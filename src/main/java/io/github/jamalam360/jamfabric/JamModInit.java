@@ -24,7 +24,10 @@
 
 package io.github.jamalam360.jamfabric;
 
+import io.github.jamalam360.jamfabric.registry.BlockRegistry;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import io.github.jamalam360.libjam.logging.LibJamLogger;
+import io.github.jamalam360.libjam.registry.LibJamRegistry;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -38,6 +41,8 @@ public class JamModInit implements ModInitializer {
     @Override
     public void onInitialize() {
         log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
+
+        new LibJamRegistry(MOD_ID, BlockRegistry.class, ItemRegistry.class);
     }
 
     public static void log(Level level, String message) {

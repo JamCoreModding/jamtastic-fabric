@@ -20,7 +20,9 @@
     "main": [
       "io.github.jamalam360.jamfabric.JamModInit"
     ],
-    "client": [],
+    "client": [
+      "io.github.jamalam360.jamfabric.JamModClientInit"
+    ],
     "server": []
   },
   "mixins": [
