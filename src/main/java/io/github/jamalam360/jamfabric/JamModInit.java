@@ -22,26 +22,25 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360;
+package io.github.jamalam360.jamfabric;
 
+import io.github.jamalam360.libjam.logging.LibJamLogger;
 import net.fabricmc.api.ModInitializer;
-
 import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class %mainclass% implements ModInitializer {
-    public static Logger LOGGER = LogManager.getLogger();
+public class JamModInit implements ModInitializer {
+    public static final String MOD_ID = "jamfabric";
+    public static final String MOD_NAME = "Jam";
 
-    public static final String MOD_ID = "%id%";
-    public static final String MOD_NAME = "%name%";
+    public static Logger LOGGER = LibJamLogger.getLogger(MOD_NAME);
 
     @Override
     public void onInitialize() {
         log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
     }
 
-    public static void log(Level level, String message){
+    public static void log(Level level, String message) {
         LOGGER.log(level, message);
     }
 

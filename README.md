@@ -1,1 +1,1 @@
-%description%
+A mod that adds jam
