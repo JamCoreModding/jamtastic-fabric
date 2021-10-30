@@ -24,29 +24,63 @@
 
 package io.github.jamalam360.jamfabric;
 
-import io.github.jamalam360.jamfabric.registry.BlockRegistry;
-import io.github.jamalam360.jamfabric.registry.ItemRegistry;
-import io.github.jamalam360.libjam.logging.LibJamLogger;
-import io.github.jamalam360.libjam.registry.LibJamRegistry;
+import io.github.jamalam360.jamfabric.block.JamPotBlock;
+import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
+import io.github.jamalam360.jamfabric.item.JamJarItem;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class JamModInit implements ModInitializer {
     public static final String MOD_ID = "jamfabric";
     public static final String MOD_NAME = "Jam";
+    public static Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
-    public static Logger LOGGER = LibJamLogger.getLogger(MOD_NAME);
+    //region Blocks
+    public static final Block JAM_POT_BLOCK = new JamPotBlock();
+    public static final BlockEntityType<JamPotBlockEntity> JAM_POT_BLOCK_ENTITY = FabricBlockEntityTypeBuilder.create(JamPotBlockEntity::new, JAM_POT_BLOCK).build();
+    //endregion
+
+    //region Items
+    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1));
+    //endregion
 
     @Override
     public void onInitialize() {
         log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
 
-        new LibJamRegistry(MOD_ID, BlockRegistry.class, ItemRegistry.class);
+        registerBlock("jam_pot", JAM_POT_BLOCK, ItemGroup.DECORATIONS);
+        registerBlockEntity("jam_pot", JAM_POT_BLOCK_ENTITY);
     }
 
+    //region Registry Methods
+    public static void registerBlock(String id, Block block, ItemGroup itemGroup) {
+        Registry.register(Registry.BLOCK, new Identifier(MOD_ID, id), block);
+        Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), new BlockItem(block, new FabricItemSettings().group(itemGroup)));
+    }
+
+    public static void registerBlockEntity(String id, BlockEntityType<?> blockEntityType) {
+        Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, id), blockEntityType);
+    }
+
+    public static void registerItem(String id, Item item) {
+        Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
+    }
+    //endregion
+
+    //region Logging Methods
     public static void log(Level level, String message) {
         LOGGER.log(level, message);
     }
-
+    //endregion
 }

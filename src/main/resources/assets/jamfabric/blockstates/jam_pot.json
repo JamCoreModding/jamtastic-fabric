@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "jamfabric:block/jam_pot", "uvlock": true },
+    "facing=east":  { "model": "jamfabric:block/jam_pot", "y":  90, "uvlock": true },
+    "facing=south": { "model": "jamfabric:block/jam_pot", "y": 180, "uvlock": true },
+    "facing=west":  { "model": "jamfabric:block/jam_pot", "y": 270, "uvlock": true }
+  }
+}

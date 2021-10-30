@@ -1,20 +1,14 @@
 package io.github.jamalam360.jamfabric.block;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockRenderView;
-import net.minecraft.world.World;
 
 /**
  * @author Jamalam360
@@ -26,16 +20,35 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
 
     @Override
     public void render(JamPotBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        matrices.push();
+        int updatedLight = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
+        float size = this.blockBenchToBlock(13);
 
-        BlockRenderManager renderManager = MinecraftClient.getInstance().getBlockRenderManager();
-        FluidState state = Fluids.WATER.getDefaultState();
-        float size = 12f / 16f;
+        float x = this.blockBenchToBlock(2);
+        float y = this.blockBenchToBlock(2);
+        float z = this.blockBenchToBlock(2);
 
-        matrices.scale(size, size, size);
+        if (entity.getItems().length > 0) {
+            matrices.push();
 
-        renderManager.renderBlockAsEntity(Blocks.WATER.getDefaultState(), matrices, vertexConsumers, light, overlay);
+            BlockState state = Blocks.RED_WOOL.getDefaultState();
 
-        matrices.pop();
+            matrices.scale(size, (float) entity.getItems().length / JamPotBlockEntity.CAPACITY, size);
+            matrices.translate(x, y, z);
+            MinecraftClient.getInstance().getBlockRenderManager().renderBlockAsEntity(state, matrices, vertexConsumers, updatedLight, overlay);
+
+            matrices.pop();
+        } else if (entity.hasWater) {
+            matrices.push();
+
+            matrices.scale(size, (float) entity.getItems().length / JamPotBlockEntity.CAPACITY, size);
+            matrices.translate(x, y, z);
+            MinecraftClient.getInstance().getBlockRenderManager().renderBlockAsEntity(Fluids.WATER.getStill().getDefaultState().getBlockState(), matrices, vertexConsumers, updatedLight, overlay);
+
+            matrices.pop();
+        }
+    }
+
+    private float blockBenchToBlock(int blockBenchCoordinates) {
+        return (float) blockBenchCoordinates / 16f;
     }
 }
