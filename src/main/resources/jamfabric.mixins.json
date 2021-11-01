@@ -2,7 +2,9 @@
   "required": true,
   "package": "io.github.jamalam360.jamfabric.mixin",
   "compatibilityLevel": "JAVA_16",
-  "mixins": [],
+  "mixins": [
+    "BlockModelRendererMixin"
+  ],
   "client": [],
   "server": [],
   "injectors": {

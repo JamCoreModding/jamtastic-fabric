@@ -4,6 +4,7 @@ import io.github.jamalam360.jamfabric.JamColorUtil;
 import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.NbtHelper;
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
+import io.github.jamalam360.jamfabric.util.Color;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -11,7 +12,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,5 +1,6 @@
 package io.github.jamalam360.jamfabric;
 
+import io.github.jamalam360.jamfabric.util.Color;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.Item;
@@ -8,14 +9,25 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jamalam360
  */
 
 public class JamColorUtil {
+    public static Color getAverageColourFromItems(Item... items) {
+        List<Color> averageColours = new ArrayList<>();
+
+        for (Item item : items) {
+            averageColours.add(JamColorUtil.getAverageColour(item));
+        }
+
+        return JamColorUtil.averageColours(averageColours.toArray(new Color[0]));
+    }
+
     public static Color averageColours(Color... colours) {
         float sumR = 0;
         float sumG = 0;
