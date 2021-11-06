@@ -33,6 +33,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
@@ -52,7 +53,7 @@ public class JamModInit implements ModInitializer {
     //endregion
 
     //region Items
-    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1));
+    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(ItemGroup.FOOD).food(new FoodComponent.Builder().build()));
     //endregion
 
     @Override
@@ -61,6 +62,8 @@ public class JamModInit implements ModInitializer {
 
         registerBlock("jam_pot", JAM_POT_BLOCK, ItemGroup.DECORATIONS);
         registerBlockEntity("jam_pot", JAM_POT_BLOCK_ENTITY);
+
+        registerItem("jam_jar", JAM_JAR);
     }
 
     //region Registry Methods

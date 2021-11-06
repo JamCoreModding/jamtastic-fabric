@@ -3,7 +3,10 @@
   "package": "io.github.jamalam360.jamfabric.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "BlockModelRendererMixin"
+    "BlockModelRendererMixin",
+    "HungerManagerMixin",
+    "LivingEntityMixin",
+    "PlayerEntityMixin"
   ],
   "client": [],
   "server": [],

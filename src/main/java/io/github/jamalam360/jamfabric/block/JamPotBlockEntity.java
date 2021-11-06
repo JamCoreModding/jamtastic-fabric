@@ -1,9 +1,33 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2021 Jamalam360
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.JamColorUtil;
 import io.github.jamalam360.jamfabric.JamModInit;
-import io.github.jamalam360.jamfabric.NbtHelper;
+import io.github.jamalam360.jamfabric.JamNbtHelper;
 import io.github.jamalam360.jamfabric.util.Color;
+import io.github.jamalam360.jamfabric.util.JamColor;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -48,6 +72,12 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
         this.hasSugar = filled;
     }
 
+    public void empty() {
+        this.clearItems();
+        this.setFilledWater(false);
+        this.setFilledSugar(false);
+    }
+
     public boolean hasWater() {
         return this.hasWater;
     }
@@ -77,7 +107,9 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
     }
 
     public void updateColor() {
-        this.cachedColor = JamColorUtil.getAverageColourFromItems(this.getItems());
+        if (this.getItems().length > 0) {
+            this.cachedColor = JamColor.getAverageItemColor(this.getItems());
+        }
     }
 
     @Override
@@ -85,7 +117,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
         super.readNbt(nbt);
 
         this.clearItems();
-        this.addItems(NbtHelper.readItems(nbt, "Ingredients"));
+        this.addItems(JamNbtHelper.readItems(nbt, "Ingredients"));
         this.hasWater = nbt.getBoolean("ContainsWater");
         this.hasSugar = nbt.getBoolean("ContainsSugar");
 
@@ -95,7 +127,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
-        NbtHelper.writeItems(nbt, "Ingredients", this.getItems());
+        JamNbtHelper.writeItems(nbt, "Ingredients", this.getItems());
         nbt.putBoolean("ContainsWater", this.hasWater);
         nbt.putBoolean("ContainsSugar", this.hasSugar);
 
@@ -108,7 +140,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
     @Override
     public void fromClientTag(NbtCompound tag) {
         this.clearItems();
-        this.addItems(NbtHelper.readItems(tag, "Ingredients"));
+        this.addItems(JamNbtHelper.readItems(tag, "Ingredients"));
         this.hasWater = tag.getBoolean("ContainsWater");
         this.hasSugar = tag.getBoolean("ContainsSugar");
 
@@ -117,7 +149,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
 
     @Override
     public NbtCompound toClientTag(NbtCompound tag) {
-        NbtHelper.writeItems(tag, "Ingredients", this.getItems());
+        JamNbtHelper.writeItems(tag, "Ingredients", this.getItems());
         tag.putBoolean("ContainsWater", this.hasWater);
         tag.putBoolean("ContainsSugar", this.hasSugar);
 

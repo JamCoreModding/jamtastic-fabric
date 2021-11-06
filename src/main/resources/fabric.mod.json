@@ -30,6 +30,7 @@
   ],
   "depends": {
     "fabricloader": ">=0.11.3",
-    "fabric": "*"
+    "fabric": "*",
+    "mealapi": ">=0.3"
   }
 }
