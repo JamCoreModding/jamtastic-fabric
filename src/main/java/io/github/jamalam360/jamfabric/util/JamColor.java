@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +42,7 @@ public class JamColor {
 
         for (int i = 0; i < items.length; i++) {
             colors[i] = getAverageItemColor(items[i]);
+            System.out.println(colors[i]);
         }
 
         return getAverageColor(colors);
@@ -50,13 +52,13 @@ public class JamColor {
      * Calculate the average colour of an item
      */
     public static Color getAverageItemColor(Item item) {
-        if (CACHE.containsKey(item)) {
+        /*if (CACHE.containsKey(item)) {
             return CACHE.get(item);
-        } else {
+        } else {*/
             Color color = getAverageColor(getColors(getNativeImage(item)));
             CACHE.put(item, color);
             return color;
-        }
+        //}
     }
     //endregion
 
@@ -89,13 +91,18 @@ public class JamColor {
      */
     private static Color[] getColors(NativeImage image) {
         Color[] colors = new Color[image.getWidth() * image.getHeight()];
-
+        System.out.println(image.getWidth());
+        System.out.println(image.getHeight());
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
+                System.out.println(x + " " + y);
                 int[] pixelColors = JamColor.unpackRgbaColor(image.getPixelColor(x, y));
-                if ((pixelColors[0] == 255 && pixelColors[1] == 255 && pixelColors[2] == 255) || (pixelColors[0] == 0 && pixelColors[1] == 0 && pixelColors[2] == 0)) {
+                System.out.println(Arrays.toString(pixelColors));
+                if ((pixelColors[0] != 255 && pixelColors[1] != 255 && pixelColors[2] != 255) && (pixelColors[0] != 0 && pixelColors[1] != 0 && pixelColors[2] != 0)) {
                     colors[x + y] = new Color(pixelColors[0], pixelColors[1], pixelColors[2]);
+                    System.out.println("Added color");
                 }
+                System.out.println();
             }
         }
 
@@ -117,8 +124,6 @@ public class JamColor {
                 green += color.getGreen();
                 blue += color.getBlue();
                 total++;
-
-                System.out.println(color);
             }
         }
 

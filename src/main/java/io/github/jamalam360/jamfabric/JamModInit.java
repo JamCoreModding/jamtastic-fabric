@@ -45,16 +45,32 @@ import org.apache.logging.log4j.Logger;
 public class JamModInit implements ModInitializer {
     public static final String MOD_ID = "jamfabric";
     public static final String MOD_NAME = "Jam";
-    public static Logger LOGGER = LogManager.getLogger(MOD_NAME);
-
     //region Blocks
     public static final Block JAM_POT_BLOCK = new JamPotBlock();
-    public static final BlockEntityType<JamPotBlockEntity> JAM_POT_BLOCK_ENTITY = FabricBlockEntityTypeBuilder.create(JamPotBlockEntity::new, JAM_POT_BLOCK).build();
-    //endregion
-
     //region Items
     public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(ItemGroup.FOOD).food(new FoodComponent.Builder().build()));
+    public static Logger LOGGER = LogManager.getLogger(MOD_NAME);    public static final BlockEntityType<JamPotBlockEntity> JAM_POT_BLOCK_ENTITY = FabricBlockEntityTypeBuilder.create(JamPotBlockEntity::new, JAM_POT_BLOCK).build();
     //endregion
+
+    //region Registry Methods
+    public static void registerBlock(String id, Block block, ItemGroup itemGroup) {
+        Registry.register(Registry.BLOCK, new Identifier(MOD_ID, id), block);
+        Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), new BlockItem(block, new FabricItemSettings().group(itemGroup)));
+    }
+    //endregion
+
+    public static void registerBlockEntity(String id, BlockEntityType<?> blockEntityType) {
+        Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, id), blockEntityType);
+    }
+
+    public static void registerItem(String id, Item item) {
+        Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
+    }
+
+    //region Logging Methods
+    public static void log(Level level, String message) {
+        LOGGER.log(level, message);
+    }
 
     @Override
     public void onInitialize() {
@@ -65,25 +81,8 @@ public class JamModInit implements ModInitializer {
 
         registerItem("jam_jar", JAM_JAR);
     }
-
-    //region Registry Methods
-    public static void registerBlock(String id, Block block, ItemGroup itemGroup) {
-        Registry.register(Registry.BLOCK, new Identifier(MOD_ID, id), block);
-        Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), new BlockItem(block, new FabricItemSettings().group(itemGroup)));
-    }
-
-    public static void registerBlockEntity(String id, BlockEntityType<?> blockEntityType) {
-        Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, id), blockEntityType);
-    }
-
-    public static void registerItem(String id, Item item) {
-        Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
-    }
     //endregion
 
-    //region Logging Methods
-    public static void log(Level level, String message) {
-        LOGGER.log(level, message);
-    }
+
     //endregion
 }
