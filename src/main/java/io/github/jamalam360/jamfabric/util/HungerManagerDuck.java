@@ -30,5 +30,5 @@ import net.minecraft.entity.player.PlayerEntity;
  * @author Jamalam360
  */
 public interface HungerManagerDuck {
-    void setPlayer(PlayerEntity player);
+    void jamfabric$setPlayer(PlayerEntity player);
 }

@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.mixin;
+package io.github.jamalam360.jamfabric.mixin.entity;
 
 import com.mojang.datafixers.util.Pair;
 import io.github.jamalam360.jamfabric.JamModInit;
@@ -43,7 +43,7 @@ import java.util.List;
  */
 
 @Mixin(LivingEntity.class)
-public class LivingEntityMixin {
+public abstract class LivingEntityMixin {
     @Redirect(
             method = "applyFoodEffects",
             at = @At(
@@ -51,7 +51,7 @@ public class LivingEntityMixin {
                     target = "Lnet/minecraft/item/FoodComponent;getStatusEffects()Ljava/util/List;"
             )
     )
-    public List<Pair<StatusEffectInstance, Float>> jamfabric_applyFoodEffects(FoodComponent instance, ItemStack stack, World world, LivingEntity targetEntity) {
+    public List<Pair<StatusEffectInstance, Float>> jamfabric$applyFoodEffects(FoodComponent instance, ItemStack stack, World world, LivingEntity targetEntity) {
         if (stack.isOf(JamModInit.JAM_JAR)) {
             return JamNbtHelper.getJamJarEffects(stack.getOrCreateNbt());
         } else {
@@ -66,7 +66,7 @@ public class LivingEntityMixin {
                     target = "Lnet/minecraft/item/ItemStack;decrement(I)V"
             )
     )
-    public void jamfabric_eatFoodDecrementRedirect(ItemStack stack, int amount) {
+    public void jamfabric$eatFoodDecrementRedirect(ItemStack stack, int amount) {
         if (stack.isOf(JamModInit.JAM_JAR)) {
             JamNbtHelper.yeetItems(stack.getOrCreateNbt(), "Ingredients");
         } else {

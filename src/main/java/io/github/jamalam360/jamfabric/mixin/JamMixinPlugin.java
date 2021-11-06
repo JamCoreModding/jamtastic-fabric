@@ -36,17 +36,6 @@ import java.util.Set;
  * @author Jamalam360
  */
 public class JamMixinPlugin implements IMixinConfigPlugin {
-
-    @Override
-    public void onLoad(String mixinPackage) {
-        // NO-OP
-    }
-
-    @Override
-    public String getRefMapperConfig() {
-        return null;
-    }
-
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (targetClassName.equals("io.github.foundationgames.sandwichable.items.SpreadItem")) {
@@ -54,6 +43,16 @@ public class JamMixinPlugin implements IMixinConfigPlugin {
         }
 
         return true;
+    }
+
+    //region No-Ops
+    @Override
+    public void onLoad(String mixinPackage) {
+    }
+
+    @Override
+    public String getRefMapperConfig() {
+        return null;
     }
 
     @Override
@@ -72,4 +71,5 @@ public class JamMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
     }
+    //endregion
 }

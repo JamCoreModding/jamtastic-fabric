@@ -43,7 +43,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(SpreadItem.class)
-public class SpreadItemMixin {
+public abstract class SpreadItemMixin {
     @Unique
     private ItemStack jamfabric$capturedStack;
 

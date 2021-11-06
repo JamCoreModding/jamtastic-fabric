@@ -22,14 +22,18 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.mixin;
+package io.github.jamalam360.jamfabric.mixin.general;
 
-import com.mojang.authlib.GameProfile;
+import com.mojang.datafixers.util.Pair;
+import io.github.foundationgames.mealapi.api.v0.PlayerFullnessUtil;
+import io.github.jamalam360.jamfabric.JamModInit;
+import io.github.jamalam360.jamfabric.JamNbtHelper;
 import io.github.jamalam360.jamfabric.util.HungerManagerDuck;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,15 +44,32 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @author Jamalam360
  */
 
-@Mixin(PlayerEntity.class)
-public class PlayerEntityMixin {
-    @Shadow protected HungerManager hungerManager;
+@Mixin(HungerManager.class)
+public abstract class HungerManagerMixin implements HungerManagerDuck {
+    @Shadow
+    public abstract void add(int food, float saturationModifier);
+
+    private PlayerEntity jamfabric$parent;
 
     @Inject(
-            at = @At("TAIL"),
-            method = "<init>"
+            method = "eat",
+            at = @At("HEAD"),
+            cancellable = true
     )
-    public void jamFabric_initMixin(World world, BlockPos pos, float yaw, GameProfile profile, CallbackInfo ci) {
-        ((HungerManagerDuck) this.hungerManager).setPlayer((PlayerEntity) (Object) this);
+    public void jamfabric$eatMixin(Item item, ItemStack stack, CallbackInfo ci) {
+        if (stack.isOf(JamModInit.JAM_JAR)) {
+            Pair<Integer, Float> pair = JamNbtHelper.getJamJarHungerAndSaturation(stack.getOrCreateNbt());
+
+            if (!this.jamfabric$parent.world.isClient && pair.getFirst() > 0) {
+                PlayerFullnessUtil.instance().addFullness((ServerPlayerEntity) this.jamfabric$parent, pair.getFirst());
+            }
+
+            ci.cancel();
+        }
+    }
+
+    @Override
+    public void jamfabric$setPlayer(PlayerEntity player) {
+        this.jamfabric$parent = player;
     }
 }

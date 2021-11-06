@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.mixin;
+package io.github.jamalam360.jamfabric.mixin.render;
 
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntityRenderer;
 import net.minecraft.block.BlockState;
@@ -43,9 +43,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(BlockModelRenderer.class)
-public class BlockModelRendererMixin {
+public abstract class BlockModelRendererMixin {
     @Unique
-    private static boolean forceColor = false;
+    private static boolean jamfabric$forceColor = false;
 
     @Inject(
             method = "render(Lnet/minecraft/client/util/math/MatrixStack$Entry;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/block/BlockState;Lnet/minecraft/client/render/model/BakedModel;FFFII)V",
@@ -56,8 +56,8 @@ public class BlockModelRendererMixin {
                  shift = At.Shift.BEFORE
             )
     )
-    public void renderMixin(MatrixStack.Entry entry, VertexConsumer vertexConsumer, BlockState blockState, BakedModel bakedModel, float f, float g, float h, int i, int j, CallbackInfo ci) {
-        forceColor = blockState == JamPotBlockEntityRenderer.JAM;
+    public void jamfabric$saveForceColorInject(MatrixStack.Entry entry, VertexConsumer vertexConsumer, BlockState blockState, BakedModel bakedModel, float f, float g, float h, int i, int j, CallbackInfo ci) {
+        jamfabric$forceColor = blockState == JamPotBlockEntityRenderer.JAM;
     }
 
     @Inject(
@@ -69,8 +69,8 @@ public class BlockModelRendererMixin {
                     shift = At.Shift.BEFORE
             )
     )
-    public void renderMixin2(MatrixStack.Entry entry, VertexConsumer vertexConsumer, BlockState blockState, BakedModel bakedModel, float f, float g, float h, int i, int j, CallbackInfo ci) {
-        forceColor = blockState == JamPotBlockEntityRenderer.JAM;
+    public void jamfabric$saveForceColorInject2(MatrixStack.Entry entry, VertexConsumer vertexConsumer, BlockState blockState, BakedModel bakedModel, float f, float g, float h, int i, int j, CallbackInfo ci) {
+        jamfabric$forceColor = blockState == JamPotBlockEntityRenderer.JAM;
     }
 
     @Redirect(
@@ -80,9 +80,9 @@ public class BlockModelRendererMixin {
                     target = "Lnet/minecraft/client/render/model/BakedQuad;hasColor()Z"
             )
     )
-    private static boolean redirectHasColor(BakedQuad instance) {
-        if (forceColor) {
-            forceColor = false;
+    private static boolean jamfabric$redirectHasColor(BakedQuad instance) {
+        if (jamfabric$forceColor) {
+            jamfabric$forceColor = false;
             return true;
         } else {
             return instance.hasColor();
