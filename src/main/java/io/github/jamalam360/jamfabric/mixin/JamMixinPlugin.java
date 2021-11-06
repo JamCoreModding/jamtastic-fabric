@@ -24,11 +24,11 @@
 
 package io.github.jamalam360.jamfabric.mixin;
 
-import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -36,13 +36,15 @@ import java.util.Set;
  * @author Jamalam360
  */
 public class JamMixinPlugin implements IMixinConfigPlugin {
+    public static final List<String> ACTIVE_COMPATIBILITY_MIXINS = new ArrayList<>();
+
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (targetClassName.equals("io.github.foundationgames.sandwichable.items.SpreadItem")) {
-            return FabricLoader.getInstance().isModLoaded("sandwichable");
+        if (mixinClassName.contains("compat")) {
+            return ACTIVE_COMPATIBILITY_MIXINS.stream().anyMatch(s -> s.contains(mixinClassName));
+        } else {
+            return true;
         }
-
-        return true;
     }
 
     //region No-Ops

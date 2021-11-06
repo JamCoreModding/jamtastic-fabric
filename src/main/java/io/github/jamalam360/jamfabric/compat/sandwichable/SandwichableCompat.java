@@ -25,12 +25,19 @@
 package io.github.jamalam360.jamfabric.compat.sandwichable;
 
 import io.github.foundationgames.sandwichable.util.SpreadRegistry;
+import io.github.jamalam360.jamfabric.compat.CompatibilityPlugin;
+import io.github.jamalam360.jamfabric.mixin.JamMixinPlugin;
 
 /**
  * @author Jamalam360
  */
-public class SandwichableCompat {
-    public static void register() {
+public class SandwichableCompat implements CompatibilityPlugin {
+    public void init() {
         SpreadRegistry.INSTANCE.register("jam", new JamSpreadType());
+    }
+
+    @Override
+    public void initMixins() {
+        JamMixinPlugin.ACTIVE_COMPATIBILITY_MIXINS.add("SpreadItemMixin");
     }
 }
