@@ -35,10 +35,8 @@ public abstract class HungerManagerMixin implements HungerManagerDuck {
     public void eatMixin(Item item, ItemStack stack, CallbackInfo ci) {
         if (stack.isOf(JamModInit.JAM_JAR)) {
             Pair<Integer, Float> pair = JamNbtHelper.getJamJarHungerAndSaturation(stack.getOrCreateNbt());
-            //this.add(pair.getFirst(), pair.getSecond());
 
             if (!this.parent.world.isClient && pair.getFirst() > 0) {
-                System.out.println("TEST!");
                 PlayerFullnessUtil.instance().addFullness((ServerPlayerEntity) this.parent, pair.getFirst());
             }
 

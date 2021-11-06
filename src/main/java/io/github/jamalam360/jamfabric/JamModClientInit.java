@@ -35,6 +35,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.Item;
@@ -74,12 +75,14 @@ public class JamModClientInit implements ClientModInitializer {
         FabricModelPredicateProviderRegistry.register(JamModInit.JAM_JAR, new Identifier("jam_jar_full"), ((stack, world, entity, seed) -> JamNbtHelper.readItems(stack.getOrCreateNbt(), "Ingredients").length != 0 ? 1.0f : 0.0f));
         //endregion
 
-        keybinding = KeyBindingHelper.registerKeyBinding(new KeyBinding("jamfabric.test", GLFW.GLFW_KEY_J, "jamfabric.test"));
+        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            keybinding = KeyBindingHelper.registerKeyBinding(new KeyBinding("jamfabric.test", GLFW.GLFW_KEY_J, "jamfabric.test"));
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (keybinding.wasPressed()) {
-                System.out.println(PlayerFullnessUtil.instance().getClientFullness());
-            }
-        });
+            ClientTickEvents.END_CLIENT_TICK.register(client -> {
+                while (keybinding.wasPressed()) {
+                    System.out.println(PlayerFullnessUtil.instance().getClientFullness());
+                }
+            });
+        }
     }
 }

@@ -45,11 +45,15 @@ import org.apache.logging.log4j.Logger;
 public class JamModInit implements ModInitializer {
     public static final String MOD_ID = "jamfabric";
     public static final String MOD_NAME = "Jam";
+    public static Logger LOGGER = LogManager.getLogger(MOD_NAME);
+
     //region Blocks
     public static final Block JAM_POT_BLOCK = new JamPotBlock();
+    public static final BlockEntityType<JamPotBlockEntity> JAM_POT_BLOCK_ENTITY = FabricBlockEntityTypeBuilder.create(JamPotBlockEntity::new, JAM_POT_BLOCK).build();
+    //endregion
+
     //region Items
-    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(ItemGroup.FOOD).food(new FoodComponent.Builder().build()));
-    public static Logger LOGGER = LogManager.getLogger(MOD_NAME);    public static final BlockEntityType<JamPotBlockEntity> JAM_POT_BLOCK_ENTITY = FabricBlockEntityTypeBuilder.create(JamPotBlockEntity::new, JAM_POT_BLOCK).build();
+    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(ItemGroup.FOOD).food(new FoodComponent.Builder().alwaysEdible().build()));
     //endregion
 
     //region Registry Methods
@@ -57,7 +61,6 @@ public class JamModInit implements ModInitializer {
         Registry.register(Registry.BLOCK, new Identifier(MOD_ID, id), block);
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), new BlockItem(block, new FabricItemSettings().group(itemGroup)));
     }
-    //endregion
 
     public static void registerBlockEntity(String id, BlockEntityType<?> blockEntityType) {
         Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, id), blockEntityType);
@@ -66,23 +69,15 @@ public class JamModInit implements ModInitializer {
     public static void registerItem(String id, Item item) {
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
     }
-
-    //region Logging Methods
-    public static void log(Level level, String message) {
-        LOGGER.log(level, message);
-    }
+    //endregion
 
     @Override
     public void onInitialize() {
-        log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
+        LOGGER.log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
 
         registerBlock("jam_pot", JAM_POT_BLOCK, ItemGroup.DECORATIONS);
         registerBlockEntity("jam_pot", JAM_POT_BLOCK_ENTITY);
 
         registerItem("jam_jar", JAM_JAR);
     }
-    //endregion
-
-
-    //endregion
 }
