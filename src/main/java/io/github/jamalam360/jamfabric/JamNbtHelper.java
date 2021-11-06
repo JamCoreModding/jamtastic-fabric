@@ -28,6 +28,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -123,7 +124,13 @@ public class JamNbtHelper {
             }
         }
 
-        tooltipMap.forEach((key, value) -> finalTooltip.add(new TranslatableText(key.getTranslationKey()).append(" x" + value).styled((style -> style.withColor(Formatting.GOLD)))));
+        if (tooltipMap.isEmpty()) {
+            finalTooltip.add(new TranslatableText("tooltip.jamfabric.empty_tooltip").styled(s -> s.withColor(Formatting.AQUA)));
+        } else {
+            finalTooltip.add(new TranslatableText("tooltip.jamfabric.hunger_tooltip", JamNbtHelper.getJamJarHungerAndSaturation(compound).getFirst()).styled(s -> s.withColor(Formatting.AQUA)));
+            finalTooltip.add(new LiteralText(""));
+            tooltipMap.forEach((key, value) -> finalTooltip.add(new TranslatableText(key.getTranslationKey()).append(" x" + value).styled((style -> style.withColor(Formatting.GOLD)))));
+        }
 
         return finalTooltip;
     }

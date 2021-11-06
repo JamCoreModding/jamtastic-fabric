@@ -62,9 +62,7 @@ public class JamJarItem extends Item {
             assert blockEntity != null;
 
             JamNbtHelper.writeItems(stack.getOrCreateNbt(), "Ingredients", blockEntity.getItems());
-            blockEntity.clearItems();
-            blockEntity.setFilledWater(false);
-            blockEntity.setFilledSugar(false);
+            blockEntity.empty();
 
             if (world.isClient && player != null) {
                 player.playSound(SoundEvents.BLOCK_BREWING_STAND_BREW, 1.0F, 1.0F);
@@ -73,6 +71,15 @@ public class JamJarItem extends Item {
             return ActionResult.SUCCESS;
         } else {
             return super.useOnBlock(context);
+        }
+    }
+
+    @Override
+    public int getMaxUseTime(ItemStack stack) {
+        if (JamNbtHelper.readItems(stack.getOrCreateNbt(), "Ingredients").length == 0) {
+            return 0;
+        } else {
+            return super.getMaxUseTime(stack);
         }
     }
 

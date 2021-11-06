@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +33,7 @@ public class JamColor {
     private static final Map<String, String> TEXTURE_OVERRIDES = new HashMap<>();
 
     //region Item Color Retrieval
+
     /**
      * Calculate the average color of all the items in the var args
      */
@@ -85,6 +85,7 @@ public class JamColor {
     }
 
     //region Color Manipulation
+
     /**
      * Gets an array of all the colors of each pixel in a NativeImage
      */

@@ -127,7 +127,9 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
-        JamNbtHelper.writeItems(nbt, "Ingredients", this.getItems());
+        if (this.getItems().length > 0) {
+            JamNbtHelper.writeItems(nbt, "Ingredients", this.getItems());
+        }
         nbt.putBoolean("ContainsWater", this.hasWater);
         nbt.putBoolean("ContainsSugar", this.hasSugar);
 
@@ -149,7 +151,9 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
 
     @Override
     public NbtCompound toClientTag(NbtCompound tag) {
+        if (this.getItems().length > 0) {
         JamNbtHelper.writeItems(tag, "Ingredients", this.getItems());
+        }
         tag.putBoolean("ContainsWater", this.hasWater);
         tag.putBoolean("ContainsSugar", this.hasSugar);
 

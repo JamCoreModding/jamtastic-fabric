@@ -28,7 +28,7 @@ import java.awt.color.ColorSpace;
 import java.awt.image.ColorModel;
 
 /**
- * Stolen from AWT because that package breaks on macOS.
+ * '''Liberated''' from AWT because that package breaks on macOS.
  */
 @SuppressWarnings({"unused", "UnnecessaryUnboxing", "SameParameterValue", "PointlessBitwiseExpression", "ManualMinMaxCalculation", "ReplaceNullCheck", "ManualArrayCopy", "SpellCheckingInspection", "GrazieInspection", "StringConcatenationInLoop"})
 public class Color {
