@@ -4,7 +4,7 @@
 		"0": "minecraft:block/glass",
 		"1": "minecraft:block/iron_block",
 		"4": "minecraft:block/oak_log",
-		"particles": "minecraft:block/iron_block"
+		"particle": "minecraft:block/iron_block"
 	},
 	"elements": [
 		{

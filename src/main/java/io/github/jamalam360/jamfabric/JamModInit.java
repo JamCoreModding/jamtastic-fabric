@@ -26,10 +26,12 @@ package io.github.jamalam360.jamfabric;
 
 import io.github.jamalam360.jamfabric.block.JamPotBlock;
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
+import io.github.jamalam360.jamfabric.compat.sandwichable.SandwichableCompat;
 import io.github.jamalam360.jamfabric.item.JamJarItem;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
@@ -79,5 +81,9 @@ public class JamModInit implements ModInitializer {
         registerBlockEntity("jam_pot", JAM_POT_BLOCK_ENTITY);
 
         registerItem("jam_jar", JAM_JAR);
+
+        if (FabricLoader.getInstance().isModLoaded("sandwichable")) {
+            SandwichableCompat.register();
+        }
     }
 }

@@ -30,11 +30,11 @@ import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.Item;
 import net.minecraft.resource.Resource;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,7 +54,6 @@ public class JamColor {
      */
 
     private static final Map<Item, Color> CACHE = new HashMap<>();
-    private static final Map<String, String> TEXTURE_OVERRIDES = new HashMap<>();
 
     //region Item Color Retrieval
 
@@ -90,15 +89,8 @@ public class JamColor {
      */
     private static @Nullable NativeImage getNativeImage(Item item) {
         try {
-            Identifier id = Registry.ITEM.getId(item);
-            String namespace = id.getNamespace();
-            String path = id.getPath();
-
-            if (TEXTURE_OVERRIDES.containsKey(path)) {
-                path = TEXTURE_OVERRIDES.get(path);
-            }
-
-            Resource texture = MinecraftClient.getInstance().getResourceManager().getResource(new Identifier(namespace, "textures/item/" + path + ".png"));
+            Identifier id = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(item).getParticleSprite().getId();
+            Resource texture = MinecraftClient.getInstance().getResourceManager().getResource(new Identifier(id.getNamespace(), "textures/" + id.getPath() + ".png"));
             return NativeImage.read(texture.getInputStream());
         } catch (IOException e) {
             JamModInit.LOGGER.log(Level.ERROR, "Caught an error while retrieving native image");
@@ -117,7 +109,7 @@ public class JamColor {
         Color[] colors = new Color[image.getWidth() * image.getHeight()];
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
-                int[] pixelColors = JamColor.unpackRgbaColor(image.getPixelColor(x, y));
+                int[] pixelColors = JamColor.unpackRgbaColor(image.getColor(x, y));
                 if ((pixelColors[0] != 255 && pixelColors[1] != 255 && pixelColors[2] != 255) && (pixelColors[0] != 0 && pixelColors[1] != 0 && pixelColors[2] != 0)) {
                     colors[x + y] = new Color(pixelColors[0], pixelColors[1], pixelColors[2]);
                 }
@@ -155,12 +147,6 @@ public class JamColor {
                 (color >> 16) & 255, // Blue
                 (color >> 24) & 255 // Alpha
         };
-    }
-    //endregion
-
-    //region Static Init
-    static {
-        TEXTURE_OVERRIDES.put("enchanted_golden_apple", "golden_apple");
     }
     //endregion
 }
