@@ -40,7 +40,7 @@ import static io.github.jamalam360.jamfabric.JamModInit.MOD_ID;
  * @author Jamalam360
  */
 public class ItemRegistry {
-    public static final ItemGroup JAM_GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "JAM_GROUP"), () -> new ItemStack(BlockRegistry.JAM_POT));
+    public static final ItemGroup JAM_GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "jam_group"), () -> new ItemStack(BlockRegistry.JAM_POT));
 
     public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(ItemGroup.FOOD).food(new FoodComponent.Builder().alwaysEdible().build()));
 

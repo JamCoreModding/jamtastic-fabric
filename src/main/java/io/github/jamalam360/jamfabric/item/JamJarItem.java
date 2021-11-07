@@ -25,6 +25,7 @@
 package io.github.jamalam360.jamfabric.item;
 
 import io.github.jamalam360.jamfabric.JamNbtHelper;
+import io.github.jamalam360.jamfabric.util.JamName;
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
 import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import net.minecraft.client.item.TooltipContext;
@@ -33,6 +34,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.UseAction;
@@ -66,6 +68,10 @@ public class JamJarItem extends Item {
 
             if (world.isClient && player != null) {
                 player.playSound(SoundEvents.BLOCK_BREWING_STAND_BREW, 1.0F, 1.0F);
+            }
+
+            if (!world.isClient) {
+                stack.setCustomName(new LiteralText(JamName.create(stack.getOrCreateNbt())));
             }
 
             return ActionResult.SUCCESS;
