@@ -25,8 +25,8 @@
 package io.github.jamalam360.jamfabric.compat.sandwichable;
 
 import io.github.foundationgames.sandwichable.items.spread.SpreadType;
-import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.JamNbtHelper;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import io.github.jamalam360.jamfabric.util.JamColor;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemConvertible;
@@ -44,7 +44,7 @@ public class JamSpreadType extends SpreadType {
     public static Map<ItemStack, Integer> cache = new HashMap<>();
 
     public JamSpreadType() {
-        super(0, 0.0f, 0, JamModInit.JAM_JAR, JamModInit.JAM_JAR);
+        super(0, 0.0f, 0, ItemRegistry.JAM_JAR, ItemRegistry.JAM_JAR);
     }
 
     @Override
@@ -79,12 +79,12 @@ public class JamSpreadType extends SpreadType {
 
     @Override
     public ItemConvertible getContainingItem() {
-        return JamModInit.JAM_JAR;
+        return ItemRegistry.JAM_JAR;
     }
 
     @Override
     public ItemStack getResultItem() {
-        return new ItemStack(JamModInit.JAM_JAR);
+        return new ItemStack(ItemRegistry.JAM_JAR);
     }
 
     @Override

@@ -24,7 +24,7 @@
 
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.JamModInit;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -65,7 +65,7 @@ public class JamPotBlock extends BlockWithEntity {
             blockEntity.setFilledSugar(true);
             stack.decrement(1);
             return ActionResult.SUCCESS;
-        } else if (stack.isFood() && blockEntity.canInsertIngredients() && !stack.isOf(JamModInit.JAM_JAR)) {
+        } else if (stack.isFood() && blockEntity.canInsertIngredients() && !stack.isOf(ItemRegistry.JAM_JAR)) {
             blockEntity.addItems(stack.getItem());
             stack.decrement(1);
             return ActionResult.SUCCESS;

@@ -26,8 +26,8 @@ package io.github.jamalam360.jamfabric.mixin.general;
 
 import com.mojang.datafixers.util.Pair;
 import io.github.foundationgames.mealapi.api.v0.PlayerFullnessUtil;
-import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.JamNbtHelper;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import io.github.jamalam360.jamfabric.util.HungerManagerDuck;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,9 +46,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HungerManager.class)
 public abstract class HungerManagerMixin implements HungerManagerDuck {
-    @Shadow
-    public abstract void add(int food, float saturationModifier);
-
     private PlayerEntity jamfabric$parent;
 
     @Inject(
@@ -57,7 +54,7 @@ public abstract class HungerManagerMixin implements HungerManagerDuck {
             cancellable = true
     )
     public void jamfabric$eatMixin(Item item, ItemStack stack, CallbackInfo ci) {
-        if (stack.isOf(JamModInit.JAM_JAR)) {
+        if (stack.isOf(ItemRegistry.JAM_JAR)) {
             Pair<Integer, Float> pair = JamNbtHelper.getJamJarHungerAndSaturation(stack.getOrCreateNbt());
 
             if (!this.jamfabric$parent.world.isClient && pair.getFirst() > 0) {

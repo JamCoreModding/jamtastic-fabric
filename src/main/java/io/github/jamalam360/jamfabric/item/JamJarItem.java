@@ -24,9 +24,9 @@
 
 package io.github.jamalam360.jamfabric.item;
 
-import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.JamNbtHelper;
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
+import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -57,7 +57,7 @@ public class JamJarItem extends Item {
         ItemStack stack = context.getStack();
         PlayerEntity player = context.getPlayer();
 
-        if (world.getBlockState(pos).isOf(JamModInit.JAM_POT_BLOCK)) {
+        if (world.getBlockState(pos).isOf(BlockRegistry.JAM_POT)) {
             JamPotBlockEntity blockEntity = (JamPotBlockEntity) world.getBlockEntity(pos);
             assert blockEntity != null;
 

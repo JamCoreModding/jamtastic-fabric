@@ -24,41 +24,30 @@
 
 package io.github.jamalam360.jamfabric;
 
-import io.github.foundationgames.mealapi.api.v0.PlayerFullnessUtil;
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntityRenderer;
-import io.github.jamalam360.jamfabric.util.Color;
+import io.github.jamalam360.jamfabric.registry.BlockRegistry;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import io.github.jamalam360.jamfabric.util.JamColor;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import org.lwjgl.glfw.GLFW;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Jamalam360
  */
 public class JamModClientInit implements ClientModInitializer {
-    public static KeyBinding keybinding;
-
     @Override
     public void onInitializeClient() {
         //region Block Entity Renderers
-        BlockEntityRendererRegistry.INSTANCE.register(JamModInit.JAM_POT_BLOCK_ENTITY, JamPotBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(BlockRegistry.JAM_POT_ENTITY, JamPotBlockEntityRenderer::new);
         //endregion
 
         //region Block Render Layers
-        BlockRenderLayerMap.INSTANCE.putBlock(JamModInit.JAM_POT_BLOCK, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.JAM_POT, RenderLayer.getTranslucent());
         //endregion
 
         //region Color Providers
@@ -68,21 +57,11 @@ public class JamModClientInit implements ClientModInitializer {
             } else {
                 return 0xffffff;
             }
-        }), JamModInit.JAM_JAR);
+        }), ItemRegistry.JAM_JAR);
         //endregion
 
         //region Model Predicate Providers
-        FabricModelPredicateProviderRegistry.register(JamModInit.JAM_JAR, new Identifier("jam_jar_full"), ((stack, world, entity, seed) -> JamNbtHelper.readItems(stack.getOrCreateNbt(), "Ingredients").length != 0 ? 1.0f : 0.0f));
+        FabricModelPredicateProviderRegistry.register(ItemRegistry.JAM_JAR, new Identifier("jam_jar_full"), ((stack, world, entity, seed) -> JamNbtHelper.readItems(stack.getOrCreateNbt(), "Ingredients").length != 0 ? 1.0f : 0.0f));
         //endregion
-
-        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            keybinding = KeyBindingHelper.registerKeyBinding(new KeyBinding("jamfabric.test", GLFW.GLFW_KEY_J, "jamfabric.test"));
-
-            ClientTickEvents.END_CLIENT_TICK.register(client -> {
-                while (keybinding.wasPressed()) {
-                    System.out.println(PlayerFullnessUtil.instance().getClientFullness());
-                }
-            });
-        }
     }
 }

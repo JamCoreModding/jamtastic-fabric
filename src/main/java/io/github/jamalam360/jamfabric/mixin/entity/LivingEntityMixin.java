@@ -25,8 +25,8 @@
 package io.github.jamalam360.jamfabric.mixin.entity;
 
 import com.mojang.datafixers.util.Pair;
-import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.JamNbtHelper;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.FoodComponent;
@@ -52,7 +52,7 @@ public abstract class LivingEntityMixin {
             )
     )
     public List<Pair<StatusEffectInstance, Float>> jamfabric$applyFoodEffects(FoodComponent instance, ItemStack stack, World world, LivingEntity targetEntity) {
-        if (stack.isOf(JamModInit.JAM_JAR)) {
+        if (stack.isOf(ItemRegistry.JAM_JAR)) {
             return JamNbtHelper.getJamJarEffects(stack.getOrCreateNbt());
         } else {
             return instance.getStatusEffects();
@@ -67,7 +67,7 @@ public abstract class LivingEntityMixin {
             )
     )
     public void jamfabric$eatFoodDecrementRedirect(ItemStack stack, int amount) {
-        if (stack.isOf(JamModInit.JAM_JAR)) {
+        if (stack.isOf(ItemRegistry.JAM_JAR)) {
             JamNbtHelper.yeetItems(stack.getOrCreateNbt(), "Ingredients");
         } else {
             stack.decrement(amount);

@@ -24,8 +24,8 @@
 
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.JamNbtHelper;
+import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.util.Color;
 import io.github.jamalam360.jamfabric.util.JamColor;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -49,7 +49,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
     public Color cachedColor = new Color(255, 255, 255); // To avoid recalculating the color every frame.
 
     public JamPotBlockEntity(BlockPos pos, BlockState state) {
-        super(JamModInit.JAM_POT_BLOCK_ENTITY, pos, state);
+        super(BlockRegistry.JAM_POT_ENTITY, pos, state);
     }
 
     public boolean canInsertWater() {
@@ -152,7 +152,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
     @Override
     public NbtCompound toClientTag(NbtCompound tag) {
         if (this.getItems().length > 0) {
-        JamNbtHelper.writeItems(tag, "Ingredients", this.getItems());
+            JamNbtHelper.writeItems(tag, "Ingredients", this.getItems());
         }
         tag.putBoolean("ContainsWater", this.hasWater);
         tag.putBoolean("ContainsSugar", this.hasSugar);
