@@ -32,6 +32,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
@@ -60,18 +62,29 @@ public class JamPotBlock extends BlockWithEntity {
             blockEntity.setFilledWater(true);
             stack.decrement(1);
             player.giveItemStack(new ItemStack(Items.BUCKET));
+
+            if (world.isClient) {
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+            }
+
             return ActionResult.SUCCESS;
         } else if (stack.isOf(Items.SUGAR) && blockEntity.canInsertSugar()) {
             blockEntity.setFilledSugar(true);
             stack.decrement(1);
+            playRandomBrewingSound(world, pos);
+
             return ActionResult.SUCCESS;
         } else if (stack.isFood() && blockEntity.canInsertIngredients() && !stack.isOf(ItemRegistry.JAM_JAR)) {
             blockEntity.addItems(stack.getItem());
             stack.decrement(1);
+            playRandomBrewingSound(world, pos);
+
             return ActionResult.SUCCESS;
         } else if (stack.isEmpty() && player.isSneaking()) {
             if (blockEntity.getItems().length > 0) {
                 player.giveItemStack(new ItemStack(blockEntity.removeLastItem()));
+                playRandomBrewingSound(world, pos);
+
                 return ActionResult.SUCCESS;
             }
         }
@@ -98,5 +111,11 @@ public class JamPotBlock extends BlockWithEntity {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
+    }
+
+    private static void playRandomBrewingSound(World world, BlockPos pos) {
+        if (world.isClient) {
+            world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_BREWING_STAND_BREW, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() + 1F, false);
+        }
     }
 }

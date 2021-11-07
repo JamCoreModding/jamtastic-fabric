@@ -47,6 +47,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
     private boolean hasSugar = false;
     public static final int CAPACITY = 4;
     public Color cachedColor = new Color(255, 255, 255); // To avoid recalculating the color every frame.
+    public Color lastColorBeforeChange = new Color(255, 255, 255);
 
     public JamPotBlockEntity(BlockPos pos, BlockState state) {
         super(BlockRegistry.JAM_POT_ENTITY, pos, state);
@@ -66,6 +67,10 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
 
     public void setFilledWater(boolean filled) {
         this.hasWater = filled;
+
+        if (filled) {
+            this.updateColor();
+        }
     }
 
     public void setFilledSugar(boolean filled) {
@@ -108,7 +113,11 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
 
     public void updateColor() {
         if (this.getItems().length > 0) {
+            this.lastColorBeforeChange = cachedColor;
             this.cachedColor = JamColor.getAverageItemColor(this.getItems());
+        } else {
+            this.lastColorBeforeChange = cachedColor;
+            this.cachedColor = JamPotBlockEntityRenderer.WATER;
         }
     }
 

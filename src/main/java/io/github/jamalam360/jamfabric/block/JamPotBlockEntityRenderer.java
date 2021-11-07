@@ -41,9 +41,12 @@ import net.minecraft.client.util.math.MatrixStack;
  * @author Jamalam360
  */
 public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBlockEntity> {
-    private static final Color WATER = new Color(49, 95, 219);
+    public static final Color WATER = new Color(49, 95, 219);
     public static final BlockState JAM = Blocks.WHITE_WOOL.getDefaultState();
     private static final BakedModel JAM_BAKED_MODEL = MinecraftClient.getInstance().getBlockRenderManager().getModel(JAM);
+    private static final int LERP = 1;
+    private Color lerpingTo;
+    private Color lastLerpProgress;
 
     @SuppressWarnings("unused")
     public JamPotBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
@@ -51,29 +54,68 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
 
     @Override
     public void render(JamPotBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        if (entity.getItems().length == 0 && !entity.hasWater()) return; //No Items, no water, no render!
+
         //region Shut Up IntelliJ
         assert entity.getWorld() != null;
         assert GameRenderer.getRenderTypeEntityCutoutShader() != null;
         assert GameRenderer.getRenderTypeEntityCutoutShader().colorModulator != null;
         //endregion
 
-        int updatedLight = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
-        Color colour = entity.cachedColor;
+        Color color;
 
-        if (entity.getItems().length == 0 && entity.hasWater()) { // No items, but water, should just render the water
-            colour = WATER;
-        } else if (entity.getItems().length == 0) { // No items, no water, shouldn't render anything
-            return;
+        if (!entity.cachedColor.equals(lerpingTo)) { // If we're not already lerping towards the new color, start lerping towards the new color (from the last color)
+            lerpingTo = entity.cachedColor;
         }
+
+        if (lastLerpProgress == null) { // If we haven't started lerping yet, set the last lerp progress to the last color
+            lastLerpProgress = entity.lastColorBeforeChange;
+        }
+
+        // Lerp from the last lerp position towards the current color of the BE
+        color = lerpBetween(LERP, lastLerpProgress, lerpingTo);
+        lastLerpProgress = color; // Set the last progress to the calculated color for next tick
+
+        int updatedLight = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
 
         //region Actually Rendering
         matrices.push();
-        matrices.scale(0.82f, 0.82f, 0.82f); //0.8125f
+        matrices.scale(0.82f, 0.82f, 0.82f);
         matrices.translate(0.0625f, 0.0625f, 0.0625f);
 
-        MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), vertexConsumers.getBuffer(TexturedRenderLayers.getEntityCutout()), JAM, JAM_BAKED_MODEL, colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, updatedLight, overlay);
+        MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(
+                matrices.peek(),
+                vertexConsumers.getBuffer(TexturedRenderLayers.getEntityCutout()),
+                JAM,
+                JAM_BAKED_MODEL,
+                color.getRed() / 255f,
+                color.getGreen() / 255f,
+                color.getBlue() / 255f,
+                updatedLight,
+                overlay
+        );
 
         matrices.pop();
         //endregion
+    }
+
+    private static Color lerpBetween(int lerp, Color from, Color to) {
+        int red = lerpBetweenInt(lerp, from.getRed(), to.getRed());
+        int green = lerpBetweenInt(lerp, from.getGreen(), to.getGreen());
+        int blue = lerpBetweenInt(lerp, from.getBlue(), to.getBlue());
+
+        return new Color(red, green, blue);
+    }
+
+    private static int lerpBetweenInt(int lerp, int from, int to) {
+        if (from != to) {
+            if (from > to) {
+                return from - lerp;
+            } else {
+                return from + lerp;
+            }
+        } else {
+            return to;
+        }
     }
 }
