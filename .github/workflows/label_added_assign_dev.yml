@@ -11,9 +11,9 @@ jobs:
       issues: write
     steps:
       - name: Assign Correct Dev
-              uses: pozil/auto-assign-issue@v1
-              with:
-                  assignees: Jamalam360
+        uses: pozil/auto-assign-issue@v1
+        with:
+          assignees: Jamalam360
                   
   assign-texturer:
     if: github.event.label.name == 'textures'
@@ -22,6 +22,6 @@ jobs:
       issues: write
     steps:
       - name: Assign Correct Dev
-              uses: pozil/auto-assign-issue@v1
-              with:
-                  assignees: Jomlom
+        uses: pozil/auto-assign-issue@v1
+        with:
+          assignees: Jomlom
