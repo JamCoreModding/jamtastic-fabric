@@ -116,7 +116,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
             this.lastColorBeforeChange = cachedColor;
             this.cachedColor = JamColor.getAverageItemColor(this.getItems());
         } else {
-            this.lastColorBeforeChange = cachedColor;
+            this.lastColorBeforeChange = JamPotBlockEntityRenderer.WATER;
             this.cachedColor = JamPotBlockEntityRenderer.WATER;
         }
     }
@@ -130,7 +130,10 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
         this.hasWater = nbt.getBoolean("ContainsWater");
         this.hasSugar = nbt.getBoolean("ContainsSugar");
 
-        this.sync();
+        if (this.getWorld() != null && !this.getWorld().isClient) {
+            this.sync();
+        }
+
         this.updateColor();
     }
 
@@ -142,7 +145,10 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
         nbt.putBoolean("ContainsWater", this.hasWater);
         nbt.putBoolean("ContainsSugar", this.hasSugar);
 
-        this.sync();
+        if (this.getWorld() != null && !this.getWorld().isClient) {
+            this.sync();
+        }
+
         this.updateColor();
 
         return super.writeNbt(nbt);

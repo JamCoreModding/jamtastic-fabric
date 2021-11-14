@@ -24,6 +24,7 @@
 
 package io.github.jamalam360.jamfabric.block;
 
+import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.util.Color;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -42,7 +43,7 @@ import net.minecraft.client.util.math.MatrixStack;
  */
 public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBlockEntity> {
     public static final Color WATER = new Color(49, 95, 219);
-    public static final BlockState JAM = Blocks.WHITE_WOOL.getDefaultState();
+    public static final BlockState JAM = BlockRegistry.JAM.getDefaultState();
     private static final BakedModel JAM_BAKED_MODEL = MinecraftClient.getInstance().getBlockRenderManager().getModel(JAM);
     private static final int LERP = 1;
     private Color lerpingTo;
@@ -77,6 +78,10 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
         lastLerpProgress = color; // Set the last progress to the calculated color for next tick
 
         int updatedLight = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
+
+        if (entity.hasWater() && entity.getItems().length == 0) {
+            color = WATER;
+        }
 
         //region Actually Rendering
         matrices.push();

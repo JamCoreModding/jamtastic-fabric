@@ -63,6 +63,8 @@ public class JamJarItem extends Item {
             JamPotBlockEntity blockEntity = (JamPotBlockEntity) world.getBlockEntity(pos);
             assert blockEntity != null;
 
+            if (blockEntity.getItems().length == 0) return super.useOnBlock(context);
+
             JamNbtHelper.writeItems(stack.getOrCreateNbt(), "Ingredients", blockEntity.getItems());
             blockEntity.empty();
 

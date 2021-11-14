@@ -69,6 +69,7 @@ public abstract class LivingEntityMixin {
     public void jamfabric$eatFoodDecrementRedirect(ItemStack stack, int amount) {
         if (stack.isOf(ItemRegistry.JAM_JAR)) {
             JamNbtHelper.yeetItems(stack.getOrCreateNbt(), "Ingredients");
+            stack.removeCustomName();
         } else {
             stack.decrement(amount);
         }
