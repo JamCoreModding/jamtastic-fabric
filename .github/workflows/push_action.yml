@@ -85,8 +85,12 @@ jobs:
         if: ${{ runner.os != 'Windows' && env.run != 'false' }}
         run: chmod +x ./gradlew
 
+      - name: Get Branch Name
+        id: branch-name
+        uses: tj-actions/branch-names@v5
+        
       - name: Pull License Changes
-        run: git pull origin ${ GITHUB_REF#refs/heads/ }
+        run: git pull origin ${{ steps.branch-name.outputs.current_branch }
 
       - name: Build
         if: ${{  env.run != 'false'  }}
