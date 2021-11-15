@@ -3,7 +3,6 @@ on: [ push, pull_request ]
 
 jobs:
   update-license:
-    if: !contains(github.ref, 'pull')
     strategy:
       matrix:
         java: [
@@ -12,6 +11,10 @@ jobs:
         os: [ ubuntu-20.04 ]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Check for PR
+        if: ${{ contains(github.ref, 'pull') }}
+        run: exit 0
+    
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
