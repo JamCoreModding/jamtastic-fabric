@@ -1,7 +1,7 @@
 plugins {
     id 'fabric-loom' version '0.9.+'
     id 'maven-publish'
-    id 'org.cadixdev.licenser' version '0.6.0'
+    id 'org.cadixdev.licenser' version '0.6.1'
 }
 
 sourceCompatibility = JavaVersion.VERSION_16
