@@ -86,7 +86,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Pull License Changes
-        run: git pull origin main
+        run: git pull origin ${ GITHUB_REF#refs/heads/ }
 
       - name: Build
         if: ${{  env.run != 'false'  }}
