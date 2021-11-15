@@ -22,32 +22,33 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric;
+package io.github.jamalam360.jamfabric.config;
 
-import io.github.jamalam360.jamfabric.config.JamFabricConfig;
-import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
-import io.github.jamalam360.jamfabric.util.registry.CompatRegistry;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import net.fabricmc.api.ModInitializer;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import io.github.jamalam360.jamfabric.JamModInit;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
-public class JamModInit implements ModInitializer {
-    public static final String MOD_ID = "jamfabric";
-    public static final String MOD_NAME = "Jam";
-    public static Logger LOGGER = LogManager.getLogger(MOD_NAME);
+/**
+ * @author Jamalam360
+ */
 
-    @Override
-    public void onInitialize() {
-        LOGGER.log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
+@Config(name = JamModInit.MOD_ID)
+public class JamFabricConfig implements ConfigData {
+    @ConfigEntry.Gui.CollapsibleObject
+    @ConfigEntry.Gui.Tooltip
+    public JamOptions jamOptions = new JamOptions();
 
-        AutoConfig.register(JamFabricConfig.class, GsonConfigSerializer::new);
+    @ConfigEntry.Gui.CollapsibleObject
+    @ConfigEntry.Gui.Tooltip
+    public CompatOptions compatOptions = new CompatOptions();
 
-        ItemRegistry.init();
-        BlockRegistry.init();
-        CompatRegistry.init();
+    public static class JamOptions {
+        @ConfigEntry.Gui.Tooltip
+        public int maxJamIngredients = 4;
+    }
+
+    public static class CompatOptions {
+        public boolean enableSandwichableCompat = true;
     }
 }

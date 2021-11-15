@@ -22,32 +22,18 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric;
+package io.github.jamalam360.jamfabric.config;
 
-import io.github.jamalam360.jamfabric.config.JamFabricConfig;
-import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
-import io.github.jamalam360.jamfabric.util.registry.CompatRegistry;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import net.fabricmc.api.ModInitializer;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-public class JamModInit implements ModInitializer {
-    public static final String MOD_ID = "jamfabric";
-    public static final String MOD_NAME = "Jam";
-    public static Logger LOGGER = LogManager.getLogger(MOD_NAME);
-
+/**
+ * @author Jamalam360
+ */
+public class ModMenuIntegration implements ModMenuApi {
     @Override
-    public void onInitialize() {
-        LOGGER.log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
-
-        AutoConfig.register(JamFabricConfig.class, GsonConfigSerializer::new);
-
-        ItemRegistry.init();
-        BlockRegistry.init();
-        CompatRegistry.init();
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
+        return parent -> AutoConfig.getConfigScreen(JamFabricConfig.class, parent).get();
     }
 }

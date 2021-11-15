@@ -2,5 +2,17 @@
   "tooltip.jamfabric.hunger_tooltip": "Hunger: %d",
   "tooltip.jamfabric.empty_tooltip": "Empty",
   "item.jamfabric.jam_jar": "Jam Jar",
-  "block.jamfabric.jam_pot": "Jam Pot"
+  "block.jamfabric.jam_pot": "Jam Pot",
+
+  "text.autoconfig.jamfabric.title": "Jam Config (Requires Restart)",
+
+  "text.autoconfig.jamfabric.option.jamOptions": "Jam Options",
+  "text.autoconfig.jamfabric.option.jamOptions.@Tooltip": "Configure jam behaviour",
+  "text.autoconfig.jamfabric.option.jamOptions.maxJamIngredients": "Max Ingredients",
+  "text.autoconfig.jamfabric.option.jamOptions.maxJamIngredients.@Tooltip": "The maximum number of ingredients allowed in jam",
+
+  "text.autoconfig.jamfabric.option.compatOptions": "Compatibility Options",
+  "text.autoconfig.jamfabric.option.compatOptions.@Tooltip": "Configure compatibility with other mods",
+  "text.autoconfig.jamfabric.option.compatOptions.enableSandwichableCompat": "Enabled Sandwichable Compatibility",
+  "text.autoconfig.jamfabric.option.compatOptions.enableSandwichableCompat.@Tooltip": "Enabled compatibility features with Sandwichable"
 }

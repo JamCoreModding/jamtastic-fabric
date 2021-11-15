@@ -23,7 +23,9 @@
     "client": [
       "io.github.jamalam360.jamfabric.JamModClientInit"
     ],
-    "server": []
+    "modmenu": [
+      "io.github.jamalam360.jamfabric.config.ModMenuIntegration"
+    ]
   },
   "mixins": [
     "jamfabric.mixins.json"
