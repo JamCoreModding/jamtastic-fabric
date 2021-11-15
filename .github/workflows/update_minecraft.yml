@@ -1,7 +1,7 @@
 name: Update Minecraft
 on: 
   schedule:
-    - cron: '* 6,18 * * *'
+    - cron: '15 7,21 * * *'
   workflow_dispatch:
 jobs:
   build:
