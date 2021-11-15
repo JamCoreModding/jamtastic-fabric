@@ -85,6 +85,9 @@ jobs:
         if: ${{ runner.os != 'Windows' && env.run != 'false' }}
         run: chmod +x ./gradlew
 
+      - name: Pull License Changes
+        run: git pull origin main
+
       - name: Build
         if: ${{  env.run != 'false'  }}
         run: ./gradlew build
