@@ -3,6 +3,7 @@ on: [ push, pull_request ]
 
 jobs:
   update-license:
+    if: ${{ !contains(github.ref, 'pull') }}
     strategy:
       matrix:
         java: [
