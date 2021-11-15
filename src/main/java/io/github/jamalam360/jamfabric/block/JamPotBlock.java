@@ -80,7 +80,7 @@ public class JamPotBlock extends BlockWithEntity {
             playRandomBrewingSound(world, pos);
 
             return ActionResult.SUCCESS;
-        } else if (stack.isEmpty() && player.isSneaking()) {
+        } else if (stack.isEmpty() && player.isSneaking() && !world.isClient) {
             if (blockEntity.jam.ingredientsSize() > 0) {
                 player.giveItemStack(new ItemStack(blockEntity.jam.removeLast()));
                 playRandomBrewingSound(world, pos);

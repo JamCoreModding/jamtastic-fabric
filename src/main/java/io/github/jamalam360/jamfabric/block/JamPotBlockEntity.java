@@ -40,7 +40,7 @@ import java.util.ArrayList;
  * @author Jamalam360
  */
 public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
-    public Jam jam = new Jam(new ArrayList<Item>().toArray(new Item[0]));
+    public Jam jam = new Jam(this::update, new ArrayList<Item>().toArray(new Item[0]));
 
     private boolean hasWater = false;
     private boolean hasSugar = false;
@@ -69,7 +69,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
         this.hasWater = filled;
 
         if (filled) {
-            this.updateColor();
+            this.update();
         }
     }
 
@@ -82,12 +82,15 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
     }
 
     public void empty() {
-        this.jam.clear();
+        this.jam.ingredients().clear();
+        this.jam.recalculate();
         this.setFilledWater(false);
         this.setFilledSugar(false);
     }
 
-    public void updateColor() {
+    public void update() {
+        if (this.jam == null) return;
+
         if (this.jam.ingredientsSize() > 0) {
             if (this.cachedColor.equals(this.jam.getColor())) return;
             this.lastColorBeforeChange = cachedColor;

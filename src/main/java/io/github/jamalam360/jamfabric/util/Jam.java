@@ -21,12 +21,21 @@ public class Jam {
 
     private final List<Item> ingredients = new ArrayList<>();
     private final List<Pair<StatusEffectInstance, Float>> effects = new ArrayList<>();
+    private final JamUpdateFunction func;
 
     private int hunger;
     private float saturation;
 
     public Jam(Item... ingredients) {
         this.ingredients.addAll(Arrays.asList(ingredients));
+        this.func = () -> {
+        };
+        this.recalculate();
+    }
+
+    public Jam(JamUpdateFunction func, Item... ingredients) {
+        this.ingredients.addAll(Arrays.asList(ingredients));
+        this.func = func;
         this.recalculate();
     }
 
@@ -105,7 +114,7 @@ public class Jam {
         return saturation;
     }
 
-    private void recalculate() {
+    public void recalculate() {
         this.hunger = 0;
         this.saturation = 0;
         this.effects.clear();
@@ -115,6 +124,8 @@ public class Jam {
             this.saturation += item.getFoodComponent().getSaturationModifier();
             this.effects.addAll(item.getFoodComponent().getStatusEffects());
         }
+
+        this.func.update();
     }
 
     public NbtCompound toNbt() {
@@ -129,5 +140,10 @@ public class Jam {
         } else {
             return new Jam(new ArrayList<Item>().toArray(new Item[0]));
         }
+    }
+
+    @FunctionalInterface
+    public interface JamUpdateFunction {
+        void update();
     }
 }

@@ -58,7 +58,7 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
     public void render(JamPotBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         if (entity.jam.ingredientsSize() == 0 && !entity.hasWater()) return; //No Items, no water, no render!
 
-        entity.updateColor();
+        entity.update();
 
         //region Shut Up IntelliJ
         assert entity.getWorld() != null;
