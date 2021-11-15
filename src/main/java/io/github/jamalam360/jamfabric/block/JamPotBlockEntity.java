@@ -24,10 +24,9 @@
 
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.JamNbtHelper;
-import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.util.Color;
-import io.github.jamalam360.jamfabric.util.JamColor;
+import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -36,17 +35,18 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Jamalam360
  */
 public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
-    private final List<Item> items = new ArrayList<>();
+    public Jam jam = new Jam(new ArrayList<Item>().toArray(new Item[0]));
+
     private boolean hasWater = false;
     private boolean hasSugar = false;
     public static final int CAPACITY = 4;
-    public Color cachedColor = new Color(255, 255, 255); // To avoid recalculating the color every frame.
+
+    public Color cachedColor = new Color(255, 255, 255);
     public Color lastColorBeforeChange = new Color(255, 255, 255);
 
     public JamPotBlockEntity(BlockPos pos, BlockState state) {
@@ -62,7 +62,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
     }
 
     public boolean canInsertIngredients() {
-        return hasSugar && hasWater && items.size() < CAPACITY;
+        return hasSugar && hasWater && jam.ingredientsSize() < CAPACITY;
     }
 
     public void setFilledWater(boolean filled) {
@@ -77,44 +77,21 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
         this.hasSugar = filled;
     }
 
-    public void empty() {
-        this.clearItems();
-        this.setFilledWater(false);
-        this.setFilledSugar(false);
-    }
-
     public boolean hasWater() {
         return this.hasWater;
     }
 
-    public boolean hasSugar() {
-        return this.hasSugar;
-    }
-
-    public void addItems(Item... newItems) {
-        items.addAll(List.of(newItems));
-        this.updateColor();
-    }
-
-    public Item removeLastItem() {
-        Item item = items.remove(items.size() - 1);
-        this.updateColor();
-        return item;
-    }
-
-    public void clearItems() {
-        items.clear();
-        this.updateColor();
-    }
-
-    public Item[] getItems() {
-        return items.toArray(new Item[0]);
+    public void empty() {
+        this.jam.clear();
+        this.setFilledWater(false);
+        this.setFilledSugar(false);
     }
 
     public void updateColor() {
-        if (this.getItems().length > 0) {
+        if (this.jam.ingredientsSize() > 0) {
+            if (this.cachedColor.equals(this.jam.getColor())) return;
             this.lastColorBeforeChange = cachedColor;
-            this.cachedColor = JamColor.getAverageItemColor(this.getItems());
+            this.cachedColor = this.jam.getColor();
         } else {
             this.lastColorBeforeChange = JamPotBlockEntityRenderer.WATER;
             this.cachedColor = JamPotBlockEntityRenderer.WATER;
@@ -125,23 +102,18 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
 
-        this.clearItems();
-        this.addItems(JamNbtHelper.readItems(nbt, "Ingredients"));
+        this.jam = Jam.fromNbt(nbt.getCompound("Jam"));
         this.hasWater = nbt.getBoolean("ContainsWater");
         this.hasSugar = nbt.getBoolean("ContainsSugar");
 
         if (this.getWorld() != null && !this.getWorld().isClient) {
             this.sync();
         }
-
-        this.updateColor();
     }
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
-        if (this.getItems().length > 0) {
-            JamNbtHelper.writeItems(nbt, "Ingredients", this.getItems());
-        }
+        nbt.put("Jam", this.jam.toNbt());
         nbt.putBoolean("ContainsWater", this.hasWater);
         nbt.putBoolean("ContainsSugar", this.hasSugar);
 
@@ -149,30 +121,21 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
             this.sync();
         }
 
-        this.updateColor();
-
         return super.writeNbt(nbt);
     }
 
     @Override
     public void fromClientTag(NbtCompound tag) {
-        this.clearItems();
-        this.addItems(JamNbtHelper.readItems(tag, "Ingredients"));
+        this.jam = Jam.fromNbt(tag.getCompound("Jam"));
         this.hasWater = tag.getBoolean("ContainsWater");
         this.hasSugar = tag.getBoolean("ContainsSugar");
-
-        this.updateColor();
     }
 
     @Override
     public NbtCompound toClientTag(NbtCompound tag) {
-        if (this.getItems().length > 0) {
-            JamNbtHelper.writeItems(tag, "Ingredients", this.getItems());
-        }
+        tag.put("Jam", this.jam.toNbt());
         tag.putBoolean("ContainsWater", this.hasWater);
         tag.putBoolean("ContainsSugar", this.hasSugar);
-
-        this.updateColor();
 
         return tag;
     }

@@ -22,31 +22,33 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.registry;
+package io.github.jamalam360.jamfabric.util.registry;
 
-import io.github.jamalam360.jamfabric.compat.CompatibilityPlugin;
-import io.github.jamalam360.jamfabric.compat.sandwichable.SandwichableCompat;
-import net.fabricmc.loader.api.FabricLoader;
+import io.github.jamalam360.jamfabric.item.JamJarItem;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.item.FoodComponent;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
-import java.util.Map;
+import static io.github.jamalam360.jamfabric.JamModInit.MOD_ID;
 
 /**
  * @author Jamalam360
  */
-public class CompatRegistry {
-    public static final Map<String, CompatibilityPlugin> COMPATIBILITY_PLUGIN_MAP = new HashMap<>();
+public class ItemRegistry {
+    public static final ItemGroup JAM_GROUP = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "jam_group"), () -> new ItemStack(BlockRegistry.JAM_POT));
 
-    static {
-        COMPATIBILITY_PLUGIN_MAP.put("sandwichable", new SandwichableCompat());
-    }
+    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(ItemGroup.FOOD).food(new FoodComponent.Builder().alwaysEdible().build()));
 
     public static void init() {
-        for (String modId : COMPATIBILITY_PLUGIN_MAP.keySet()) {
-            if (FabricLoader.getInstance().isModLoaded(modId)) {
-                COMPATIBILITY_PLUGIN_MAP.get(modId).init();
-                COMPATIBILITY_PLUGIN_MAP.get(modId).initMixins();
-            }
-        }
+        registerItem("jam_jar", JAM_JAR);
+    }
+
+    private static void registerItem(String id, Item item) {
+        Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
     }
 }

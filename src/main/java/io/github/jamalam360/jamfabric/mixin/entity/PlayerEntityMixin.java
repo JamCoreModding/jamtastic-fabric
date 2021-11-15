@@ -25,7 +25,7 @@
 package io.github.jamalam360.jamfabric.mixin.entity;
 
 import com.mojang.authlib.GameProfile;
-import io.github.jamalam360.jamfabric.util.HungerManagerDuck;
+import io.github.jamalam360.jamfabric.util.duck.HungerManagerDuck;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;

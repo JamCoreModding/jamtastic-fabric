@@ -25,9 +25,9 @@
 package io.github.jamalam360.jamfabric;
 
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntityRenderer;
-import io.github.jamalam360.jamfabric.registry.BlockRegistry;
-import io.github.jamalam360.jamfabric.registry.ItemRegistry;
-import io.github.jamalam360.jamfabric.util.JamColor;
+import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
+import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.util.Jam;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
@@ -53,7 +53,7 @@ public class JamModClientInit implements ClientModInitializer {
         //region Color Providers
         ColorProviderRegistry.ITEM.register(((stack, tintIndex) -> {
             if (tintIndex == 1) {
-                return JamColor.getAverageItemColor(JamNbtHelper.readItems(stack.getOrCreateNbt(), "Ingredients")).getRGB();
+                return Jam.fromNbt(stack.getSubNbt("Jam")).getColor().getRGB();
             } else {
                 return 0xffffff;
             }
@@ -61,7 +61,7 @@ public class JamModClientInit implements ClientModInitializer {
         //endregion
 
         //region Model Predicate Providers
-        FabricModelPredicateProviderRegistry.register(ItemRegistry.JAM_JAR, new Identifier("jam_jar_full"), ((stack, world, entity, seed) -> JamNbtHelper.readItems(stack.getOrCreateNbt(), "Ingredients").length != 0 ? 1.0f : 0.0f));
+        FabricModelPredicateProviderRegistry.register(ItemRegistry.JAM_JAR, new Identifier("jam_jar_full"), ((stack, world, entity, seed) -> Jam.fromNbt(stack.getSubNbt("Jam")).ingredientsSize() != 0 ? 1.0f : 0.0f));
         //endregion
     }
 }

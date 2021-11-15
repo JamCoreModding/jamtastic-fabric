@@ -24,9 +24,9 @@
 
 package io.github.jamalam360.jamfabric;
 
-import io.github.jamalam360.jamfabric.registry.BlockRegistry;
-import io.github.jamalam360.jamfabric.registry.CompatRegistry;
-import io.github.jamalam360.jamfabric.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
+import io.github.jamalam360.jamfabric.util.registry.CompatRegistry;
+import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

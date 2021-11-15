@@ -22,26 +22,20 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util;
+package io.github.jamalam360.jamfabric.util.helper;
 
-import io.github.jamalam360.jamfabric.JamModInit;
-import net.minecraft.client.MinecraftClient;
+import io.github.jamalam360.jamfabric.util.Color;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.Item;
-import net.minecraft.resource.Resource;
-import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.Level;
-import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Jamalam360
  */
-public class JamColor {
+public class ColorHelper {
     /*
      *  Responsible for taking in an array of items and returning an average colour, this involves:
      *      - Getting a NativeImage off of an Item
@@ -60,11 +54,11 @@ public class JamColor {
     /**
      * Calculate the average color of all the items in the var args
      */
-    public static Color getAverageItemColor(Item... items) {
-        Color[] colors = new Color[items.length];
+    public static Color getAverageItemColor(List<Item> items) {
+        Color[] colors = new Color[items.size()];
 
-        for (int i = 0; i < items.length; i++) {
-            colors[i] = getAverageItemColor(items[i]);
+        for (int i = 0; i < items.size(); i++) {
+            colors[i] = getAverageItemColor(items.get(i));
         }
 
         return getAverageColor(colors);
@@ -77,28 +71,12 @@ public class JamColor {
         if (CACHE.containsKey(item)) {
             return CACHE.get(item);
         } else {
-            Color color = getAverageColor(getColors(getNativeImage(item)));
+            Color color = getAverageColor(getColors(NativeImageHelper.getNativeImage(item)));
             CACHE.put(item, color);
             return color;
         }
     }
     //endregion
-
-    /**
-     * Returns a NativeImage of an Items texture, taking into account the overrides set in TEXTURE_OVERRIDES
-     */
-    private static @Nullable NativeImage getNativeImage(Item item) {
-        try {
-            Identifier id = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(item).getParticleSprite().getId();
-            Resource texture = MinecraftClient.getInstance().getResourceManager().getResource(new Identifier(id.getNamespace(), "textures/" + id.getPath() + ".png"));
-            return NativeImage.read(texture.getInputStream());
-        } catch (IOException e) {
-            JamModInit.LOGGER.log(Level.ERROR, "Caught an error while retrieving native image");
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
     //region Color Manipulation
 
@@ -109,7 +87,7 @@ public class JamColor {
         Color[] colors = new Color[image.getWidth() * image.getHeight()];
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
-                int[] pixelColors = JamColor.unpackRgbaColor(image.getColor(x, y));
+                int[] pixelColors = ColorHelper.unpackRgbaColor(image.getColor(x, y));
                 if ((pixelColors[0] != 255 && pixelColors[1] != 255 && pixelColors[2] != 255) && (pixelColors[0] != 0 && pixelColors[1] != 0 && pixelColors[2] != 0)) {
                     colors[x + y] = new Color(pixelColors[0], pixelColors[1], pixelColors[2]);
                 }

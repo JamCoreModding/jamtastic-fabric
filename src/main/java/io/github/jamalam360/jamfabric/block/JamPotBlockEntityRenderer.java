@@ -24,10 +24,9 @@
 
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.registry.BlockRegistry;
+import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.util.Color;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -44,8 +43,10 @@ import net.minecraft.client.util.math.MatrixStack;
 public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBlockEntity> {
     public static final Color WATER = new Color(49, 95, 219);
     public static final BlockState JAM = BlockRegistry.JAM.getDefaultState();
+
     private static final BakedModel JAM_BAKED_MODEL = MinecraftClient.getInstance().getBlockRenderManager().getModel(JAM);
     private static final int LERP = 1;
+
     private Color lerpingTo;
     private Color lastLerpProgress;
 
@@ -55,7 +56,9 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
 
     @Override
     public void render(JamPotBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if (entity.getItems().length == 0 && !entity.hasWater()) return; //No Items, no water, no render!
+        if (entity.jam.ingredientsSize() == 0 && !entity.hasWater()) return; //No Items, no water, no render!
+
+        entity.updateColor();
 
         //region Shut Up IntelliJ
         assert entity.getWorld() != null;
@@ -79,7 +82,7 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
 
         int updatedLight = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
 
-        if (entity.hasWater() && entity.getItems().length == 0) {
+        if (entity.hasWater() && entity.jam.ingredientsSize() == 0) {
             color = WATER;
         }
 

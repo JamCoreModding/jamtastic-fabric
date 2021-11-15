@@ -24,10 +24,10 @@
 
 package io.github.jamalam360.jamfabric.item;
 
-import io.github.jamalam360.jamfabric.JamNbtHelper;
-import io.github.jamalam360.jamfabric.util.JamName;
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
-import io.github.jamalam360.jamfabric.registry.BlockRegistry;
+import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
+import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.util.JamNameGenerator;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -61,30 +61,33 @@ public class JamJarItem extends Item {
 
         if (world.getBlockState(pos).isOf(BlockRegistry.JAM_POT)) {
             JamPotBlockEntity blockEntity = (JamPotBlockEntity) world.getBlockEntity(pos);
+            assert player != null;
             assert blockEntity != null;
 
-            if (blockEntity.getItems().length == 0) return super.useOnBlock(context);
+            if (blockEntity.jam.ingredientsSize() == 0) return super.useOnBlock(context);
 
-            JamNbtHelper.writeItems(stack.getOrCreateNbt(), "Ingredients", blockEntity.getItems());
-            blockEntity.empty();
+            if (player.isSneaking()) {
+                stack.setSubNbt("Jam", blockEntity.jam.toNbt());
 
-            if (world.isClient && player != null) {
-                player.playSound(SoundEvents.BLOCK_BREWING_STAND_BREW, 1.0F, 1.0F);
+                if (world.isClient) {
+                    player.playSound(SoundEvents.BLOCK_BREWING_STAND_BREW, 1.0F, 1.0F);
+                }
+
+                if (!world.isClient) {
+                    stack.setCustomName(new LiteralText(JamNameGenerator.create(stack.getSubNbt("Jam"))));
+                }
+
+                blockEntity.empty();
+                return ActionResult.SUCCESS;
             }
-
-            if (!world.isClient) {
-                stack.setCustomName(new LiteralText(JamName.create(stack.getOrCreateNbt())));
-            }
-
-            return ActionResult.SUCCESS;
-        } else {
-            return super.useOnBlock(context);
         }
+
+        return super.useOnBlock(context);
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
-        if (JamNbtHelper.readItems(stack.getOrCreateNbt(), "Ingredients").length == 0) {
+        if (Jam.fromNbt(stack.getSubNbt("Jam")).ingredientsSize() == 0) {
             return 0;
         } else {
             return super.getMaxUseTime(stack);
@@ -99,6 +102,6 @@ public class JamJarItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        tooltip.addAll(JamNbtHelper.getJamJarTooltipContent(stack.getOrCreateNbt()));
+        tooltip.addAll(Jam.fromNbt(stack.getSubNbt("Jam")).getTooltipContent());
     }
 }

@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.registry;
+package io.github.jamalam360.jamfabric.util.registry;
 
 import io.github.jamalam360.jamfabric.block.JamPotBlock;
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;

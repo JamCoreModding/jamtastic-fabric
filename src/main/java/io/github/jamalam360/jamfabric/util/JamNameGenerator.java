@@ -24,20 +24,18 @@
 
 package io.github.jamalam360.jamfabric.util;
 
-import io.github.jamalam360.jamfabric.JamNbtHelper;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Jamalam360
  */
-public class JamName {
+public class JamNameGenerator {
     private static final Random RANDOM = new Random();
 
     //region Templates
@@ -70,22 +68,19 @@ public class JamName {
     public static String create(NbtCompound nbt) {
         StringBuilder sb = new StringBuilder();
 
-        Item[] items = JamNbtHelper.readItems(nbt, "Ingredients");
+        Jam jam = Jam.fromNbt(nbt);
 
-        if (items.length == 0) {
+        if (jam.ingredientsSize() == 0) {
             return "";
         }
 
-        boolean hasEffects = JamNbtHelper.getJamJarEffects(nbt).size() > 0;
+        boolean hasEffects = jam.effectsRaw().size() > 0;
 
         if (hasEffects) {
             int badCount = 0;
             int goodCount = 0;
 
-            List<StatusEffectInstance> effects = new ArrayList<>();
-            JamNbtHelper.getJamJarEffects(nbt).forEach(pair -> effects.add(pair.getFirst()));
-
-            for (StatusEffectInstance instance : effects) {
+            for (StatusEffectInstance instance : jam.effects()) {
                 if (instance.getEffectType().isBeneficial()) {
                     goodCount++;
                 } else {
@@ -105,10 +100,11 @@ public class JamName {
         }
 
         String template;
+        List<Item> uniqueItems = jam.ingredients().stream().distinct().collect(Collectors.toList());
 
-        if (items.length == 1) {
+        if (uniqueItems.size() == 1) {
             template = TEMPLATES[0];
-        } else if (items.length == 2) {
+        } else if (uniqueItems.size() == 2) {
             template = TEMPLATES[1];
         } else {
             template = random(TEMPLATES);
@@ -116,17 +112,9 @@ public class JamName {
 
         // Fill the template
 
-        Item[] itemsCopy = items.clone();
-
         while (template.contains("%item%")) {
-            int randInt = RANDOM.nextInt(itemsCopy.length);
-
-            while (itemsCopy[randInt] == null) {
-                randInt = RANDOM.nextInt(itemsCopy.length);
-            }
-
-            template = template.replaceFirst("%item%", I18n.translate(itemsCopy[randInt].getTranslationKey()));
-            itemsCopy[randInt] = null;
+            int randInt = RANDOM.nextInt(uniqueItems.size());
+            template = template.replaceFirst("%item%", I18n.translate(uniqueItems.remove(randInt).getTranslationKey()));
         }
 
         template = template.replaceFirst("%noun%", random(JAM_NOUNS));

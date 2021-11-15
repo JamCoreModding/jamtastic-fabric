@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util;
+package io.github.jamalam360.jamfabric.util.duck;
 
 import net.minecraft.entity.player.PlayerEntity;
 
