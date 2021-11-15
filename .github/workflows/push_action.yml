@@ -90,7 +90,7 @@ jobs:
         uses: tj-actions/branch-names@v5
         
       - name: Pull License Changes
-        run: git pull origin ${{ steps.branch-name.outputs.current_branch }
+        run: git pull origin ${{ steps.branch-name.outputs.current_branch }}
 
       - name: Build
         if: ${{  env.run != 'false'  }}
