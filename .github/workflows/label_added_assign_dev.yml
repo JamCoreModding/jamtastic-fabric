@@ -1,0 +1,27 @@
+name: Assign Correct Developer
+on:
+  issues:
+    types:
+      - labeled
+jobs:
+  assign-dev:
+    if: github.event.label.name == 'code'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Assign Correct Dev
+        uses: pozil/auto-assign-issue@v1
+        with:
+          assignees: Jamalam360
+                  
+  assign-texturer:
+    if: github.event.label.name == 'textures'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Assign Correct Dev
+        uses: pozil/auto-assign-issue@v1
+        with:
+          assignees: Jomlom
