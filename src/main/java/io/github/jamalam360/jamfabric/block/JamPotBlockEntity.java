@@ -26,6 +26,7 @@ package io.github.jamalam360.jamfabric.block;
 
 import io.github.jamalam360.jamfabric.util.Color;
 import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.util.Utils;
 import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
@@ -44,7 +45,7 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
 
     private boolean hasWater = false;
     private boolean hasSugar = false;
-    public static final int CAPACITY = 4;
+    public static final int CAPACITY = Utils.getConfig().jamOptions.maxJamIngredients;
 
     public Color cachedColor = new Color(255, 255, 255);
     public Color lastColorBeforeChange = new Color(255, 255, 255);

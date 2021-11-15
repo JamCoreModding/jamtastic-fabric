@@ -43,7 +43,7 @@ public class CompatRegistry {
 
     public static void init() {
         for (String modId : COMPATIBILITY_PLUGIN_MAP.keySet()) {
-            if (FabricLoader.getInstance().isModLoaded(modId)) {
+            if (FabricLoader.getInstance().isModLoaded(modId) && COMPATIBILITY_PLUGIN_MAP.get(modId).isEnabled()) {
                 COMPATIBILITY_PLUGIN_MAP.get(modId).init();
                 COMPATIBILITY_PLUGIN_MAP.get(modId).initMixins();
             }

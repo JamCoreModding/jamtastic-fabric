@@ -24,9 +24,12 @@
 
 package io.github.jamalam360.jamfabric;
 
+import io.github.jamalam360.jamfabric.config.JamFabricConfig;
 import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.util.registry.CompatRegistry;
 import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -40,6 +43,8 @@ public class JamModInit implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
+
+        AutoConfig.register(JamFabricConfig.class, GsonConfigSerializer::new);
 
         ItemRegistry.init();
         BlockRegistry.init();
