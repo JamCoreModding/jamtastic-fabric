@@ -24,7 +24,6 @@ jobs:
         id: check
         with:
           cache-base-key: mc-manifest-
-          debug-disable-cache-storing: true
       
       - name: Validate Gradle Wrapper
         if: ${{ steps.check.outputs.id != '' }}
