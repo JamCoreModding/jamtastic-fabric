@@ -28,6 +28,7 @@ import io.github.jamalam360.jamfabric.config.JamFabricConfig;
 import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.util.registry.CompatRegistry;
 import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.villager.JamVillagerProfession;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -49,5 +50,6 @@ public class JamModInit implements ModInitializer {
         ItemRegistry.init();
         BlockRegistry.init();
         CompatRegistry.init();
+        JamVillagerProfession.init();
     }
 }

@@ -1,8 +1,12 @@
 {
   "tooltip.jamfabric.hunger_tooltip": "Hunger: %d",
   "tooltip.jamfabric.empty_tooltip": "Empty",
+
   "item.jamfabric.jam_jar": "Jam Jar",
+
   "block.jamfabric.jam_pot": "Jam Pot",
+
+  "entity.minecraft.villager.jam_villager_profession": "Jam Guy",
 
   "text.autoconfig.jamfabric.title": "Jam Config (Requires Restart)",
 
