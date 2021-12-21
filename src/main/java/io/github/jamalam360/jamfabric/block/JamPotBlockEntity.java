@@ -28,7 +28,6 @@ import io.github.jamalam360.jamfabric.util.Color;
 import io.github.jamalam360.jamfabric.util.Jam;
 import io.github.jamalam360.jamfabric.util.Utils;
 import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.Item;
@@ -40,7 +39,7 @@ import java.util.ArrayList;
 /**
  * @author Jamalam360
  */
-public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
+public class JamPotBlockEntity extends BlockEntity {
     public Jam jam = new Jam(this::update, new ArrayList<Item>().toArray(new Item[0]));
 
     private boolean hasWater = false;
@@ -104,31 +103,21 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-
         this.jam = Jam.fromNbt(nbt.getCompound("Jam"));
         this.hasWater = nbt.getBoolean("ContainsWater");
         this.hasSugar = nbt.getBoolean("ContainsSugar");
-
-        if (this.getWorld() != null && !this.getWorld().isClient) {
-            this.sync();
-        }
+        super.readNbt(nbt);
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
+    public void writeNbt(NbtCompound nbt) {
         nbt.put("Jam", this.jam.toNbt());
         nbt.putBoolean("ContainsWater", this.hasWater);
         nbt.putBoolean("ContainsSugar", this.hasSugar);
-
-        if (this.getWorld() != null && !this.getWorld().isClient) {
-            this.sync();
-        }
-
-        return super.writeNbt(nbt);
+        super.writeNbt(nbt);
     }
 
-    @Override
+    /*@Override
     public void fromClientTag(NbtCompound tag) {
         this.jam = Jam.fromNbt(tag.getCompound("Jam"));
         this.hasWater = tag.getBoolean("ContainsWater");
@@ -142,5 +131,5 @@ public class JamPotBlockEntity extends BlockEntity implements BlockEntityClientS
         tag.putBoolean("ContainsSugar", this.hasSugar);
 
         return tag;
-    }
+    }*/
 }

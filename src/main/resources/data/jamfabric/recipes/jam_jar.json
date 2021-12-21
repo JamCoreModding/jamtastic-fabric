@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " W ",
+    "G G",
+    " G "
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:logs"
+    },
+    "G1": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "jamfabric:jam_jar",
+    "count": 4
+  }
+}

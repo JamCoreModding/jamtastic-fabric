@@ -1,0 +1,32 @@
+{
+  "name": "Making Your First Jam",
+  "icon": "jamfabric:jam_pot",
+  "category": "jamfabric:jam_making",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "To get started making jam, you will need the following equipment and ingredients: <br> $(li) A bucket of water <br>  $(li) A piece of sugar <br>  $(li)  A jam pot <br>  $(li)  An empty jam jar <br> The crafting recipes for the jam jar and pot can be seen on the following pages."
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "jamfabric:jam_pot",
+      "text": "The jam pot is your main tool within the jam making world. <br> It is used to mix your jam to create all manor of flavours and...atrocities if you wish. <br> It's the first port of call for any new jam maker."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "jamfabric:jam_pot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "jamfabric:jam_jar",
+      "text": "The jam jar is a reusable container from which to eat to your heart's content. <br> It is used to store and eat your jam."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "jamfabric:jam_jar"
+    }
+  ]
+}

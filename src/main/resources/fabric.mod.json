@@ -31,11 +31,13 @@
     "jamfabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.11.3",
     "fabric": "*",
+    "cloth-config2": "*",
+    "fabricloader": ">=0.11.3",
     "mealapi": ">=0.3"
   },
   "custom": {
-    "notify_version_url": "https://raw.githubusercontent.com/JamCoreModding/Meta/main/data/mod_versions.json"
+    "notify_gradle_properties_url": "https://raw.githubusercontent.com/JamCoreModding/JamFabric/main/gradle.properties",
+    "notify_gradle_properties_key": "mod_version"
   }
 }
