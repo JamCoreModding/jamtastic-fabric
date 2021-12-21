@@ -4,12 +4,10 @@
   "compatibilityLevel": "JAVA_16",
   "plugin": "io.github.jamalam360.jamfabric.mixin.JamMixinPlugin",
   "mixins": [
-    "accessor.StructurePoolAccessor",
     "compat.SpreadItemMixin",
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",
     "general.HungerManagerMixin",
-    "general.StructurePoolsMixin",
     "render.BlockModelRendererMixin"
   ],
   "client": [],
