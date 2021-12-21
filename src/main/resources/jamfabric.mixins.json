@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_16",
   "plugin": "io.github.jamalam360.jamfabric.mixin.JamMixinPlugin",
   "mixins": [
-    "compat.SpreadItemMixin",
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",
     "general.HungerManagerMixin",

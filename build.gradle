@@ -51,7 +51,6 @@ dependencies {
     }
 
     // Optional Dependencies
-    //modApi('maven.modrinth:sandwichable:' + project.property('sandwichable_version')) //Doesn't work on 1.18 yet, ignoring for now
     modApi('com.terraformersmc:modmenu:' + project.property('mod_menu_version'))
     modApi('vazkii.patchouli:Patchouli:' + project.property('patchouli_version'))
 }
