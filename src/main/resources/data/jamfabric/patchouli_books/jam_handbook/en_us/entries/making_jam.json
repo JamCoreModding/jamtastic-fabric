@@ -1,0 +1,18 @@
+{
+  "name": "Making Your Jam",
+  "icon": "jamfabric:jam_jar",
+  "category": "jamfabric:jam_making",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "First, place down your jam pot. Then follow the recipe below: $(br) $(li) Add some water and sugar to the pot by right clicking on it with a water bucket and sugar $(li) Add your ingredients! You can add up to 4 different types of food to your jam. Right click on the pot with your food and the jam will slowly change colour as it brews."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "jamfabric:jam_jar{Jam: {Ingredients0: \"minecraft:carrot\", Ingredients1: \"minecraft:glow_berries\", Ingredients2: \"minecraft:pumpkin_pie\", Ingredients3: \"minecraft:baked_potato\", IngredientsLength: 4}, display: {Name: {\"text\":\"Glow Berries, Baked Potato and Pumpkin Pie Conserve\"}}}",
+      "title": "Congratulations",
+      "text": "Once you're finished with your mixing, Shift + Right Click on the pot with your jam jar to extract it. $(br2) You've now made (and hopefully eaten - without dying) your first jar of jam! Next, try experimenting with different ingredients and effects! Good luck!"
+    }
+  ]
+}

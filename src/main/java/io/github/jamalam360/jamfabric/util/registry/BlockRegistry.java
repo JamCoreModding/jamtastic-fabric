@@ -49,7 +49,7 @@ public class BlockRegistry {
 
     public static void init() {
         registerBlock("jam_render", JAM, null);
-        registerBlock("jam_pot", JAM_POT, ItemRegistry.JAM_GROUP);
+        registerBlock("jam_pot", JAM_POT, ItemGroup.FOOD);
         registerBlockEntity("jam_pot", JAM_POT_ENTITY);
     }
 
