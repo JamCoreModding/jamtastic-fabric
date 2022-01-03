@@ -1,0 +1,20 @@
+{
+  "type": "advancement_reward",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "jamfabric:jam_jar",
+          "functions": [
+            {
+              "function": "set_nbt",
+              "tag": "{Jam: {Ingredients2: \"minecraft:melon_slice\", Ingredients3: \"minecraft:enchanted_golden_apple\", Ingredients0: \"minecraft:melon_slice\", IngredientsLength: 4, Ingredients1: \"minecraft:melon_slice\"}, display:{Name: '{\"text\":\"Mega Jam\"}'}}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
