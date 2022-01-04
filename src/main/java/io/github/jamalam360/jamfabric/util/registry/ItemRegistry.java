@@ -41,9 +41,11 @@ import static io.github.jamalam360.jamfabric.JamModInit.MOD_ID;
  */
 public class ItemRegistry {
     public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(ItemGroup.FOOD).food(new FoodComponent.Builder().alwaysEdible().build()));
+    public static final Item FAKE_CAKE = new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(14).saturationModifier(2.8f).build()));
 
     public static void init() {
         registerItem("jam_jar", JAM_JAR);
+        registerItem("fake_cake", FAKE_CAKE);
     }
 
     private static void registerItem(String id, Item item) {
