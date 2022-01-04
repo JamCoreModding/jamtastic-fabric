@@ -106,7 +106,7 @@ public class ColorHelper {
         double averageSqRoot = 0;
         int total = 0;
 
-        for (Color color : colors) {floor
+        for (Color color : colors) {
             if (color != null) {
                 averageSqRoot += Math.sqrt(color.getRGB());
                 total++;
