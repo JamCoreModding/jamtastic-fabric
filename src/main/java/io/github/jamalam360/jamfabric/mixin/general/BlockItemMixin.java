@@ -43,7 +43,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BlockItem.class)
 public class BlockItemMixin {
     @SuppressWarnings("DeprecatedIsStillUsed")
-    @Shadow @Final @Deprecated private Block block;
+    @Shadow
+    @Final
+    @Deprecated
+    private Block block;
 
     @Inject(
             method = "useOnBlock",
@@ -52,14 +55,12 @@ public class BlockItemMixin {
     )
     public void jamfabric$useCakeOnPotCheck(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
         BlockState jamfabric$state = context.getWorld().getBlockState(context.getBlockPos());
-        if (jamfabric$state.isOf(BlockRegistry.JAM_POT)) {
-            if (this.block instanceof CakeBlock) {
-                JamPotBlockEntity jamfabric$entity = ((JamPotBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos()));
-                if (jamfabric$entity != null && jamfabric$entity.canInsertIngredients()) {
-                    jamfabric$entity.jam.add(ItemRegistry.FAKE_CAKE);
-                    context.getPlayer().getStackInHand(context.getHand()).decrement(1);
-                    cir.setReturnValue(ActionResult.SUCCESS);
-                }
+        if (jamfabric$state.isOf(BlockRegistry.JAM_POT) && this.block instanceof CakeBlock) {
+            JamPotBlockEntity jamfabric$entity = ((JamPotBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos()));
+            if (jamfabric$entity != null && context.getPlayer() != null && jamfabric$entity.canInsertIngredients()) {
+                jamfabric$entity.jam.add(ItemRegistry.FAKE_CAKE);
+                context.getPlayer().getStackInHand(context.getHand()).decrement(1);
+                cir.setReturnValue(ActionResult.SUCCESS);
             }
         }
     }
