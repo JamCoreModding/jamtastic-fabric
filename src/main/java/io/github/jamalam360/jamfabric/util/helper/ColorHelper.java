@@ -28,6 +28,7 @@ import io.github.jamalam360.jamfabric.util.Color;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.Item;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +108,6 @@ public class ColorHelper {
         float g = 0;
         float b = 0;
         int total = 0;
-
         for (Color color : colors) {
             if (color != null) {
                 r += color.getRed() * color.getRed();
@@ -117,11 +117,11 @@ public class ColorHelper {
             }
         }
 
-        return new Color(
-                Math.round(Math.sqrt(r / total)),
-                Math.round(Math.sqrt(g / total)),
-                Math.round(Math.sqrt(b / total))
-        );
+        long avgR = Math.round(Math.sqrt(r / total));
+        long avgG = Math.round(Math.sqrt(g / total));
+        long avgB = Math.round(Math.sqrt(b / total));
+
+        return new Color((int) avgR, (int) avgG, (int) avgB);
     }
 
     private static int[] unpackRgbaColor(int color) {
