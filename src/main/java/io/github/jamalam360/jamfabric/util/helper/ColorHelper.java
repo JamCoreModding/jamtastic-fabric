@@ -103,19 +103,25 @@ public class ColorHelper {
      * Calculates the average colour of an array of colors
      */
     private static Color getAverageColor(Color[] colors) {
-        double averageSqRoot = 0;
+        float r = 0;
+        float g = 0;
+        float b = 0;
         int total = 0;
 
-        for (Color color : colors) {floor
+        for (Color color : colors) {
             if (color != null) {
-                averageSqRoot += Math.sqrt(color.getRGB());
+                r += color.getRed() * color.getRed();
+                g += color.getGreen() * color.getGreen();
+                b += color.getBlue() * color.getBlue();
                 total++;
             }
         }
 
-        averageSqRoot = averageSqRoot / total;
-
-        return new Color((int) Math.round(averageSqRoot * averageSqRoot));
+        return new Color(
+                Math.round(Math.sqrt(r / total)),
+                Math.round(Math.sqrt(g / total)),
+                Math.round(Math.sqrt(b / total))
+        );
     }
 
     private static int[] unpackRgbaColor(int color) {
