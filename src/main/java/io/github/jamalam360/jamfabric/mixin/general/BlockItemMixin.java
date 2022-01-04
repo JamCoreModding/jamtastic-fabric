@@ -57,8 +57,8 @@ public class BlockItemMixin {
                 JamPotBlockEntity jamfabric$entity = ((JamPotBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos()));
                 if (jamfabric$entity != null && jamfabric$entity.canInsertIngredients()) {
                     jamfabric$entity.jam.add(ItemRegistry.FAKE_CAKE);
-                    context.getStack().decrement(1);
-                    cir.setReturnValue(ActionResult.CONSUME);
+                    context.getPlayer().getStackInHand(context.getHand()).decrement(1);
+                    cir.setReturnValue(ActionResult.SUCCESS);
                 }
             }
         }
