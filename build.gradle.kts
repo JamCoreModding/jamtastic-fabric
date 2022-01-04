@@ -47,7 +47,7 @@ dependencies {
 
     // Optional:
     modApi("com.terraformersmc:modmenu:$modMenuVersion")
-    modApi("vazkii.patchouli:Patchouli:$pathouliVersion")
+    modApi("vazkii.patchouli:Patchouli:$patchouliVersion")
 }
 
 tasks {
