@@ -45,6 +45,8 @@ public class ColorHelper {
      *      - Repeat all of this for each item in the array and then average those colours
      *      - Return the average colour
      *  This class should also maintain a cache of items and their colours, so that the process is not repeated unnecessarily
+     *
+     * To average colours, we square the average of the square root of every pixel's colour (suggested by FoundationGames)
      */
 
     private static final Map<Item, Color> CACHE = new HashMap<>();
@@ -101,21 +103,19 @@ public class ColorHelper {
      * Calculates the average colour of an array of colors
      */
     private static Color getAverageColor(Color[] colors) {
-        int red = 0;
-        int green = 0;
-        int blue = 0;
+        double averageSqRoot = 0;
         int total = 0;
 
         for (Color color : colors) {
             if (color != null) {
-                red += color.getRed();
-                green += color.getGreen();
-                blue += color.getBlue();
+                averageSqRoot += Math.sqrt(color.getRGB());
                 total++;
             }
         }
 
-        return new Color(red / total, green / total, blue / total);
+        averageSqRoot = averageSqRoot / total;
+
+        return new Color((int) Math.round(averageSqRoot * averageSqRoot));
     }
 
     private static int[] unpackRgbaColor(int color) {
