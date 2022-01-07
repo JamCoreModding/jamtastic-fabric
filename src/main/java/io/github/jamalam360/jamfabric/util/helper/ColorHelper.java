@@ -46,7 +46,7 @@ public class ColorHelper {
      *      - Return the average colour
      *  This class should also maintain a cache of items and their colours, so that the process is not repeated unnecessarily
      *
-     * To average colours, we square the average of the square root of every pixel's colour (suggested by FoundationGames)
+     * To average colours, we convert them to HSB/HSL/HSV and then average each component
      */
 
     private static final Map<Item, Color> CACHE = new HashMap<>();
