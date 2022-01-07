@@ -14,5 +14,6 @@
   "server": [],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "refmap": "jamfabric-refmap.json"
 }
