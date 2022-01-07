@@ -10,6 +10,12 @@ val modVersion: String by project
 group = "io.github.jamalam360"
 version = modVersion
 
+loom {
+    mixin {
+        defaultRefmapName.set("jamfabric-refmap.json")
+    }
+}
+
 repositories {
     val mavenUrls = listOf(
         "https://maven.terraformersmc.com/releases",
