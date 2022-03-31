@@ -48,5 +48,7 @@ public class JamModInit implements ModInitializer {
         ItemRegistry.init();
         BlockRegistry.init();
         CompatRegistry.init();
+
+        LOGGER.log(Level.INFO, "Jamtastic initialized");
     }
 }
