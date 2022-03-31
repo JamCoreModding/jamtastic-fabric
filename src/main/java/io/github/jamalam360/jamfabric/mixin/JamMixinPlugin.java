@@ -47,7 +47,6 @@ public class JamMixinPlugin implements IMixinConfigPlugin {
         }
     }
 
-    //region No-Ops
     @Override
     public void onLoad(String mixinPackage) {
     }
@@ -73,5 +72,4 @@ public class JamMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
     }
-    //endregion
 }

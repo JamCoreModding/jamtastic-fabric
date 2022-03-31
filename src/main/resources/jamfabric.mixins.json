@@ -8,7 +8,7 @@
     "entity.PlayerEntityMixin",
     "general.BlockItemMixin",
     "general.HungerManagerMixin",
-    "render.BlockModelRendererMixin"
+    "render.BakedQuadMixin"
   ],
   "client": [],
   "server": [],

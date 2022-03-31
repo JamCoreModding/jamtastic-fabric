@@ -37,12 +37,11 @@ import org.apache.logging.log4j.Logger;
 
 public class JamModInit implements ModInitializer {
     public static final String MOD_ID = "jamfabric";
-    public static final String MOD_NAME = "Jam";
-    public static Logger LOGGER = LogManager.getLogger(MOD_NAME);
+    public static Logger LOGGER = LogManager.getLogger("Jamtastic");
 
     @Override
     public void onInitialize() {
-        LOGGER.log(Level.INFO, "Initializing '" + MOD_NAME + "' under the ID '" + MOD_ID + "'");
+        LOGGER.log(Level.INFO, "Initializing Jamtastic");
 
         AutoConfig.register(JamFabricConfig.class, GsonConfigSerializer::new);
 

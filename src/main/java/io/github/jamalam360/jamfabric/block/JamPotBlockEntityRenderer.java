@@ -24,8 +24,8 @@
 
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.util.Color;
+import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
@@ -60,11 +60,9 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
 
         entity.update();
 
-        //region Shut Up IntelliJ
         assert entity.getWorld() != null;
         assert GameRenderer.getRenderTypeEntityCutoutShader() != null;
         assert GameRenderer.getRenderTypeEntityCutoutShader().colorModulator != null;
-        //endregion
 
         Color color;
 
@@ -86,7 +84,6 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
             color = WATER;
         }
 
-        //region Actually Rendering
         matrices.push();
         matrices.scale(0.82f, 0.82f, 0.82f);
         matrices.translate(0.0625f, 0.0625f, 0.0625f);
@@ -104,7 +101,6 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
         );
 
         matrices.pop();
-        //endregion
     }
 
     private static Color lerpBetween(int lerp, Color from, Color to) {
