@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util;
+package io.github.jamalam360.jamfabric.util.color;
 
 /**
  * '''Liberated''' from AWT because that package breaks on macOS.

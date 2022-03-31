@@ -24,7 +24,7 @@
 
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.util.Color;
+import io.github.jamalam360.jamfabric.util.color.Color;
 import io.github.jamalam360.jamfabric.util.Jam;
 import io.github.jamalam360.jamfabric.util.Utils;
 import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;

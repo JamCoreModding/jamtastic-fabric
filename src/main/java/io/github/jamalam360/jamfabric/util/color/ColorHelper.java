@@ -22,9 +22,10 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util.helper;
+package io.github.jamalam360.jamfabric.util.color;
 
-import io.github.jamalam360.jamfabric.util.Color;
+import io.github.jamalam360.jamfabric.util.Utils;
+import io.github.jamalam360.jamfabric.util.helper.NativeImageHelper;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.Item;
 
@@ -51,8 +52,6 @@ public class ColorHelper {
 
     private static final Map<Item, Color> CACHE = new HashMap<>();
 
-    //region Item Color Retrieval
-
     /**
      * Calculate the average color of all the items in the var args
      */
@@ -63,7 +62,7 @@ public class ColorHelper {
             colors[i] = getAverageItemColor(items.get(i));
         }
 
-        return getAverageColor(colors);
+        return Utils.getConfig().jamOptions.colorProviderType.getProvider().getAverageColor(colors);
     }
 
     /**
@@ -73,14 +72,11 @@ public class ColorHelper {
         if (CACHE.containsKey(item)) {
             return CACHE.get(item);
         } else {
-            Color color = getAverageColor(getColors(NativeImageHelper.getNativeImage(item)));
+            Color color = Utils.getConfig().jamOptions.colorProviderType.getProvider().getAverageColor(getColors(NativeImageHelper.getNativeImage(item)));
             CACHE.put(item, color);
             return color;
         }
     }
-    //endregion
-
-    //region Color Manipulation
 
     /**
      * Gets an array of all the colors of each pixel in a NativeImage
@@ -99,31 +95,6 @@ public class ColorHelper {
         return colors;
     }
 
-    /**
-     * Calculates the average colour of an array of colors
-     */
-    private static Color getAverageColor(Color[] colors) {
-        float r = 0;
-        float g = 0;
-        float b = 0;
-        int total = 0;
-
-        for (Color color : colors) {
-            if (color != null) {
-                r += color.getRed() * color.getRed();
-                g += color.getGreen() * color.getGreen();
-                b += color.getBlue() * color.getBlue();
-                total++;
-            }
-        }
-
-        long avgR = Math.round(Math.sqrt(r / total));
-        long avgG = Math.round(Math.sqrt(g / total));
-        long avgB = Math.round(Math.sqrt(b / total));
-
-        return new Color((int) avgR, (int) avgG, (int) avgB);
-    }
-
     private static int[] unpackRgbaColor(int color) {
         return new int[]{
                 color & 255, // Red
@@ -132,5 +103,4 @@ public class ColorHelper {
                 (color >> 24) & 255 // Alpha
         };
     }
-    //endregion
 }

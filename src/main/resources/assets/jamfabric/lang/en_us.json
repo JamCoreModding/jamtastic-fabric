@@ -7,14 +7,14 @@
 
   "block.jamfabric.jam_pot": "Jam Pot",
 
-  "entity.minecraft.villager.jam_villager_profession": "Jam Guy",
-
-  "text.autoconfig.jamfabric.title": "Jam Config (Requires Restart)",
+  "text.autoconfig.jamfabric.title": "Jam Config (May Require Restart)",
 
   "text.autoconfig.jamfabric.option.jamOptions": "Jam Options",
   "text.autoconfig.jamfabric.option.jamOptions.@Tooltip": "Configure jam behaviour",
   "text.autoconfig.jamfabric.option.jamOptions.maxJamIngredients": "Max Ingredients",
   "text.autoconfig.jamfabric.option.jamOptions.maxJamIngredients.@Tooltip": "The maximum number of ingredients allowed in jam",
+  "text.autoconfig.jamfabric.option.jamOptions.colorProviderType": "Jam Color Algorithm",
+  "text.autoconfig.jamfabric.option.jamOptions.colorProviderType.@Tooltip": "The algorithm to use to get the average color for the jam",
 
   "text.autoconfig.jamfabric.option.compatOptions": "Compatibility Options",
   "text.autoconfig.jamfabric.option.compatOptions.@Tooltip": "Configure compatibility with other mods",

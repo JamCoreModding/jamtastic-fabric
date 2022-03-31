@@ -25,7 +25,8 @@
 package io.github.jamalam360.jamfabric.util;
 
 import com.mojang.datafixers.util.Pair;
-import io.github.jamalam360.jamfabric.util.helper.ColorHelper;
+import io.github.jamalam360.jamfabric.util.color.Color;
+import io.github.jamalam360.jamfabric.util.color.ColorHelper;
 import io.github.jamalam360.jamfabric.util.helper.NbtHelper;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
