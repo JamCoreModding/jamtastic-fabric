@@ -48,7 +48,9 @@ public class JamNameGenerator {
 
     private static final String[] BENEFICIAL_EFFECT_ADJECTIVES = new String[]{
             "Premium",
-            "Luxury"
+            "Luxury",
+            "Fine",
+            "Superior"
     };
 
     private static final String[] NON_BENEFICIAL_EFFECT_ADJECTIVES = new String[]{
@@ -56,7 +58,8 @@ public class JamNameGenerator {
             "Revolting",
             "Sickening",
             "Unpleasant",
-            "Nauseating"
+            "Nauseating",
+            "Horrid"
     };
 
     private static final String[] JAM_NOUNS = new String[]{
