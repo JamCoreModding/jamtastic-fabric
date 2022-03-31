@@ -47,7 +47,7 @@ public class JamFabricConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public int maxJamIngredients = 4;
         @ConfigEntry.Gui.Tooltip
-        public AverageColorProviderType colorProviderType = AverageColorProviderType.SIMPLE_AVERAGE;
+        public AverageColorProviderType colorProviderType = AverageColorProviderType.HSB_AVERAGE;
     }
 
     public static class CompatOptions {

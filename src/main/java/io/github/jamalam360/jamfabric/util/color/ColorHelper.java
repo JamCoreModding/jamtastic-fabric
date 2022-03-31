@@ -46,8 +46,6 @@ public class ColorHelper {
      *      - Repeat all of this for each item in the array and then average those colours
      *      - Return the average colour
      *  This class should also maintain a cache of items and their colours, so that the process is not repeated unnecessarily
-     *
-     * To average colours, we convert them to HSB/HSL/HSV and then average each component
      */
 
     private static final Map<Item, Color> CACHE = new HashMap<>();
