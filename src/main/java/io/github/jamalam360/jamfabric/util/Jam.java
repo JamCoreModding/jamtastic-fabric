@@ -35,6 +35,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -158,11 +159,11 @@ public class Jam {
         return compound;
     }
 
-    public static Jam fromNbt(NbtCompound compound) {
+    public static Jam fromNbt(@Nullable NbtCompound compound) {
         if (compound != null) {
             return new Jam(NbtHelper.readItems(compound, INGREDIENTS_BASE_KEY));
         } else {
-            return new Jam(new ArrayList<Item>().toArray(new Item[0]));
+            return new Jam();
         }
     }
 

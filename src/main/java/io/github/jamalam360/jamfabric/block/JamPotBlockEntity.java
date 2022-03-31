@@ -32,7 +32,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -40,14 +44,13 @@ import java.util.ArrayList;
  * @author Jamalam360
  */
 public class JamPotBlockEntity extends BlockEntity {
-    public Jam jam = new Jam(this::update, new ArrayList<Item>().toArray(new Item[0]));
-
-    private boolean hasWater = false;
-    private boolean hasSugar = false;
     public static final int CAPACITY = Utils.getConfig().jamOptions.maxJamIngredients;
 
+    public Jam jam = new Jam(this::update, new ArrayList<Item>().toArray(new Item[0]));
     public Color cachedColor = new Color(255, 255, 255);
     public Color lastColorBeforeChange = new Color(255, 255, 255);
+    private boolean hasWater = false;
+    private boolean hasSugar = false;
 
     public JamPotBlockEntity(BlockPos pos, BlockState state) {
         super(BlockRegistry.JAM_POT_ENTITY, pos, state);
@@ -71,10 +74,13 @@ public class JamPotBlockEntity extends BlockEntity {
         if (filled) {
             this.update();
         }
+
+        this.markDirty();
     }
 
     public void setFilledSugar(boolean filled) {
         this.hasSugar = filled;
+        this.markDirty();
     }
 
     public boolean hasWater() {
@@ -86,6 +92,7 @@ public class JamPotBlockEntity extends BlockEntity {
         this.jam.recalculate();
         this.setFilledWater(false);
         this.setFilledSugar(false);
+        this.markDirty();
     }
 
     public void update() {
@@ -99,11 +106,13 @@ public class JamPotBlockEntity extends BlockEntity {
             this.lastColorBeforeChange = JamPotBlockEntityRenderer.WATER;
             this.cachedColor = JamPotBlockEntityRenderer.WATER;
         }
+
+        this.markDirty();
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        this.jam = Jam.fromNbt(nbt.getCompound("Jam"));
+        this.jam = Jam.fromNbt((NbtCompound) nbt.get("Jam"));
         this.hasWater = nbt.getBoolean("ContainsWater");
         this.hasSugar = nbt.getBoolean("ContainsSugar");
         super.readNbt(nbt);
@@ -117,19 +126,20 @@ public class JamPotBlockEntity extends BlockEntity {
         super.writeNbt(nbt);
     }
 
-    /*@Override
-    public void fromClientTag(NbtCompound tag) {
-        this.jam = Jam.fromNbt(tag.getCompound("Jam"));
-        this.hasWater = tag.getBoolean("ContainsWater");
-        this.hasSugar = tag.getBoolean("ContainsSugar");
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.of(this);
     }
 
     @Override
-    public NbtCompound toClientTag(NbtCompound tag) {
-        tag.put("Jam", this.jam.toNbt());
-        tag.putBoolean("ContainsWater", this.hasWater);
-        tag.putBoolean("ContainsSugar", this.hasSugar);
-
-        return tag;
-    }*/
+    public NbtCompound toInitialChunkDataNbt() {
+        NbtCompound nbt = super.toInitialChunkDataNbt();
+        nbt.put("Jam", this.jam.toNbt());
+        nbt.putBoolean("ContainsWater", this.hasWater);
+        nbt.putBoolean("ContainsSugar", this.hasSugar);
+        super.writeNbt(nbt);
+        this.markDirty();
+        return nbt;
+    }
 }
