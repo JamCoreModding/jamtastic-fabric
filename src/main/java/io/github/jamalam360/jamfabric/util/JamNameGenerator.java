@@ -101,9 +101,11 @@ public class JamNameGenerator {
         } else {
             for (Item item  : jam.ingredients()){
                 if (new TranslatableText(item.getTranslationKey()).asString().contains("raw")) {
-                    sb.append(random(NON_BENEFICIAL_EFFECT_ADJECTIVES));
-                    sb.append(" ");
-                    break;
+                    if (RANDOM.nextBoolean()) {
+                        sb.append(random(NON_BENEFICIAL_EFFECT_ADJECTIVES));
+                        sb.append(" ");
+                        break;
+                    }
                 }
             }
         }
