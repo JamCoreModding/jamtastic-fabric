@@ -88,8 +88,7 @@ public class JamPotBlockEntity extends BlockEntity {
     }
 
     public void empty() {
-        this.jam.ingredients().clear();
-        this.jam.recalculate();
+        this.jam.clear();
         this.setFilledWater(false);
         this.setFilledSugar(false);
         this.markDirty();

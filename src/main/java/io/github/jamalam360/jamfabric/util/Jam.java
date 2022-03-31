@@ -48,6 +48,7 @@ public class Jam {
     private final List<Item> ingredients = new ArrayList<>();
     private final List<Pair<StatusEffectInstance, Float>> effects = new ArrayList<>();
     private final JamUpdateFunction func;
+    private JamUpdateFunction clearListener = null;
 
     private int hunger;
     private float saturation;
@@ -63,6 +64,10 @@ public class Jam {
         this.ingredients.addAll(Arrays.asList(ingredients));
         this.func = func;
         this.recalculate();
+    }
+
+    public void setClearListener(JamUpdateFunction clearListener) {
+        this.clearListener = clearListener;
     }
 
     public void add(Item item) {
@@ -84,6 +89,10 @@ public class Jam {
     public void clear() {
         ingredients.clear();
         this.recalculate();
+
+        if (clearListener != null) {
+            clearListener.update();
+        }
     }
 
     public int ingredientsSize() {

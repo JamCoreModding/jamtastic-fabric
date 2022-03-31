@@ -43,12 +43,13 @@ import net.minecraft.client.util.math.MatrixStack;
 public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBlockEntity> {
     public static final Color WATER = new Color(49, 95, 219);
     public static final BlockState JAM = BlockRegistry.JAM.getDefaultState();
-
     private static final BakedModel JAM_BAKED_MODEL = MinecraftClient.getInstance().getBlockRenderManager().getModel(JAM);
     private static final int LERP = 1;
 
     private Color lerpingTo;
     private Color lastLerpProgress;
+    private boolean appliedClearListener = false;
+    private boolean justCleared = false;
 
     @SuppressWarnings("unused")
     public JamPotBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
@@ -56,6 +57,17 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
 
     @Override
     public void render(JamPotBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        if (!appliedClearListener) {
+            entity.jam.setClearListener(() -> justCleared = true);
+            appliedClearListener = true;
+        }
+
+        if (justCleared) {
+            lerpingTo = WATER;
+            lastLerpProgress = WATER;
+            justCleared = false;
+        }
+
         if (entity.jam.ingredientsSize() == 0 && !entity.hasWater()) return; //No Items, no water, no render!
 
         entity.update();
