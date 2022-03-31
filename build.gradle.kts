@@ -1,7 +1,7 @@
 plugins {
-    id("fabric-loom") version "0.10-SNAPSHOT"
-    id("io.github.juuxel.loom-quiltflower-mini") version "1.2.1"
-    id("org.quiltmc.quilt-mappings-on-loom") version "3.1.1"
+    id("fabric-loom") version "0.11-SNAPSHOT"
+    id("io.github.juuxel.loom-quiltflower") version "1.6.0"
+    id("org.quiltmc.quilt-mappings-on-loom") version "4.0.0"
     id("org.cadixdev.licenser") version "0.6.1"
 }
 

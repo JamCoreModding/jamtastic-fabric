@@ -2,16 +2,19 @@
   "schemaVersion": 1,
   "id": "jamfabric",
   "version": "${version}",
-  "name": "Jam Fabric",
+  "name": "Jamtastic",
   "description": "A mod that adds jam",
   "authors": [
-    "Jamalam360 - Owner, Developer"
+    "Jamalam - Primary Developer"
   ],
-  "contributors": [],
+  "contributors": [
+    "Jomlom - Artist/Models"
+  ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/",
-    "issues": "https://github.com/JamCoreModding/JamFabric/issues",
-    "sources": "https://github.com/JamCoreModding/JamFabric"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/jam-fabric",
+    "issues": "https://github.com/JamCoreModding/Jamtastic/issues",
+    "sources": "https://github.com/JamCoreModding/Jamtastic",
+    "discord": "https://discord.jamalam.tech"
   },
   "license": "MIT",
   "icon": "assets/jamfabric/icon.png",
