@@ -73,11 +73,11 @@ tasks {
     }
 
     jar {
-        archiveBaseName.set("Jam")
+        archiveBaseName.set("Jamtastic")
     }
 
     remapJar {
-        archiveBaseName.set("Jam")
+        archiveBaseName.set("Jamtastic")
     }
 
     withType<JavaCompile> {
