@@ -28,6 +28,7 @@ import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.TranslatableText;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -97,6 +98,14 @@ public class JamNameGenerator {
             }
 
             sb.append(" ");
+        } else {
+            for (Item item  : jam.ingredients()){
+                if (new TranslatableText(item.getTranslationKey()).asString().contains("raw")) {
+                    sb.append(random(NON_BENEFICIAL_EFFECT_ADJECTIVES));
+                    sb.append(" ");
+                    break;
+                }
+            }
         }
 
         String template;
