@@ -28,7 +28,6 @@ package io.github.jamalam360.jamfabric.compat;
  * @author Jamalam360
  */
 public interface CompatibilityPlugin {
-    boolean isEnabled();
+    String getModId();
     void init();
-    void initMixins();
 }

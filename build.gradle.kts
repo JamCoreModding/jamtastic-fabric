@@ -21,7 +21,8 @@ repositories {
         "https://maven.terraformersmc.com/releases",
         "https://maven.shedaniel.me/",
         "https://api.modrinth.com/maven",
-        "https://maven.blamejared.com"
+        "https://maven.blamejared.com",
+        "https://cursemaven.com"
     )
 
     for (url in mavenUrls) {
@@ -30,30 +31,21 @@ repositories {
 }
 
 dependencies {
-    val minecraftVersion: String by project
-    val mappingsVersion: String by project
-    val loaderVersion: String by project
-    val fabricApiVersion: String by project
-    val clothConfigVersion: String by project
-    val modMenuVersion: String by project
-    val mealApiVersion: String by project
-    val patchouliVersion: String by project
-
-    minecraft("com.mojang:minecraft:$minecraftVersion")
+    minecraft(libs.minecraft)
     mappings(loom.layered {
-        addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:$minecraftVersion+build.$mappingsVersion:v2"))
+        addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.18.2+build.21:v2"))
     })
 
-    modImplementation("net.fabricmc:fabric-loader:$loaderVersion")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricApiVersion")
+    modImplementation(libs.loader)
+    modImplementation(libs.fabric.api)
 
     // Required:
-    modApi("me.shedaniel.cloth:cloth-config-fabric:$clothConfigVersion")
-    modApi("maven.modrinth:mealapi:$mealApiVersion")
+    modApi(libs.cloth.config)
+    modApi(libs.meal.api)
 
     // Optional:
-    modApi("com.terraformersmc:modmenu:$modMenuVersion")
-    modApi("vazkii.patchouli:Patchouli:$patchouliVersion")
+    modApi(libs.mod.menu)
+    modApi(libs.patchouli)
 }
 
 tasks {

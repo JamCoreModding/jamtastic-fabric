@@ -26,28 +26,28 @@ package io.github.jamalam360.jamfabric.util.registry;
 
 import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.compat.CompatibilityPlugin;
+import io.github.jamalam360.jamfabric.mixin.JamMixinPlugin;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jamalam360
  */
 public class CompatRegistry {
-    public static final Map<String, CompatibilityPlugin> COMPATIBILITY_PLUGIN_MAP = new HashMap<>();
+    public static final List<CompatibilityPlugin> COMPATIBILITY_PLUGINS = new ArrayList<>();
 
-    // I don't know why this is here, but I'm too scared to remove it...
     static {
     }
 
     public static void init() {
-        for (String modId : COMPATIBILITY_PLUGIN_MAP.keySet()) {
-            if (FabricLoader.getInstance().isModLoaded(modId) && COMPATIBILITY_PLUGIN_MAP.get(modId).isEnabled()) {
-                JamModInit.LOGGER.log(Level.INFO, "Initializing compatibility with mod '" + modId + "'");
-                COMPATIBILITY_PLUGIN_MAP.get(modId).init();
-                COMPATIBILITY_PLUGIN_MAP.get(modId).initMixins();
+        for (CompatibilityPlugin plugin : COMPATIBILITY_PLUGINS) {
+            if (FabricLoader.getInstance().isModLoaded(plugin.getModId())) {
+                JamModInit.LOGGER.log(Level.INFO, "Initializing compatibility with mod '" + plugin.getModId() + "'");
+                JamMixinPlugin.ACTIVE_COMPATIBILITY_MIXIN_PACKAGES.add(plugin.getModId());
+                plugin.init();
             }
         }
     }

@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_16",
   "plugin": "io.github.jamalam360.jamfabric.mixin.JamMixinPlugin",
   "mixins": [
+    "compat.bodaciousberries.BerryMixin",
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",
     "general.BlockItemMixin",

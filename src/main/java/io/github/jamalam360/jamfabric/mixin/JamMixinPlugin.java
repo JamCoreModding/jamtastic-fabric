@@ -36,12 +36,15 @@ import java.util.Set;
  * @author Jamalam360
  */
 public class JamMixinPlugin implements IMixinConfigPlugin {
-    public static final List<String> ACTIVE_COMPATIBILITY_MIXINS = new ArrayList<>();
+    public static final List<String> ACTIVE_COMPATIBILITY_MIXIN_PACKAGES = new ArrayList<>();
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (mixinClassName.contains("compat")) {
-            return ACTIVE_COMPATIBILITY_MIXINS.stream().anyMatch(s -> s.contains(mixinClassName));
+            return ACTIVE_COMPATIBILITY_MIXIN_PACKAGES.stream().anyMatch(s -> {
+                String compatPackage = s.split("io.github.jamaalam360.jamfabric.mixin.compat.")[1];
+                return compatPackage.equals(s);
+            });
         } else {
             return true;
         }
