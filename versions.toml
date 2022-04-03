@@ -1,6 +1,5 @@
 [versions]
 minecraft = "1.18.2"
-mappings = "21"
 loader = "0.13.3"
 fabric-api = "0.48.0+1.18.2"
 cloth-config = "6.2.51"
@@ -10,7 +9,6 @@ patchouli = "1.18.2-66-FABRIC"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft"  }
-mappings = { module = "org.quiltmc:quilt-mappings", version.ref = "mappings" }
 loader = { module = "net.fabricmc:fabric-loader", version.ref = "loader" }
 fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
 cloth-config = { module = "me.shedaniel.cloth:cloth-config-fabric", version.ref = "cloth-config" }
