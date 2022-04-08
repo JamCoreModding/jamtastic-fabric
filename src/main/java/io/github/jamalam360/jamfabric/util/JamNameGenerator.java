@@ -24,6 +24,7 @@
 
 package io.github.jamalam360.jamfabric.util;
 
+import io.github.jamalam360.jamfabric.util.helper.TranslationHelper;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
@@ -38,36 +39,15 @@ import java.util.stream.Collectors;
  */
 public class JamNameGenerator {
     private static final Random RANDOM = new Random();
+    private static final String[] BENEFICIAL_EFFECT_ADJECTIVES = TranslationHelper.getTranslations("jam_names.jamfabric.beneficial_effect_adjectives");
+    private static final String[] NON_BENEFICIAL_EFFECT_ADJECTIVES = TranslationHelper.getTranslations("jam_names.jamfabric.non_beneficial_effect_adjectives");
+    private static final String[] NOUNS = TranslationHelper.getTranslations("jam_names.jamfabric.nouns");
 
-    //region Templates
     private static final String[] TEMPLATES = new String[]{
             "%item% %noun%",
             "%item% and %item% %noun%",
             "%item%, %item% and %item% %noun%"
     };
-
-    private static final String[] BENEFICIAL_EFFECT_ADJECTIVES = new String[]{
-            "Premium",
-            "Luxury",
-            "Fine",
-            "Superior"
-    };
-
-    private static final String[] NON_BENEFICIAL_EFFECT_ADJECTIVES = new String[]{
-            "Disgusting",
-            "Revolting",
-            "Sickening",
-            "Unpleasant",
-            "Nauseating",
-            "Horrid"
-    };
-
-    private static final String[] JAM_NOUNS = new String[]{
-            "Jam",
-            "Conserve",
-            "Preserve"
-    };
-    //endregion
 
     public static String create(NbtCompound nbt) {
         StringBuilder sb = new StringBuilder();
@@ -102,7 +82,7 @@ public class JamNameGenerator {
 
             sb.append(" ");
         } else {
-            for (Item item  : jam.ingredients()){
+            for (Item item : jam.ingredients()) {
                 if (new TranslatableText(item.getTranslationKey()).asString().contains("raw")) {
                     if (RANDOM.nextBoolean()) {
                         sb.append(random(NON_BENEFICIAL_EFFECT_ADJECTIVES));
@@ -131,7 +111,7 @@ public class JamNameGenerator {
             template = template.replaceFirst("%item%", I18n.translate(uniqueItems.remove(randInt).getTranslationKey()));
         }
 
-        template = template.replaceFirst("%noun%", random(JAM_NOUNS));
+        template = template.replaceFirst("%noun%", random(NOUNS));
 
         sb.append(template);
 
