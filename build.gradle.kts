@@ -17,17 +17,23 @@ loom {
 }
 
 repositories {
-    val mavenUrls = listOf(
-        "https://maven.terraformersmc.com/releases",
-        "https://maven.shedaniel.me/",
-        "https://api.modrinth.com/maven",
-        "https://maven.blamejared.com",
-        "https://cursemaven.com",
-        "https://storage.googleapis.com/devan-maven/"
+    val mavenUrls = mapOf(
+        Pair("https://maven.terraformersmc.com/releases", listOf("com.terraformersmc")),
+        Pair("https://maven.shedaniel.me/", listOf("me.shedaniel.cloth")),
+        Pair("https://api.modrinth.com/maven", listOf("maven.modrinth")),
+        Pair("https://maven.blamejared.com", listOf("vazkii.patchouli")),
+        Pair("https://storage.googleapis.com/devan-maven/", listOf("io.github.foa", "io.github.astrarre")),
     )
 
-    for (url in mavenUrls) {
-        maven(url = url)
+    for (mavenPair in mavenUrls) {
+        maven {
+            url = uri(mavenPair.key)
+            content {
+                for (group in mavenPair.value) {
+                    includeGroup(group)
+                }
+            }
+        }
     }
 }
 
