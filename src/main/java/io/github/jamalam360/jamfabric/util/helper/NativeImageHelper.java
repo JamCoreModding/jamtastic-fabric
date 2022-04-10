@@ -45,7 +45,7 @@ public class NativeImageHelper {
             Resource texture = MinecraftClient.getInstance().getResourceManager().getAllResources(new Identifier(id.getNamespace(), "textures/" + id.getPath() + ".png")).get(0);
 
             if (texture == null) {
-                throw new NullPointerException("Texture is null");
+                throw new NullPointerException("Unexpected null texture");
             }
 
             return NativeImage.read(texture.getInputStream());

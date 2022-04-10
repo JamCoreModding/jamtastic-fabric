@@ -38,7 +38,6 @@ import java.util.List;
  */
 @SuppressWarnings({"UnusedReturnValue", "unused"})
 public class NbtHelper {
-    //region Item Storage in NBT
     public static NbtCompound writeItems(NbtCompound compound, String baseKey, Item... items) {
         ArrayList<Item> appendedItems = new ArrayList<>(List.of(items));
         appendedItems.addAll(Arrays.asList(readItems(compound, baseKey)));
@@ -69,5 +68,4 @@ public class NbtHelper {
     public static Item readItem(NbtCompound compound, String key) {
         return Registry.ITEM.get(new Identifier(compound.getString(key)));
     }
-    //endregion
 }

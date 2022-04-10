@@ -26,6 +26,7 @@ package io.github.jamalam360.jamfabric.util.registry;
 
 import io.github.jamalam360.jamfabric.block.JamPotBlock;
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
+import io.github.jamalam360.jamfabric.util.Utils;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -34,10 +35,7 @@ import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
-import static io.github.jamalam360.jamfabric.JamModInit.MOD_ID;
 
 /**
  * @author Jamalam360
@@ -54,14 +52,14 @@ public class BlockRegistry {
     }
 
     private static void registerBlock(String id, Block block, ItemGroup itemGroup) {
-        Registry.register(Registry.BLOCK, new Identifier(MOD_ID, id), block);
+        Registry.register(Registry.BLOCK, Utils.id(id), block);
 
         if (itemGroup != null) {
-            Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), new BlockItem(block, new FabricItemSettings().group(itemGroup)));
+            Registry.register(Registry.ITEM, Utils.id(id), new BlockItem(block, new FabricItemSettings().group(itemGroup)));
         }
     }
 
     private static void registerBlockEntity(String id, BlockEntityType<?> blockEntityType) {
-        Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, id), blockEntityType);
+        Registry.register(Registry.BLOCK_ENTITY_TYPE, Utils.id(id), blockEntityType);
     }
 }

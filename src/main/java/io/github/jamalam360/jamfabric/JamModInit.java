@@ -53,8 +53,7 @@ public class JamModInit implements ModInitializer {
         CompatRegistry.init();
 
         StackAware.MAX_COUNT_REGISTRY.forExact(ItemKey.of(ItemRegistry.JAM_JAR), (itemKey, count) -> {
-            System.out.println("Jam jar max count");
-           if (Jam.fromNbt(itemKey.getCompoundTag()).ingredientsSize() > 0) {
+           if (Jam.fromNbt(itemKey.getCompoundTag().getCompound("Jam")).ingredientsSize() > 0) {
                return 1;
            } else {
                return 16;

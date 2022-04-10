@@ -25,14 +25,12 @@
 package io.github.jamalam360.jamfabric.util.registry;
 
 import io.github.jamalam360.jamfabric.item.JamJarItem;
+import io.github.jamalam360.jamfabric.util.Utils;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
-import static io.github.jamalam360.jamfabric.JamModInit.MOD_ID;
 
 /**
  * @author Jamalam360
@@ -47,6 +45,6 @@ public class ItemRegistry {
     }
 
     private static void registerItem(String id, Item item) {
-        Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
+        Registry.register(Registry.ITEM, Utils.id(id), item);
     }
 }
