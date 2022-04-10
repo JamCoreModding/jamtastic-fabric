@@ -4,7 +4,7 @@ loader = "0.13.3"
 fabric-api = "0.48.0+1.18.2"
 cloth-config = "6.2.51"
 meal-api = "0.3+1.18"
-stack-aware = "1.0.2"
+stack-aware = "1.0.3"
 mod-menu = "3.1.0"
 patchouli = "1.18.2-66-FABRIC"
 
