@@ -22,7 +22,8 @@ repositories {
         "https://maven.shedaniel.me/",
         "https://api.modrinth.com/maven",
         "https://maven.blamejared.com",
-        "https://cursemaven.com"
+        "https://cursemaven.com",
+        "https://storage.googleapis.com/devan-maven/"
     )
 
     for (url in mavenUrls) {
@@ -42,6 +43,7 @@ dependencies {
     // Required:
     modApi(libs.cloth.config)
     modApi(libs.meal.api)
+    modApi(libs.stack.aware)
 
     // Optional:
     modApi(libs.mod.menu)
