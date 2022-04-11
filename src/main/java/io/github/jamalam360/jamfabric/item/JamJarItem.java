@@ -25,9 +25,9 @@
 package io.github.jamalam360.jamfabric.item;
 
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
-import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.util.Jam;
 import io.github.jamalam360.jamfabric.util.JamNameGenerator;
+import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -63,8 +63,14 @@ public class JamJarItem extends Item {
             JamPotBlockEntity blockEntity = (JamPotBlockEntity) world.getBlockEntity(pos);
             assert player != null;
             assert blockEntity != null;
-
-            if (blockEntity.jam.ingredientsSize() == 0) return super.useOnBlock(context);
+            
+            if (
+                    blockEntity.jam.ingredientsSize() == 0
+                            || stack.getSubNbt("Jam") == null
+                            || Jam.fromNbt(stack.getSubNbt("Jam")).ingredientsSize() > 0
+            ) {
+                return super.useOnBlock(context);
+            }
 
             if (player.isSneaking()) {
                 stack.setSubNbt("Jam", blockEntity.jam.toNbt());
