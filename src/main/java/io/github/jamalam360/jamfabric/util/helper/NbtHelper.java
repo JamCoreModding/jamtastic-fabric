@@ -24,6 +24,7 @@
 
 package io.github.jamalam360.jamfabric.util.helper;
 
+import io.github.jamalam360.jamfabric.data.JamIngredient;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
@@ -67,5 +68,27 @@ public class NbtHelper {
 
     public static Item readItem(NbtCompound compound, String key) {
         return Registry.ITEM.get(new Identifier(compound.getString(key)));
+    }
+
+    public static NbtCompound writeJamIngredients(NbtCompound compound, String baseKey, JamIngredient... ingredients) {
+        ArrayList<JamIngredient> appendedIngredients = new ArrayList<>(List.of(ingredients));
+        appendedIngredients.addAll(Arrays.asList(readJamIngredients(compound, baseKey)));
+
+        compound.putInt(baseKey + "Length", appendedIngredients.size());
+        for (int i = 0; i < appendedIngredients.size(); i++) {
+            compound.putString(baseKey + i, appendedIngredients.get(i).toNbt());
+        }
+
+        return compound;
+    }
+
+    public static JamIngredient[] readJamIngredients(NbtCompound compound, String baseKey) {
+        ArrayList<JamIngredient> ingredients = new ArrayList<>();
+
+        for (int i = 0; i < compound.getInt(baseKey + "Length"); i++) {
+            ingredients.add(JamIngredient.ofNbt(compound.getString(baseKey + i)));
+        }
+
+        return ingredients.toArray(new JamIngredient[0]);
     }
 }

@@ -24,13 +24,12 @@
 
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.util.color.Color;
 import io.github.jamalam360.jamfabric.util.Jam;
 import io.github.jamalam360.jamfabric.util.Utils;
+import io.github.jamalam360.jamfabric.util.color.Color;
 import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -38,15 +37,13 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-
 /**
  * @author Jamalam360
  */
 public class JamPotBlockEntity extends BlockEntity {
     public static final int CAPACITY = Utils.getConfig().jamOptions.maxJamIngredients;
 
-    public Jam jam = new Jam(this::update, new ArrayList<Item>().toArray(new Item[0]));
+    public Jam jam = new Jam(this::update);
     public Color cachedColor = new Color(255, 255, 255);
     public Color lastColorBeforeChange = new Color(255, 255, 255);
     private boolean hasWater = false;

@@ -30,6 +30,7 @@ import io.github.jamalam360.jamfabric.config.JamFabricConfig;
 import io.github.jamalam360.jamfabric.util.Jam;
 import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.util.registry.CompatRegistry;
+import io.github.jamalam360.jamfabric.util.registry.DataRegistry;
 import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -51,13 +52,14 @@ public class JamModInit implements ModInitializer {
         ItemRegistry.init();
         BlockRegistry.init();
         CompatRegistry.init();
+        DataRegistry.init();
 
         StackAware.MAX_COUNT_REGISTRY.forExact(ItemKey.of(ItemRegistry.JAM_JAR), (itemKey, count) -> {
-           if (Jam.fromNbt(itemKey.getCompoundTag().getCompound("Jam")).ingredientsSize() > 0) {
-               return 1;
-           } else {
-               return 16;
-           }
+            if (Jam.fromNbt(itemKey.getCompoundTag().getCompound("Jam")).ingredientsSize() > 0) {
+                return 1;
+            } else {
+                return 16;
+            }
         });
 
         LOGGER.log(Level.INFO, "Jamtastic initialized");

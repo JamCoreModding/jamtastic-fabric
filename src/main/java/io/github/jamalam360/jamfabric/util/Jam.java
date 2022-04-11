@@ -25,6 +25,7 @@
 package io.github.jamalam360.jamfabric.util;
 
 import com.mojang.datafixers.util.Pair;
+import io.github.jamalam360.jamfabric.data.JamIngredient;
 import io.github.jamalam360.jamfabric.util.color.Color;
 import io.github.jamalam360.jamfabric.util.color.ColorHelper;
 import io.github.jamalam360.jamfabric.util.helper.NbtHelper;
@@ -38,6 +39,7 @@ import net.minecraft.util.Formatting;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Jamalam360
@@ -45,7 +47,7 @@ import java.util.*;
 public class Jam {
     public static final String INGREDIENTS_BASE_KEY = "Ingredients";
 
-    private final List<Item> ingredients = new ArrayList<>();
+    private final List<JamIngredient> ingredients = new ArrayList<>();
     private final List<Pair<StatusEffectInstance, Float>> effects = new ArrayList<>();
     private final JamUpdateFunction func;
     private JamUpdateFunction clearListener = null;
@@ -53,14 +55,14 @@ public class Jam {
     private int hunger;
     private float saturation;
 
-    public Jam(Item... ingredients) {
+    public Jam(JamIngredient... ingredients) {
         this.ingredients.addAll(Arrays.asList(ingredients));
         this.func = () -> {
         };
         this.recalculate();
     }
 
-    public Jam(JamUpdateFunction func, Item... ingredients) {
+    public Jam(JamUpdateFunction func, JamIngredient... ingredients) {
         this.ingredients.addAll(Arrays.asList(ingredients));
         this.func = func;
         this.recalculate();
@@ -70,20 +72,23 @@ public class Jam {
         this.clearListener = clearListener;
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void add(Item item) {
-        ingredients.add(item);
-        this.recalculate();
+        if (item.isFood()) {
+            ingredients.add(new JamIngredient(item, item.getFoodComponent().getHunger(), item.getFoodComponent().getSaturationModifier()));
+            this.recalculate();
+        }
     }
 
-    public void addAll(Collection<Item> items) {
-        ingredients.addAll(items);
+    public void addRaw(JamIngredient ingredient) {
+        ingredients.add(ingredient);
         this.recalculate();
     }
 
     public Item removeLast() {
-        Item item = ingredients.remove(ingredients.size() - 1);
+        JamIngredient ingredient = ingredients.remove(ingredients.size() - 1);
         this.recalculate();
-        return item;
+        return ingredient.item();
     }
 
     public void clear() {
@@ -100,22 +105,22 @@ public class Jam {
     }
 
     public List<Item> ingredients() {
-        return ingredients;
+        return ingredients.stream().map(JamIngredient::item).collect(Collectors.toList());
     }
 
     public Color getColor() {
-        return ColorHelper.getAverageItemColor(ingredients);
+        return ColorHelper.getAverageItemColor(ingredients.stream().map(JamIngredient::item).collect(Collectors.toList()));
     }
 
     public List<Text> getTooltipContent() {
         Map<Item, Integer> tooltipMap = new HashMap<>();
         List<Text> finalTooltip = new ArrayList<>();
 
-        for (Item item : this.ingredients) {
-            if (tooltipMap.containsKey(item)) {
-                tooltipMap.put(item, tooltipMap.get(item) + 1);
+        for (JamIngredient ingredient : this.ingredients) {
+            if (tooltipMap.containsKey(ingredient.item())) {
+                tooltipMap.put(ingredient.item(), tooltipMap.get(ingredient.item()) + 1);
             } else {
-                tooltipMap.put(item, 1);
+                tooltipMap.put(ingredient.item(), 1);
             }
         }
 
@@ -149,15 +154,18 @@ public class Jam {
         return saturation;
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void recalculate() {
         this.hunger = 0;
         this.saturation = 0;
         this.effects.clear();
 
-        for (Item item : ingredients) {
-            this.hunger += item.getFoodComponent().getHunger();
-            this.saturation += item.getFoodComponent().getSaturationModifier();
-            this.effects.addAll(item.getFoodComponent().getStatusEffects());
+        for (JamIngredient ingredient : ingredients) {
+            this.hunger += ingredient.hunger();
+            this.saturation += ingredient.saturation();
+            if (ingredient.item().isFood()) {
+                this.effects.addAll(ingredient.item().getFoodComponent().getStatusEffects());
+            }
         }
 
         this.func.update();
@@ -165,13 +173,13 @@ public class Jam {
 
     public NbtCompound toNbt() {
         NbtCompound compound = new NbtCompound();
-        NbtHelper.writeItems(compound, INGREDIENTS_BASE_KEY, ingredients.toArray(new Item[0]));
+        NbtHelper.writeJamIngredients(compound, INGREDIENTS_BASE_KEY, ingredients.toArray(new JamIngredient[0]));
         return compound;
     }
 
     public static Jam fromNbt(@Nullable NbtCompound compound) {
         if (compound != null) {
-            return new Jam(NbtHelper.readItems(compound, INGREDIENTS_BASE_KEY));
+            return new Jam(NbtHelper.readJamIngredients(compound, INGREDIENTS_BASE_KEY));
         } else {
             return new Jam();
         }

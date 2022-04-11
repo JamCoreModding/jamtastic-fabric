@@ -6,7 +6,6 @@
   "mixins": [
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",
-    "general.BlockItemMixin",
     "general.HungerManagerMixin",
     "render.BakedQuadMixin"
   ],
