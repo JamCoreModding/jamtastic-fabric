@@ -63,7 +63,7 @@ public class JamJarItem extends Item {
             JamPotBlockEntity blockEntity = (JamPotBlockEntity) world.getBlockEntity(pos);
             assert player != null;
             assert blockEntity != null;
-            
+
             if (
                     blockEntity.jam.ingredientsSize() == 0
                             || stack.getSubNbt("Jam") == null
