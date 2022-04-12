@@ -25,6 +25,8 @@ repositories {
         Pair("https://storage.googleapis.com/devan-maven/", listOf("io.github.foa", "io.github.astrarre")),
     )
 
+    mavenLocal()
+
     for (mavenPair in mavenUrls) {
         maven {
             url = uri(mavenPair.key)
@@ -40,7 +42,7 @@ repositories {
 dependencies {
     minecraft(libs.minecraft)
     mappings(loom.layered {
-        addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.18.2+build.22:v2"))
+        addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.18.2+build.local:v2"))
     })
 
     modImplementation(libs.loader)
