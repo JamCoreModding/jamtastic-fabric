@@ -24,6 +24,8 @@
 
 package io.github.jamalam360.jamfabric.block;
 
+import io.github.jamalam360.jamfabric.data.JamIngredient;
+import io.github.jamalam360.jamfabric.data.JamIngredientRegistry;
 import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -79,6 +81,11 @@ public class JamPotBlock extends BlockWithEntity {
             stack.decrement(1);
             playRandomBrewingSound(world, pos);
 
+            return ActionResult.SUCCESS;
+        } else if (JamIngredientRegistry.has(player.getStackInHand(hand).getItem()) && blockEntity.canInsertIngredients()) {
+            JamIngredient ingredient = JamIngredientRegistry.get(player.getStackInHand(hand).getItem());
+            blockEntity.jam.addRaw(ingredient);
+            player.getStackInHand(hand).decrement(1);
             return ActionResult.SUCCESS;
         } else if (stack.isEmpty() && player.isSneaking() && !world.isClient) {
             if (blockEntity.jam.ingredientsSize() > 0) {

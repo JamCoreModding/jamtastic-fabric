@@ -4,6 +4,16 @@
       "item": "minecraft:cake",
       "hunger": 14,
       "saturation": 2.8
+    },
+    {
+      "item": "minecraft:slime_ball",
+      "hunger": 4,
+      "saturation": 1.2
+    },
+    {
+      "item": "minecraft:magma_cream",
+      "hunger": 7,
+      "saturation": 1.4
     }
   ]
 }

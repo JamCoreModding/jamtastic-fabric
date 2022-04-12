@@ -16,21 +16,5 @@ import net.minecraft.util.ActionResult;
 public class DataRegistry {
     public static void init() {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new JamIngredientsResourceReloadListener());
-
-        UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-            if (world.getBlockState(hitResult.getBlockPos()).getBlock() instanceof JamPotBlock) {
-                if (JamIngredientRegistry.has(player.getStackInHand(hand).getItem())) {
-                    JamIngredient ingredient = JamIngredientRegistry.get(player.getStackInHand(hand).getItem());
-                    JamPotBlockEntity entity = ((JamPotBlockEntity) world.getBlockEntity(hitResult.getBlockPos()));
-                    if (entity != null && entity.canInsertIngredients()) {
-                        entity.jam.addRaw(ingredient);
-                        player.getStackInHand(hand).decrement(1);
-                        return ActionResult.SUCCESS;
-                    }
-                }
-            }
-
-            return ActionResult.PASS;
-        });
     }
 }
