@@ -46,26 +46,21 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
     private static final BakedModel JAM_BAKED_MODEL = MinecraftClient.getInstance().getBlockRenderManager().getModel(JAM);
     private static final int LERP = 1;
 
-    private Color lerpingTo;
-    private Color lastLerpProgress;
-    private boolean appliedClearListener = false;
-    private boolean justCleared = false;
-
     @SuppressWarnings("unused")
     public JamPotBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
     }
 
     @Override
     public void render(JamPotBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if (!appliedClearListener) {
-            entity.jam.setClearListener(() -> justCleared = true);
-            appliedClearListener = true;
+        if (!entity.appliedClearListener) {
+            entity.jam.setClearListener(() -> entity.justCleared = true);
+            entity.appliedClearListener = true;
         }
 
-        if (justCleared) {
-            lerpingTo = WATER;
-            lastLerpProgress = WATER;
-            justCleared = false;
+        if (entity.justCleared) {
+            entity.lerpingTo = WATER;
+            entity.lastLerpProgress = WATER;
+            entity.justCleared = false;
         }
 
         if (entity.jam.ingredientsSize() > 0 && entity.jam.getColor().getBlue() == 255 && entity.jam.getColor().getGreen() == 255 && entity.jam.getColor().getRed() == 255) {
@@ -82,17 +77,17 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
 
         Color color;
 
-        if (!entity.cachedColor.equals(lerpingTo)) { // If we're not already lerping towards the new color, start lerping towards the new color (from the last color)
-            lerpingTo = entity.cachedColor;
+        if (!entity.cachedColor.equals(entity.lerpingTo)) { // If we're not already lerping towards the new color, start lerping towards the new color (from the last color)
+            entity.lerpingTo = entity.cachedColor;
         }
 
-        if (lastLerpProgress == null) { // If we haven't started lerping yet, set the last lerp progress to the last color
-            lastLerpProgress = entity.lastColorBeforeChange;
+        if (entity.lastLerpProgress == null) { // If we haven't started lerping yet, set the last lerp progress to the last color
+            entity.lastLerpProgress = entity.lastColorBeforeChange;
         }
 
         // Lerp from the last lerp position towards the current color of the BE
-        color = lerpBetween(LERP, lastLerpProgress, lerpingTo);
-        lastLerpProgress = color; // Set the last progress to the calculated color for next tick
+        color = lerpBetween(LERP, entity.lastLerpProgress, entity.lerpingTo);
+        entity.lastLerpProgress = color; // Set the last progress to the calculated color for next tick
 
         int updatedLight = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
 

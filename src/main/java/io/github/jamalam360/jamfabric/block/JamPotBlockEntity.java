@@ -49,6 +49,11 @@ public class JamPotBlockEntity extends BlockEntity {
     private boolean hasWater = false;
     private boolean hasSugar = false;
 
+    public Color lerpingTo;
+    public Color lastLerpProgress;
+    public boolean appliedClearListener = false;
+    public boolean justCleared = false;
+
     public JamPotBlockEntity(BlockPos pos, BlockState state) {
         super(BlockRegistry.JAM_POT_ENTITY, pos, state);
     }
