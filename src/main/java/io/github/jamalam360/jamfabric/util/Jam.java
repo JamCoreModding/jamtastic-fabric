@@ -25,6 +25,7 @@
 package io.github.jamalam360.jamfabric.util;
 
 import com.mojang.datafixers.util.Pair;
+import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.data.JamIngredient;
 import io.github.jamalam360.jamfabric.util.color.Color;
 import io.github.jamalam360.jamfabric.util.color.ColorHelper;
@@ -178,10 +179,31 @@ public class Jam {
     }
 
     public static Jam fromNbt(@Nullable NbtCompound compound) {
-        if (compound != null) {
-            return new Jam(NbtHelper.readJamIngredients(compound, INGREDIENTS_BASE_KEY));
-        } else {
-            return new Jam();
+        try {
+            if (compound != null) {
+                return new Jam(NbtHelper.readJamIngredients(compound, INGREDIENTS_BASE_KEY));
+            } else {
+                return new Jam();
+            }
+        } catch (Exception e) {
+            JamModInit.LOGGER.warn("Failed to load jam from NBT, this is likely due to an update in the NBT format, and can be ignored.");
+
+            Item[] ingredients = NbtHelper.readItems(compound, INGREDIENTS_BASE_KEY);
+
+            for (int i = 0; i < compound.getInt(INGREDIENTS_BASE_KEY + "Length"); i++) {
+                compound.remove(INGREDIENTS_BASE_KEY + i);
+            }
+            compound.remove(INGREDIENTS_BASE_KEY + "Length");
+
+            Jam jam = new Jam();
+
+            for (Item ingredient : ingredients) {
+                jam.add(ingredient);
+            }
+
+            NbtHelper.writeJamIngredients(compound, INGREDIENTS_BASE_KEY, jam.ingredients.toArray(new JamIngredient[0]));
+
+            return jam;
         }
     }
 

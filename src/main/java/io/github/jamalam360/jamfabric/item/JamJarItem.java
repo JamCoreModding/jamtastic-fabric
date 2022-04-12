@@ -66,8 +66,8 @@ public class JamJarItem extends Item {
 
             if (
                     blockEntity.jam.ingredientsSize() == 0
-                            || stack.getSubNbt("Jam") == null
-                            || Jam.fromNbt(stack.getSubNbt("Jam")).ingredientsSize() > 0
+                            || (stack.getSubNbt("Jam") != null
+                            && Jam.fromNbt(stack.getSubNbt("Jam")).ingredientsSize() > 0)
             ) {
                 return super.useOnBlock(context);
             }

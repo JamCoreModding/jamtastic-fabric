@@ -68,6 +68,10 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
             justCleared = false;
         }
 
+        if (entity.jam.ingredientsSize() > 0 && entity.jam.getColor().getBlue() == 255 && entity.jam.getColor().getGreen() == 255 && entity.jam.getColor().getRed() == 255) {
+            entity.jam.recalculate();
+        }
+
         if (entity.jam.ingredientsSize() == 0 && !entity.hasWater()) return; //No Items, no water, no render!
 
         entity.update();
