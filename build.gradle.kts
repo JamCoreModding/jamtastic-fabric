@@ -51,11 +51,14 @@ dependencies {
     // Required:
     modApi(libs.cloth.config)
     modApi(libs.meal.api)
-    include(modApi(libs.stack.aware))
+    modApi(libs.stack.aware)
 
     // Optional:
     modApi(libs.mod.menu)
     modApi(libs.patchouli)
+
+    // JiJ:
+    include(libs.stack.aware)
 }
 
 tasks {
