@@ -42,7 +42,7 @@ repositories {
 dependencies {
     minecraft(libs.minecraft)
     mappings(loom.layered {
-        addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.18.2+build.local:v2"))
+        addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.18.2+build.22:v2"))
     })
 
     modImplementation(libs.loader)
