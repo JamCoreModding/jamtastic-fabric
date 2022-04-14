@@ -24,7 +24,7 @@
 
 package io.github.jamalam360.jamfabric;
 
-import io.github.astrarre.itemview.v0.fabric.ItemKey;
+//import io.github.astrarre.itemview.v0.fabric.ItemKey;
 // import io.github.foa.stackaware.v0.api.StackAware;
 import io.github.jamalam360.jamfabric.config.JamFabricConfig;
 import io.github.jamalam360.jamfabric.util.Jam;
