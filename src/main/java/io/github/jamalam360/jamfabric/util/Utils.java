@@ -26,6 +26,7 @@ package io.github.jamalam360.jamfabric.util;
 
 import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.config.JamFabricConfig;
+import io.github.jamalam360.jamfabric.util.color.Color;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.util.Identifier;
 
@@ -33,6 +34,8 @@ import net.minecraft.util.Identifier;
  * @author Jamalam360
  */
 public class Utils {
+    public static final Color WATER_COLOR = new Color(49, 95, 219);
+
     public static JamFabricConfig getConfig() {
         return AutoConfig.getConfigHolder(JamFabricConfig.class).getConfig();
     }

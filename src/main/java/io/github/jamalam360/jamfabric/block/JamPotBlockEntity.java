@@ -104,8 +104,8 @@ public class JamPotBlockEntity extends BlockEntity {
             this.lastColorBeforeChange = cachedColor;
             this.cachedColor = this.jam.getColor();
         } else {
-            this.lastColorBeforeChange = JamPotBlockEntityRenderer.WATER;
-            this.cachedColor = JamPotBlockEntityRenderer.WATER;
+            this.lastColorBeforeChange = Utils.WATER_COLOR;
+            this.cachedColor = Utils.WATER_COLOR;
         }
 
         this.markDirty();
