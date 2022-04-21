@@ -34,8 +34,8 @@ public class TranslationHelper {
         int index = 0;
 
         while (I18n.hasTranslation(baseKey + "." + index)) {
-            list.add(I18n.translate(baseKey + "." +
-                    "" + index));
+            list.add(baseKey + "." +
+                    "" + index);
             index++;
         }
 

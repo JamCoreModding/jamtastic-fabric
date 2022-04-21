@@ -24,12 +24,10 @@
 
 package io.github.jamalam360.jamfabric.util;
 
-import io.github.jamalam360.jamfabric.util.helper.TranslationHelper;
-import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.TranslatableText;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,23 +37,28 @@ import java.util.stream.Collectors;
  */
 public class JamNameGenerator {
     private static final Random RANDOM = new Random();
-    private static final String[] BENEFICIAL_EFFECT_ADJECTIVES = TranslationHelper.getTranslations("jam_names.jamfabric.beneficial_effect_adjectives");
-    private static final String[] NON_BENEFICIAL_EFFECT_ADJECTIVES = TranslationHelper.getTranslations("jam_names.jamfabric.non_beneficial_effect_adjectives");
-    private static final String[] NOUNS = TranslationHelper.getTranslations("jam_names.jamfabric.nouns");
+    public static final String BENEFICIAL_EFFECT_ADJECTIVES_KEY = "jam_names.jamfabric.beneficial_effect_adjectives";
+    public static final String NON_BENEFICIAL_EFFECT_ADJECTIVES_KEY = "jam_names.jamfabric.non_beneficial_effect_adjectives";
+    public static final String NOUNS_KEY = "jam_names.jamfabric.nouns";
 
-    private static final String[] TEMPLATES = new String[]{
-            "%item% %noun%",
-            "%item% and %item% %noun%",
-            "%item%, %item% and %item% %noun%"
+    public static String[] BENEFICIAL_EFFECT_ADJECTIVES = new String[0];
+    public static String[] NON_BENEFICIAL_EFFECT_ADJECTIVES = new String[0];
+    public static String[] NOUNS = new String[0];
+
+    private static final String[][] TEMPLATES = new String[][]{
+            new String[]{"item", "noun"},
+            new String[]{"item", "and", "item", "noun"},
+            new String[]{"item", "item", "and", "item", "noun"}
     };
 
-    public static String create(NbtCompound nbt) {
-        StringBuilder sb = new StringBuilder();
+    public static String[] create(NbtCompound nbt, PlayerEntity player) {
+        if (player.world.isClient) return new String[0];
 
+        StringBuilder sb = new StringBuilder();
         Jam jam = Jam.fromNbt(nbt);
 
         if (jam.ingredientsSize() == 0) {
-            return "";
+            return new String[0];
         }
 
         boolean hasEffects = jam.effectsRaw().size() > 0;
@@ -83,7 +86,7 @@ public class JamNameGenerator {
             sb.append(" ");
         } else {
             for (Item item : jam.ingredients()) {
-                if (new TranslatableText(item.getTranslationKey()).asString().contains("raw")) {
+                if (item.getTranslationKey().contains("raw")) {
                     if (RANDOM.nextBoolean()) {
                         sb.append(random(NON_BENEFICIAL_EFFECT_ADJECTIVES));
                         sb.append(" ");
@@ -93,7 +96,7 @@ public class JamNameGenerator {
             }
         }
 
-        String template;
+        String[] template;
         List<Item> uniqueItems = jam.ingredients().stream().distinct().collect(Collectors.toList());
 
         if (uniqueItems.size() == 1) {
@@ -104,21 +107,25 @@ public class JamNameGenerator {
             template = random(TEMPLATES);
         }
 
-        // Fill the template
+        for (String s : template) {
+            if (s.equals("item")) {
+                int randInt = RANDOM.nextInt(uniqueItems.size());
+                sb.append(uniqueItems.remove(randInt).getTranslationKey());
+            } else if (s.equals("noun")) {
+                sb.append(random(NOUNS));
+            } else {
+                sb.append(s);
+            }
 
-        while (template.contains("%item%")) {
-            int randInt = RANDOM.nextInt(uniqueItems.size());
-            template = template.replaceFirst("%item%", I18n.translate(uniqueItems.remove(randInt).getTranslationKey()));
+            sb.append(" ");
         }
 
-        template = template.replaceFirst("%noun%", random(NOUNS));
+        sb.deleteCharAt(sb.length() - 1);
 
-        sb.append(template);
-
-        return sb.toString();
+        return sb.toString().split(" ");
     }
 
-    private static String random(String[] arr) {
+    private static <T> T random(T[] arr) {
         return arr[RANDOM.nextInt(arr.length)];
     }
 }

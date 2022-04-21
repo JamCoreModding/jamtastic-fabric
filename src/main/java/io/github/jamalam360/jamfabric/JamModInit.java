@@ -26,12 +26,9 @@ package io.github.jamalam360.jamfabric;
 
 //import io.github.astrarre.itemview.v0.fabric.ItemKey;
 // import io.github.foa.stackaware.v0.api.StackAware;
+
 import io.github.jamalam360.jamfabric.config.JamFabricConfig;
-import io.github.jamalam360.jamfabric.util.Jam;
-import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
-import io.github.jamalam360.jamfabric.util.registry.CompatRegistry;
-import io.github.jamalam360.jamfabric.util.registry.DataRegistry;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.util.registry.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -53,6 +50,7 @@ public class JamModInit implements ModInitializer {
         BlockRegistry.init();
         CompatRegistry.init();
         DataRegistry.init();
+        NetworkingRegistry.init(false);
 
         // StackAware.MAX_COUNT_REGISTRY.forExact(ItemKey.of(ItemRegistry.JAM_JAR), (itemKey, count) -> {
         //     if (Jam.fromNbt(itemKey.getCompoundTag().getCompound("Jam")).ingredientsSize() > 0) {

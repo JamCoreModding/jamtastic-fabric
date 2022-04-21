@@ -80,7 +80,7 @@ public class JamJarItem extends Item {
                 }
 
                 if (!world.isClient) {
-                    stack.setCustomName(new LiteralText(JamNameGenerator.create(stack.getSubNbt("Jam"))));
+                    stack.setCustomName(new LiteralText(String.join(" ", JamNameGenerator.create(stack.getSubNbt("Jam"), context.getPlayer()))));
                 }
 
                 blockEntity.empty();

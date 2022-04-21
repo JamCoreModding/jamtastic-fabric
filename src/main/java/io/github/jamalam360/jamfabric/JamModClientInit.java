@@ -28,6 +28,7 @@ import io.github.jamalam360.jamfabric.block.JamPotBlockEntityRenderer;
 import io.github.jamalam360.jamfabric.util.Jam;
 import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.util.registry.NetworkingRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
@@ -55,5 +56,7 @@ public class JamModClientInit implements ClientModInitializer {
         }), ItemRegistry.JAM_JAR);
 
         ModelPredicateProviderRegistry.register(ItemRegistry.JAM_JAR, new Identifier("jam_jar_full"), ((stack, world, entity, seed) -> Jam.fromNbt(stack.getSubNbt("Jam")).ingredientsSize() != 0 ? 1.0f : 0.0f));
+
+        NetworkingRegistry.init(true);
     }
 }
