@@ -86,6 +86,8 @@ public class JamPotBlock extends BlockWithEntity {
             JamIngredient ingredient = JamIngredientRegistry.get(player.getStackInHand(hand).getItem());
             blockEntity.jam.addRaw(ingredient);
             player.getStackInHand(hand).decrement(1);
+            JamPotBlock.playRandomBrewingSound(world, pos);
+
             return ActionResult.SUCCESS;
         } else if (stack.isEmpty() && player.isSneaking() && !world.isClient) {
             if (blockEntity.jam.ingredientsSize() > 0) {
@@ -120,7 +122,7 @@ public class JamPotBlock extends BlockWithEntity {
         return BlockRenderType.MODEL;
     }
 
-    private static void playRandomBrewingSound(World world, BlockPos pos) {
+    public static void playRandomBrewingSound(World world, BlockPos pos) {
         if (world.isClient) {
             world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_BREWING_STAND_BREW, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() + 1F, false);
         }

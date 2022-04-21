@@ -34,6 +34,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
@@ -106,6 +107,10 @@ public class JamPotBlockEntity extends BlockEntity {
         } else {
             this.lastColorBeforeChange = Utils.WATER_COLOR;
             this.cachedColor = Utils.WATER_COLOR;
+        }
+
+        if (!this.world.isClient) {
+            this.world.getPlayers().forEach(player -> ((ServerPlayerEntity) player).networkHandler.sendPacket(this.toUpdatePacket()));
         }
 
         this.markDirty();
