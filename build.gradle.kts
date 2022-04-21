@@ -23,7 +23,8 @@ repositories {
         Pair("https://api.modrinth.com/maven", listOf("maven.modrinth")),
         Pair("https://maven.blamejared.com", listOf("vazkii.patchouli")),
         Pair("https://storage.googleapis.com/devan-maven/", listOf("io.github.foa", "io.github.astrarre")),
-        Pair("https://maven.gegy.dev", listOf("dev.lambdaurora"))
+        Pair("https://maven.gegy.dev", listOf("dev.lambdaurora")),
+        Pair("https://maven.nucleoid.xyz", listOf("fr.catcore"))
     )
 
     mavenLocal()
