@@ -79,7 +79,6 @@ tasks {
     }
 
     build {
-        dependsOn("copyTranslations")
         dependsOn("updateLicenses")
     }
 
