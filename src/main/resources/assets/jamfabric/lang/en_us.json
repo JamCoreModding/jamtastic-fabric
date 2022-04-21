@@ -6,6 +6,8 @@
 
   "block.jamfabric.jam_pot": "Jam Pot",
 
+  "text.jamfabric.jam_spread": "Jam",
+
   "text.autoconfig.jamfabric.title": "Jam Config (May Require Restart)",
 
   "text.autoconfig.jamfabric.option.jamOptions": "Jam Options",

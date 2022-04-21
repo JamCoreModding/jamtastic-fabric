@@ -23,6 +23,7 @@ repositories {
         Pair("https://api.modrinth.com/maven", listOf("maven.modrinth")),
         Pair("https://maven.blamejared.com", listOf("vazkii.patchouli")),
         Pair("https://storage.googleapis.com/devan-maven/", listOf("io.github.foa", "io.github.astrarre")),
+        Pair("https://maven.gegy.dev", listOf("dev.lambdaurora"))
     )
 
     mavenLocal()
@@ -56,9 +57,13 @@ dependencies {
     // Optional:
     modApi(libs.mod.menu)
     modApi(libs.patchouli)
+    modApi(libs.sandwichable)
 
     // JiJ:
     //include(libs.stack.aware)
+
+    // Runtime:
+    modLocalRuntime(libs.spruce.ui) // Dependency of Sandwichable
 }
 
 tasks {

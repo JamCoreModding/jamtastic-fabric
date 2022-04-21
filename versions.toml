@@ -7,6 +7,8 @@ meal-api = "0.3+1.18"
 stack-aware = "1.0.3"
 mod-menu = "3.1.0"
 patchouli = "1.18.2-66-FABRIC"
+sandwichable = "1.2+1.18.2"
+spruce-ui = "3.3.3+1.18"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft"  }
@@ -17,3 +19,5 @@ meal-api = { module = "maven.modrinth:mealapi", version.ref = "meal-api" }
 stack-aware = { module = "io.github.foa:StackAware", version.ref="stack-aware"}
 mod-menu = { module = "com.terraformersmc:modmenu", version.ref = "mod-menu" }
 patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli" }
+sandwichable = { module = "maven.modrinth:sandwichable", version.ref = "sandwichable" }
+spruce-ui = { module = "dev.lambdaurora:spruceui", version.ref = "spruce-ui" }

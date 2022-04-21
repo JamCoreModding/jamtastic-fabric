@@ -26,6 +26,7 @@ package io.github.jamalam360.jamfabric.util.registry;
 
 import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.compat.CompatibilityPlugin;
+import io.github.jamalam360.jamfabric.compat.sandwichable.SandwichablePlugin;
 import io.github.jamalam360.jamfabric.mixin.JamMixinPlugin;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
@@ -40,12 +41,13 @@ public class CompatRegistry {
     public static final List<CompatibilityPlugin> COMPATIBILITY_PLUGINS = new ArrayList<>();
 
     static {
+        COMPATIBILITY_PLUGINS.add(new SandwichablePlugin());
     }
 
     public static void init() {
         for (CompatibilityPlugin plugin : COMPATIBILITY_PLUGINS) {
             if (FabricLoader.getInstance().isModLoaded(plugin.getModId())) {
-                JamModInit.LOGGER.log(Level.INFO, "Initializing compatibility with mod '" + plugin.getModId() + "'");
+                JamModInit.LOGGER.log(Level.INFO, "Initializing compatibility with " + plugin.getModId());
                 JamMixinPlugin.ACTIVE_COMPATIBILITY_MIXIN_PACKAGES.add(plugin.getModId());
                 plugin.init();
             }
