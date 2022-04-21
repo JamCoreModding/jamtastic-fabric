@@ -101,9 +101,11 @@ public class JamPotBlockEntity extends BlockEntity {
         if (this.jam == null) return;
 
         if (this.jam.ingredientsSize() > 0) {
-            if (this.cachedColor.equals(this.jam.getColor())) return;
-            this.lastColorBeforeChange = cachedColor;
-            this.cachedColor = this.jam.getColor();
+            if (this.world.isClient) {
+                if (this.cachedColor.equals(this.jam.getColor())) return;
+                this.lastColorBeforeChange = cachedColor;
+                this.cachedColor = this.jam.getColor();
+            }
         } else {
             this.lastColorBeforeChange = Utils.WATER_COLOR;
             this.cachedColor = Utils.WATER_COLOR;
