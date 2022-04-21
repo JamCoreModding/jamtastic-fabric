@@ -79,7 +79,7 @@ public class JamJarItem extends Item {
                     player.playSound(SoundEvents.BLOCK_BREWING_STAND_BREW, 1.0F, 1.0F);
                 }
 
-                if (world.isClient) {
+                if (!world.isClient) {
                     stack.setCustomName(new LiteralText(JamNameGenerator.create(stack.getSubNbt("Jam"))));
                 }
 

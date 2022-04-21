@@ -24,32 +24,44 @@
 
 package io.github.jamalam360.jamfabric.util.registry;
 
+import com.google.common.collect.Maps;
 import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.compat.CompatibilityPlugin;
-import io.github.jamalam360.jamfabric.compat.sandwichable.SandwichablePlugin;
 import io.github.jamalam360.jamfabric.mixin.JamMixinPlugin;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jamalam360
  */
 public class CompatRegistry {
-    public static final List<CompatibilityPlugin> COMPATIBILITY_PLUGINS = new ArrayList<>();
+    public static final Map<String, String> COMPATIBILITY_PLUGINS = Maps.newHashMap();
 
     static {
-        COMPATIBILITY_PLUGINS.add(new SandwichablePlugin());
+        COMPATIBILITY_PLUGINS.put("sandwichable", "sandwichable.SandwichablePlugin");
     }
 
     public static void init() {
-        for (CompatibilityPlugin plugin : COMPATIBILITY_PLUGINS) {
-            if (FabricLoader.getInstance().isModLoaded(plugin.getModId())) {
-                JamModInit.LOGGER.log(Level.INFO, "Initializing compatibility with " + plugin.getModId());
-                JamMixinPlugin.ACTIVE_COMPATIBILITY_MIXIN_PACKAGES.add(plugin.getModId());
-                plugin.init();
+        for (Map.Entry<String, String> plugin : COMPATIBILITY_PLUGINS.entrySet()) {
+            if (FabricLoader.getInstance().isModLoaded(plugin.getKey())) {
+                try {
+                    Class<?> clazz = Class.forName("io.github.jamalam360.jamfabric.compat." + plugin.getValue());
+                    Object obj = clazz.getConstructor().newInstance();
+
+                    if (obj instanceof CompatibilityPlugin pluginInstance) {
+
+                        JamModInit.LOGGER.log(Level.INFO, "Initializing compatibility with " + plugin.getKey());
+                        JamMixinPlugin.ACTIVE_COMPATIBILITY_MIXIN_PACKAGES.add(plugin.getKey());
+                        pluginInstance.init();
+                    } else {
+                        throw new IllegalArgumentException();
+                    }
+                } catch (Exception e) {
+                    JamModInit.LOGGER.log(Level.ERROR, "Failed to load compatibility plugin: " + plugin.getKey());
+                    throw new IllegalArgumentException();
+                }
             }
         }
     }

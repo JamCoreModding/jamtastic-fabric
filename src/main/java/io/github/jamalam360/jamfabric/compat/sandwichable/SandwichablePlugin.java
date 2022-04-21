@@ -38,9 +38,4 @@ public class SandwichablePlugin implements CompatibilityPlugin {
             SpreadRegistry.INSTANCE.register("jamtastic:jam", new JamSpreadType());
         }
     }
-
-    @Override
-    public String getModId() {
-        return "sandwichable";
-    }
 }

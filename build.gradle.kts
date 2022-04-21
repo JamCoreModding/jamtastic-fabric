@@ -24,7 +24,7 @@ repositories {
         Pair("https://maven.blamejared.com", listOf("vazkii.patchouli")),
         Pair("https://storage.googleapis.com/devan-maven/", listOf("io.github.foa", "io.github.astrarre")),
         Pair("https://maven.gegy.dev", listOf("dev.lambdaurora")),
-        Pair("https://maven.nucleoid.xyz", listOf("fr.catcore"))
+        Pair("https://maven.nucleoid.xyz", listOf("fr.catcore", "xyz.nucleoid")),
     )
 
     mavenLocal()
@@ -54,6 +54,7 @@ dependencies {
     modApi(libs.cloth.config)
     modApi(libs.meal.api)
     //modApi(libs.stack.aware)
+    modApi(libs.server.translations.api)
 
     // Optional:
     modApi(libs.mod.menu)
@@ -62,6 +63,7 @@ dependencies {
 
     // JiJ:
     //include(libs.stack.aware)
+    include(libs.server.translations.api) //TODO: Don't include this if it's available on CF?
 
     // Runtime:
     modLocalRuntime(libs.spruce.ui) // Dependency of Sandwichable
