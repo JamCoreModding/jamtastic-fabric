@@ -1,0 +1,41 @@
+{
+  "tooltip.jamfabric.hunger_tooltip": "Hunger: %d",
+  "tooltip.jamfabric.empty_tooltip": "Empty",
+
+  "item.jamfabric.jam_jar": "Jam Jar",
+
+  "block.jamfabric.jam_pot": "Jam Pot",
+
+  "text.jamfabric.jam_spread": "Jam",
+
+  "text.autoconfig.jamfabric.title": "Jam Config (May Require Restart)",
+
+  "text.autoconfig.jamfabric.option.jamOptions": "Jam Options",
+  "text.autoconfig.jamfabric.option.jamOptions.@Tooltip": "Configure jam behaviour",
+  "text.autoconfig.jamfabric.option.jamOptions.maxJamIngredients": "Max Ingredients",
+  "text.autoconfig.jamfabric.option.jamOptions.maxJamIngredients.@Tooltip": "The maximum number of ingredients allowed in jam",
+  "text.autoconfig.jamfabric.option.jamOptions.colorProviderType": "Jam Color Algorithm",
+  "text.autoconfig.jamfabric.option.jamOptions.colorProviderType.@Tooltip": "The algorithm to use to get the average color for the jam",
+
+  "text.autoconfig.jamfabric.option.compatOptions": "Compatibility Options",
+  "text.autoconfig.jamfabric.option.compatOptions.@Tooltip": "Configure compatibility with other mods",
+  "text.autoconfig.jamfabric.option.compatOptions.enableSandwichableCompat": "Enabled Sandwichable Compatibility",
+  "text.autoconfig.jamfabric.option.compatOptions.enableSandwichableCompat.@Tooltip": "Enabled compatibility features with Sandwichable",
+
+  "jam_names.jamfabric.beneficial_effect_adjectives.0": "Premium",
+  "jam_names.jamfabric.beneficial_effect_adjectives.1": "Luxury",
+  "jam_names.jamfabric.beneficial_effect_adjectives.2": "Fine",
+  "jam_names.jamfabric.beneficial_effect_adjectives.3": "Superior",
+
+  "jam_names.jamfabric.non_beneficial_effect_adjectives.0": "Disgusting",
+  "jam_names.jamfabric.non_beneficial_effect_adjectives.1": "Revolting",
+  "jam_names.jamfabric.non_beneficial_effect_adjectives.2": "Sickening",
+  "jam_names.jamfabric.non_beneficial_effect_adjectives.3": "Unpleasant",
+  "jam_names.jamfabric.non_beneficial_effect_adjectives.4": "Nauseating",
+  "jam_names.jamfabric.non_beneficial_effect_adjectives.5": "Horrid",
+
+  "jam_names.jamfabric.nouns.0": "Jam",
+  "jam_names.jamfabric.nouns.1": "Conserve",
+  "jam_names.jamfabric.nouns.2": "Preserve",
+  "jam_names.jamfabric.nouns.3": "Jelly"
+}

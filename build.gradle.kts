@@ -81,7 +81,13 @@ tasks {
         }
     }
 
+    register<Copy>("copyTranslations") {
+        from("src/main/resources/assets/jamfabric/lang")
+        into("src/main/resources/data/jamfabric/lang")
+    }
+
     build {
+        dependsOn("copyTranslations")
         dependsOn("updateLicenses")
     }
 
