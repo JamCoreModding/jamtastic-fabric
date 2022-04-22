@@ -19,5 +19,5 @@ meal-api = { module = "maven.modrinth:mealapi", version.ref = "meal-api" }
 stack-aware = { module = "io.github.foa:StackAware", version.ref="stack-aware"}
 mod-menu = { module = "com.terraformersmc:modmenu", version.ref = "mod-menu" }
 patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli" }
-sandwichable = { module = "maven.modrinth:sandwichable", version.ref = "sandwichable" }
+sandwichable = { module = "maven.modrinth:5g7OOxWC", version.ref = "sandwichable" }
 spruce-ui = { module = "dev.lambdaurora:spruceui", version.ref = "spruce-ui" }
