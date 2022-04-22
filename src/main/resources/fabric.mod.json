@@ -45,6 +45,6 @@
   },
   "custom": {
     "notify_gradle_properties_url": "https://raw.githubusercontent.com/JamCoreModding/JamFabric/main/gradle.properties",
-    "notify_gradle_properties_key": "modVersion"
+    "notify_gradle_properties_key": "mod_version"
   }
 }

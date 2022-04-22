@@ -5,10 +5,13 @@ plugins {
     id("org.cadixdev.licenser") version "0.6.1"
 }
 
-val modVersion: String by project
+apply(from = "https://raw.githubusercontent.com/JamCoreModding/Gronk/main/publishing.gradle.kts")
+apply(from = "https://raw.githubusercontent.com/JamCoreModding/Gronk/main/misc.gradle.kts")
+
+val mod_version: String by project
 
 group = "io.github.jamalam360"
-version = modVersion
+version = mod_version
 
 loom {
     mixin {
@@ -25,8 +28,6 @@ repositories {
         Pair("https://storage.googleapis.com/devan-maven/", listOf("io.github.foa", "io.github.astrarre")),
         Pair("https://maven.gegy.dev", listOf("dev.lambdaurora"))
     )
-
-    mavenLocal()
 
     for (mavenPair in mavenUrls) {
         maven {
@@ -64,33 +65,4 @@ dependencies {
 
     // Runtime:
     modLocalRuntime(libs.spruce.ui) // Dependency of Sandwichable
-}
-
-tasks {
-    processResources {
-        inputs.property("version", project.version)
-        filesMatching("fabric.mod.json") {
-            expand(
-                mutableMapOf(
-                    "version" to project.version
-                )
-            )
-        }
-    }
-
-    build {
-        dependsOn("updateLicenses")
-    }
-
-    jar {
-        archiveBaseName.set("Jamtastic")
-    }
-
-    remapJar {
-        archiveBaseName.set("Jamtastic")
-    }
-
-    withType<JavaCompile> {
-        options.release.set(17)
-    }
 }
