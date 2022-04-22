@@ -9,10 +9,11 @@
     "entity.PlayerEntityMixin",
     "general.HopperBlockEntityMixin",
     "general.HungerManagerMixin",
-    "general.ItemStackMixin",
     "render.BakedQuadMixin"
   ],
-  "client": [],
+  "client": [
+    "general.ItemStackMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1
