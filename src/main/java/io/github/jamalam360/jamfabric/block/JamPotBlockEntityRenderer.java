@@ -24,7 +24,6 @@
 
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.util.Utils;
 import io.github.jamalam360.jamfabric.color.Color;
 import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
@@ -58,8 +57,8 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
         }
 
         if (entity.justCleared) {
-            entity.lerpingTo = Utils.WATER_COLOR;
-            entity.lastLerpProgress = Utils.WATER_COLOR;
+            entity.lerpingTo = Color.WATER;
+            entity.lastLerpProgress = Color.WATER;
             entity.justCleared = false;
         }
 
@@ -92,7 +91,7 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
         int updatedLight = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
 
         if (entity.hasWater() && entity.jam.ingredientsSize() == 0) {
-            color = Utils.WATER_COLOR;;
+            color = Color.WATER;;
         }
 
         matrices.push();

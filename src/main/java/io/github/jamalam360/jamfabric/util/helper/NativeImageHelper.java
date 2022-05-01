@@ -24,6 +24,7 @@
 
 package io.github.jamalam360.jamfabric.util.helper;
 
+import io.github.jamalam360.jamfabric.color.Color;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.Item;
@@ -37,11 +38,8 @@ import org.apache.logging.log4j.Logger;
  * @author Jamalam360
  */
 public class NativeImageHelper {
-    private static Logger LOGGER = LogManager.getLogger("Jamtastic/NativeImage");
+    private static final Logger LOGGER = LogManager.getLogger("Jamtastic/NativeImage");
 
-    /**
-     * Returns a NativeImage of an Items texture
-     */
     public static NativeImage getNativeImage(Item item) {
         try {
             Identifier id = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(item).getParticleSprite().getId();
@@ -59,4 +57,19 @@ public class NativeImageHelper {
 
         return new NativeImage(16, 16, false);
     }
+
+    public static Color[] getColors(NativeImage image) {
+        Color[] colors = new Color[image.getWidth() * image.getHeight()];
+        for (int x = 0; x < image.getWidth(); x++) {
+            for (int y = 0; y < image.getHeight(); y++) {
+                int[] pixelColors = ColorHelper.unpackRgbaColor(image.getPixelColor(x, y));
+                if ((pixelColors[0] != 255 && pixelColors[1] != 255 && pixelColors[2] != 255) && (pixelColors[0] != 0 && pixelColors[1] != 0 && pixelColors[2] != 0)) {
+                    colors[x + y] = new Color(pixelColors[0], pixelColors[1], pixelColors[2]);
+                }
+            }
+        }
+
+        return colors;
+    }
+
 }

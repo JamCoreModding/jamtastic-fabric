@@ -47,10 +47,10 @@ public class SimpleAverageColorProvider implements AverageColorProvider {
             }
         }
 
-        long avgR = Math.round(r / total);
-        long avgG = Math.round(g / total);
-        long avgB = Math.round(b / total);
+        r /= total;
+        g /= total;
+        b /= total;
 
-        return new Color((int) avgR, (int) avgG, (int) avgB);
+        return new Color((int) r, (int) g, (int) b);
     }
 }

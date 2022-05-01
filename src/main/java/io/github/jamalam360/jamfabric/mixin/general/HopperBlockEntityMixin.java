@@ -55,7 +55,7 @@ public class HopperBlockEntityMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void jamfabric$insertIntoJamJar(World world, BlockPos pos, BlockState state, Inventory inventory, CallbackInfoReturnable<Boolean> cir) {
+    private static void jamfabric$tryInsertIntoJamJar(World world, BlockPos pos, BlockState state, Inventory inventory, CallbackInfoReturnable<Boolean> cir) {
         BlockPos jamPos = pos.offset(state.get(HopperBlock.FACING));
 
         if (world.getBlockEntity(jamPos) instanceof JamPotBlockEntity jamPotBlockEntity) {

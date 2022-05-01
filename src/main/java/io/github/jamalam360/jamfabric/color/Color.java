@@ -27,8 +27,9 @@ package io.github.jamalam360.jamfabric.color;
 /**
  * '''Liberated''' from AWT because that package breaks on macOS.
  */
-@SuppressWarnings({"SameParameterValue", "PointlessBitwiseExpression"})
 public class Color {
+    public static final Color WATER = new Color(49, 95, 219);
+
     int value;
 
     private static void testColorValueRange(int r, int g, int b, int a) {
@@ -69,7 +70,7 @@ public class Color {
         value = ((a & 0xFF) << 24) |
                 ((r & 0xFF) << 16) |
                 ((g & 0xFF) << 8) |
-                ((b & 0xFF) << 0);
+                ((b & 0xFF));
         testColorValueRange(r, g, b, a);
     }
 
@@ -82,7 +83,7 @@ public class Color {
     }
 
     public int getBlue() {
-        return (getRGB() >> 0) & 0xFF;
+        return (getRGB()) & 0xFF;
     }
 
     public int getRGB() {
@@ -132,7 +133,7 @@ public class Color {
                 }
             }
         }
-        return 0xff000000 | (r << 16) | (g << 8) | (b << 0);
+        return 0xff000000 | (r << 16) | (g << 8) | (b);
     }
 
     public static float[] RGBtoHSB(int r, int g, int b, float[] hsbvals) {

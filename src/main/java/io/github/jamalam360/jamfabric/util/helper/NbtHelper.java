@@ -37,20 +37,7 @@ import java.util.List;
 /**
  * @author Jamalam360
  */
-@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class NbtHelper {
-    public static NbtCompound writeItems(NbtCompound compound, String baseKey, Item... items) {
-        ArrayList<Item> appendedItems = new ArrayList<>(List.of(items));
-        appendedItems.addAll(Arrays.asList(readItems(compound, baseKey)));
-
-        compound.putInt(baseKey + "Length", appendedItems.size());
-        for (int i = 0; i < appendedItems.size(); i++) {
-            compound.putString(baseKey + i, Registry.ITEM.getId(appendedItems.get(i)).toString());
-        }
-
-        return compound;
-    }
-
     public static Item[] readItems(NbtCompound compound, String baseKey) {
         ArrayList<Item> items = new ArrayList<>();
 
@@ -61,16 +48,7 @@ public class NbtHelper {
         return items.toArray(new Item[0]);
     }
 
-    public static NbtCompound writeItem(NbtCompound compound, String key, Item item) {
-        compound.putString(key, Registry.ITEM.getId(item).toString());
-        return compound;
-    }
-
-    public static Item readItem(NbtCompound compound, String key) {
-        return Registry.ITEM.get(new Identifier(compound.getString(key)));
-    }
-
-    public static NbtCompound writeJamIngredients(NbtCompound compound, String baseKey, JamIngredient... ingredients) {
+    public static void writeJamIngredients(NbtCompound compound, String baseKey, JamIngredient... ingredients) {
         ArrayList<JamIngredient> appendedIngredients = new ArrayList<>(List.of(ingredients));
         appendedIngredients.addAll(Arrays.asList(readJamIngredients(compound, baseKey)));
 
@@ -78,8 +56,6 @@ public class NbtHelper {
         for (int i = 0; i < appendedIngredients.size(); i++) {
             compound.putString(baseKey + i, appendedIngredients.get(i).toNbt());
         }
-
-        return compound;
     }
 
     public static JamIngredient[] readJamIngredients(NbtCompound compound, String baseKey) {

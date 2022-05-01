@@ -37,18 +37,21 @@ public class HsbAverageColorProvider implements AverageColorProvider {
         float s = 0;
         float b = 0;
         float total = 0;
+
         for (Color color : colors) {
             if (color != null) {
                 float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
                 h += hsb[0] * hsb[2];
                 s += hsb[1] * hsb[2];
                 b += hsb[2];
-                total += hsb[2];
+                total++;
             }
         }
+
         h /= total;
         s /= total;
         b /= total;
+
         return new Color(Color.HSBtoRGB(h, s, b));
     }
 }
