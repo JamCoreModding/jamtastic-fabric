@@ -12,4 +12,4 @@
 
 No issues were closed in this release.
 
-[Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/1.3.5...1.4.0)
+[Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/...)
