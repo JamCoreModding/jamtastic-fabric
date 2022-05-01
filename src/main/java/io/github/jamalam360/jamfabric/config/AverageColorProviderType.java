@@ -37,11 +37,11 @@ public enum AverageColorProviderType {
     SIMPLE_SQUARED_AVERAGE(new SimpleSquaredAverageColorProvider()),
     HSB_AVERAGE(new HsbAverageColorProvider());
 
+    private final AverageColorProvider provider;
+
     AverageColorProviderType(AverageColorProvider provider) {
         this.provider = provider;
     }
-
-    private final AverageColorProvider provider;
 
     public AverageColorProvider getProvider() {
         return provider;

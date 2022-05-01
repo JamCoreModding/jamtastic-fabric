@@ -51,6 +51,7 @@ public class JamFabricConfig implements ConfigData {
     }
 
     public static class CompatOptions {
+        @ConfigEntry.Gui.Tooltip
         public boolean enableSandwichableCompat = true;
     }
 }
