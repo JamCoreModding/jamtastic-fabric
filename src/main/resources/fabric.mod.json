@@ -3,17 +3,17 @@
   "id": "jamfabric",
   "version": "${version}",
   "name": "Jamtastic",
-  "description": "A mod that adds jam",
+  "description": "Make all the jam your heart desires...",
   "authors": [
-    "Jamalam - Primary Developer"
+    "Jamalam"
   ],
   "contributors": [
-    "Jomlom - Artist/Models"
+    "Jomlom"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/jam-fabric",
-    "issues": "https://github.com/JamCoreModding/Jamtastic/issues",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/jamtastic",
     "sources": "https://github.com/JamCoreModding/Jamtastic",
+    "issues": "https://github.com/JamCoreModding/Jamtastic/issues",
     "discord": "https://discord.jamalam.tech"
   },
   "license": "MIT",
