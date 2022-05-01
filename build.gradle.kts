@@ -47,22 +47,23 @@ dependencies {
         addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.18.2+build.22:v2"))
     })
 
-    modImplementation(libs.loader)
+    // Fabric:
+    modImplementation(libs.fabric.loader)
     modImplementation(libs.fabric.api)
 
     // Required:
-    modApi(libs.cloth.config)
-    modApi(libs.meal.api)
-    //modApi(libs.stack.aware)
-
-    // Optional:
-    modApi(libs.mod.menu)
-    modApi(libs.patchouli)
-    modApi(libs.sandwichable)
+    modApi(libs.required.cloth.config)
+    modApi(libs.required.meal.api)
+    //modApi(libs.required.stack.aware)
 
     // JiJ:
-    //include(libs.stack.aware)
+    //include(libs.required.aware)
+
+    // Optional:
+    modApi(libs.optional.mod.menu)
+    modApi(libs.optional.patchouli)
+    modApi(libs.optional.sandwichable)
 
     // Runtime:
-    modLocalRuntime(libs.spruce.ui) // Dependency of Sandwichable
+    modLocalRuntime(libs.runtime.spruce.ui) // Dependency of Sandwichable
 }
