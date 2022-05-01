@@ -29,7 +29,6 @@ import io.github.jamalam360.jamfabric.jam.Jam;
 import io.github.jamalam360.jamfabric.jam.JamNameGenerator;
 import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -38,7 +37,6 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.UseAction;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,33 +52,28 @@ public class JamJarItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        World world = context.getWorld();
-        BlockPos pos = context.getBlockPos();
-        ItemStack stack = context.getStack();
-        PlayerEntity player = context.getPlayer();
-
-        if (world.getBlockState(pos).isOf(BlockRegistry.JAM_POT)) {
-            JamPotBlockEntity blockEntity = (JamPotBlockEntity) world.getBlockEntity(pos);
-            assert player != null;
-            assert blockEntity != null;
+        if (context.getWorld().getBlockState(context.getBlockPos()).isOf(BlockRegistry.JAM_POT)) {
+            JamPotBlockEntity blockEntity = (JamPotBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos());
 
             if (
-                    blockEntity.jam.ingredientsSize() == 0
-                            || (stack.getSubNbt("Jam") != null
-                            && Jam.fromNbt(stack.getSubNbt("Jam")).ingredientsSize() > 0)
+                    blockEntity == null ||
+                            context.getPlayer() == null ||
+                            blockEntity.jam.ingredientsSize() == 0
+                            || (context.getStack().getSubNbt("Jam") != null
+                            && Jam.fromNbt(context.getStack().getSubNbt("Jam")).ingredientsSize() > 0)
             ) {
                 return super.useOnBlock(context);
             }
 
-            if (player.isSneaking()) {
-                stack.setSubNbt("Jam", blockEntity.jam.toNbt());
+            if (context.getPlayer().isSneaking()) {
+                context.getStack().setSubNbt("Jam", blockEntity.jam.toNbt());
 
-                if (world.isClient) {
-                    player.playSound(SoundEvents.BLOCK_BREWING_STAND_BREW, 1.0F, 1.0F);
+                if (context.getWorld().isClient) {
+                    context.getPlayer().playSound(SoundEvents.BLOCK_BREWING_STAND_BREW, 1.0F, 1.0F);
                 }
 
-                if (!world.isClient) {
-                    stack.setCustomName(new LiteralText(String.join(" ", JamNameGenerator.create(stack.getSubNbt("Jam"), context.getPlayer()))));
+                if (!context.getWorld().isClient) {
+                    context.getStack().setCustomName(new LiteralText(String.join(" ", JamNameGenerator.create(context.getStack().getSubNbt("Jam"), context.getPlayer()))));
                 }
 
                 blockEntity.empty();
