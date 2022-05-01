@@ -25,10 +25,9 @@
 package io.github.jamalam360.jamfabric.jam;
 
 import com.mojang.datafixers.util.Pair;
-import io.github.jamalam360.jamfabric.JamModInit;
-import io.github.jamalam360.jamfabric.data.JamIngredient;
 import io.github.jamalam360.jamfabric.color.Color;
 import io.github.jamalam360.jamfabric.color.ColorHelper;
+import io.github.jamalam360.jamfabric.data.JamIngredient;
 import io.github.jamalam360.jamfabric.util.helper.NbtHelper;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
@@ -37,6 +36,8 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -47,6 +48,7 @@ import java.util.stream.Collectors;
  */
 public class Jam {
     public static final String INGREDIENTS_BASE_KEY = "Ingredients";
+    private static final Logger LOGGER = LogManager.getLogger("Jamtastic/Jam");
 
     private final List<JamIngredient> ingredients = new ArrayList<>();
     private final List<Pair<StatusEffectInstance, Float>> effects = new ArrayList<>();
@@ -186,7 +188,7 @@ public class Jam {
                 return new Jam();
             }
         } catch (Exception e) {
-            JamModInit.LOGGER.warn("Failed to load jam from NBT, this is likely due to an update in the NBT format, and can be ignored.");
+            LOGGER.warn("Failed to load jam from NBT, this is likely due to an update in the NBT format, and can be ignored.");
 
             Item[] ingredients = NbtHelper.readItems(compound, INGREDIENTS_BASE_KEY);
 

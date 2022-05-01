@@ -38,11 +38,11 @@ import org.apache.logging.log4j.Logger;
 
 public class JamModInit implements ModInitializer {
     public static final String MOD_ID = "jamfabric";
-    public static Logger LOGGER = LogManager.getLogger("Jamtastic");
+    private static final Logger LOGGER = LogManager.getLogger("Jamtastic/Initializer");
 
     @Override
     public void onInitialize() {
-        LOGGER.log(Level.INFO, "Initializing Jamtastic");
+        LOGGER.log(Level.INFO, "Initializing Jamtastic.");
 
         AutoConfig.register(JamFabricConfig.class, GsonConfigSerializer::new);
 
@@ -60,6 +60,6 @@ public class JamModInit implements ModInitializer {
         //     }
         // });
 
-        LOGGER.log(Level.INFO, "Jamtastic initialized");
+        LOGGER.log(Level.INFO, "Jamtastic initialized.");
     }
 }

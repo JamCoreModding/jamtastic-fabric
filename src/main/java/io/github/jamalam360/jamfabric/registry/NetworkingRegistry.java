@@ -24,7 +24,6 @@
 
 package io.github.jamalam360.jamfabric.registry;
 
-import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.jam.JamNameGenerator;
 import io.github.jamalam360.jamfabric.util.Utils;
 import io.github.jamalam360.jamfabric.util.helper.TranslationHelper;
@@ -34,6 +33,8 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Jamalam360
@@ -41,6 +42,8 @@ import net.minecraft.util.Identifier;
 public class NetworkingRegistry {
     public static final Identifier GET_TRANSLATION_KEYS_REQ = Utils.id("get_translation_count_req");
     private static final Identifier GET_TRANSLATION_KEYS_RES = Utils.id("get_translation_count_res");
+
+    private static final Logger LOGGER = LogManager.getLogger("Jamtastic/Networking");
 
     public static void init(boolean isClient) {
         if (isClient) {
@@ -62,7 +65,7 @@ public class NetworkingRegistry {
                     case JamNameGenerator.NON_BENEFICIAL_EFFECT_ADJECTIVES_KEY -> JamNameGenerator.NON_BENEFICIAL_EFFECT_ADJECTIVES = translationsArray;
                     case JamNameGenerator.NOUNS_KEY -> JamNameGenerator.NOUNS = translationsArray;
                     default -> {
-                        JamModInit.LOGGER.error("Unknown translation key: " + baseKey);
+                        LOGGER.error("Unknown translation key: " + baseKey + ".");
                         throw new IllegalArgumentException();
                     }
                 }

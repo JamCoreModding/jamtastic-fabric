@@ -24,18 +24,21 @@
 
 package io.github.jamalam360.jamfabric.util.helper;
 
-import io.github.jamalam360.jamfabric.JamModInit;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.Item;
 import net.minecraft.resource.Resource;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Jamalam360
  */
 public class NativeImageHelper {
+    private static Logger LOGGER = LogManager.getLogger("Jamtastic/NativeImage");
+
     /**
      * Returns a NativeImage of an Items texture
      */
@@ -50,7 +53,7 @@ public class NativeImageHelper {
 
             return NativeImage.read(texture.getInputStream());
         } catch (Exception e) {
-            JamModInit.LOGGER.log(Level.ERROR, "Failed to retrieve NativeImage texture of item " + item.getName().getString() + ". This a bug, and should be reported.");
+            LOGGER.log(Level.ERROR, "Failed to retrieve NativeImage texture of item " + item.getName().getString() + ". This a bug, and should be reported.");
             e.printStackTrace();
         }
 

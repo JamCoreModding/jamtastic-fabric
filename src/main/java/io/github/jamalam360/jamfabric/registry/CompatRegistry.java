@@ -25,11 +25,12 @@
 package io.github.jamalam360.jamfabric.registry;
 
 import com.google.common.collect.Maps;
-import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.compat.CompatibilityPlugin;
 import io.github.jamalam360.jamfabric.mixin.JamMixinPlugin;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
@@ -38,6 +39,7 @@ import java.util.Map;
  */
 public class CompatRegistry {
     public static final Map<String, String> COMPATIBILITY_PLUGINS = Maps.newHashMap();
+    private static final Logger LOGGER = LogManager.getLogger("Jamtastic/Compatibility");
 
     static {
         COMPATIBILITY_PLUGINS.put("sandwichable", "sandwichable.SandwichablePlugin");
@@ -52,14 +54,14 @@ public class CompatRegistry {
 
                     if (obj instanceof CompatibilityPlugin pluginInstance) {
 
-                        JamModInit.LOGGER.log(Level.INFO, "Initializing compatibility with " + plugin.getKey());
+                        LOGGER.log(Level.INFO, "Initializing compatibility with " + plugin.getKey() + ".");
                         JamMixinPlugin.ACTIVE_COMPATIBILITY_MIXIN_PACKAGES.add(plugin.getKey());
                         pluginInstance.init();
                     } else {
                         throw new IllegalArgumentException();
                     }
                 } catch (Exception e) {
-                    JamModInit.LOGGER.log(Level.ERROR, "Failed to load compatibility plugin: " + plugin.getKey());
+                    LOGGER.log(Level.ERROR, "Failed to load compatibility plugin: " + plugin.getKey() + ".");
                     throw new IllegalArgumentException();
                 }
             }
