@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util.registry;
+package io.github.jamalam360.jamfabric.registry;
 
 import com.google.common.collect.Maps;
 import io.github.jamalam360.jamfabric.JamModInit;

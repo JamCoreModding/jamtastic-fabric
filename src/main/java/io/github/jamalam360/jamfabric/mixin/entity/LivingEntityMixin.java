@@ -25,8 +25,8 @@
 package io.github.jamalam360.jamfabric.mixin.entity;
 
 import com.mojang.datafixers.util.Pair;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
-import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.jam.Jam;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.FoodComponent;

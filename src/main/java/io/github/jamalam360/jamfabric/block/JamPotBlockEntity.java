@@ -24,10 +24,10 @@
 
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.jam.Jam;
 import io.github.jamalam360.jamfabric.util.Utils;
-import io.github.jamalam360.jamfabric.util.color.Color;
-import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
+import io.github.jamalam360.jamfabric.color.Color;
+import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;

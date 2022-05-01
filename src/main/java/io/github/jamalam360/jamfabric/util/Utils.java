@@ -26,7 +26,7 @@ package io.github.jamalam360.jamfabric.util;
 
 import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.config.JamFabricConfig;
-import io.github.jamalam360.jamfabric.util.color.Color;
+import io.github.jamalam360.jamfabric.color.Color;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.util.Identifier;
 

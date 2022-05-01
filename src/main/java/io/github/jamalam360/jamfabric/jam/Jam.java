@@ -22,13 +22,13 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util;
+package io.github.jamalam360.jamfabric.jam;
 
 import com.mojang.datafixers.util.Pair;
 import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.data.JamIngredient;
-import io.github.jamalam360.jamfabric.util.color.Color;
-import io.github.jamalam360.jamfabric.util.color.ColorHelper;
+import io.github.jamalam360.jamfabric.color.Color;
+import io.github.jamalam360.jamfabric.color.ColorHelper;
 import io.github.jamalam360.jamfabric.util.helper.NbtHelper;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;

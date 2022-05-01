@@ -28,7 +28,7 @@ package io.github.jamalam360.jamfabric;
 // import io.github.foa.stackaware.v0.api.StackAware;
 
 import io.github.jamalam360.jamfabric.config.JamFabricConfig;
-import io.github.jamalam360.jamfabric.util.registry.*;
+import io.github.jamalam360.jamfabric.registry.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;

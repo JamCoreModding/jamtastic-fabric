@@ -22,33 +22,27 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util.color.algorithm;
+package io.github.jamalam360.jamfabric.registry;
 
-import io.github.jamalam360.jamfabric.util.color.AverageColorProvider;
-import io.github.jamalam360.jamfabric.util.color.Color;
+import io.github.jamalam360.jamfabric.item.JamJarItem;
+import io.github.jamalam360.jamfabric.util.Utils;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.item.FoodComponent;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.util.registry.Registry;
 
 /**
  * @author Jamalam360
  */
-public class HsbAverageColorProvider implements AverageColorProvider {
-    @Override
-    public Color getAverageColor(Color[] colors) {
-        float h = 0;
-        float s = 0;
-        float b = 0;
-        float total = 0;
-        for (Color color : colors) {
-            if (color != null) {
-                float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
-                h += hsb[0] * hsb[2];
-                s += hsb[1] * hsb[2];
-                b += hsb[2];
-                total += hsb[2];
-            }
-        }
-        h /= total;
-        s /= total;
-        b /= total;
-        return new Color(Color.HSBtoRGB(h, s, b));
+public class ItemRegistry {
+    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(ItemGroup.FOOD).food(new FoodComponent.Builder().alwaysEdible().build()));
+
+    public static void init() {
+        registerItem("jam_jar", JAM_JAR);
+    }
+
+    private static void registerItem(String id, Item item) {
+        Registry.register(Registry.ITEM, Utils.id(id), item);
     }
 }

@@ -22,10 +22,10 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util.registry;
+package io.github.jamalam360.jamfabric.registry;
 
 import io.github.jamalam360.jamfabric.JamModInit;
-import io.github.jamalam360.jamfabric.util.JamNameGenerator;
+import io.github.jamalam360.jamfabric.jam.JamNameGenerator;
 import io.github.jamalam360.jamfabric.util.Utils;
 import io.github.jamalam360.jamfabric.util.helper.TranslationHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;

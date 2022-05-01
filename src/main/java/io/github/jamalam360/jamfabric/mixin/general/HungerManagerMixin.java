@@ -25,9 +25,9 @@
 package io.github.jamalam360.jamfabric.mixin.general;
 
 import io.github.foundationgames.mealapi.api.v0.PlayerFullnessUtil;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import io.github.jamalam360.jamfabric.util.duck.HungerManagerDuck;
-import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.jam.Jam;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

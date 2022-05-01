@@ -25,8 +25,8 @@
 package io.github.jamalam360.jamfabric.compat.sandwichable;
 
 import io.github.foundationgames.sandwichable.items.spread.SpreadType;
-import io.github.jamalam360.jamfabric.util.Jam;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.jam.Jam;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;

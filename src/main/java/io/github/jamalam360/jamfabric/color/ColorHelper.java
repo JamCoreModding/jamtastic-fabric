@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util.color;
+package io.github.jamalam360.jamfabric.color;
 
 import io.github.jamalam360.jamfabric.util.Utils;
 import io.github.jamalam360.jamfabric.util.helper.NativeImageHelper;

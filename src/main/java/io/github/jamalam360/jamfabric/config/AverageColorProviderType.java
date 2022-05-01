@@ -24,10 +24,10 @@
 
 package io.github.jamalam360.jamfabric.config;
 
-import io.github.jamalam360.jamfabric.util.color.AverageColorProvider;
-import io.github.jamalam360.jamfabric.util.color.algorithm.HsbAverageColorProvider;
-import io.github.jamalam360.jamfabric.util.color.algorithm.SimpleAverageColorProvider;
-import io.github.jamalam360.jamfabric.util.color.algorithm.SimpleSquaredAverageColorProvider;
+import io.github.jamalam360.jamfabric.color.AverageColorProvider;
+import io.github.jamalam360.jamfabric.color.algorithm.HsbAverageColorProvider;
+import io.github.jamalam360.jamfabric.color.algorithm.SimpleAverageColorProvider;
+import io.github.jamalam360.jamfabric.color.algorithm.SimpleSquaredAverageColorProvider;
 
 /**
  * @author Jamalam360

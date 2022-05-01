@@ -27,7 +27,7 @@ package io.github.jamalam360.jamfabric.mixin.compat.sandwichable;
 import io.github.foundationgames.sandwichable.items.SpreadItem;
 import io.github.foundationgames.sandwichable.items.spread.SpreadType;
 import io.github.jamalam360.jamfabric.compat.sandwichable.JamSpreadType;
-import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.jam.Jam;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

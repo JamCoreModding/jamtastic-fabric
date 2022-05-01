@@ -22,35 +22,33 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util.color.algorithm;
+package io.github.jamalam360.jamfabric.color.algorithm;
 
-import io.github.jamalam360.jamfabric.util.color.AverageColorProvider;
-import io.github.jamalam360.jamfabric.util.color.Color;
+import io.github.jamalam360.jamfabric.color.AverageColorProvider;
+import io.github.jamalam360.jamfabric.color.Color;
 
 /**
  * @author Jamalam360
  */
-public class SimpleAverageColorProvider implements AverageColorProvider {
+public class HsbAverageColorProvider implements AverageColorProvider {
     @Override
     public Color getAverageColor(Color[] colors) {
-        float r = 0;
-        float g = 0;
+        float h = 0;
+        float s = 0;
         float b = 0;
-        int total = 0;
-
+        float total = 0;
         for (Color color : colors) {
             if (color != null) {
-                r += color.getRed();
-                g += color.getGreen();
-                b += color.getBlue();
-                total++;
+                float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
+                h += hsb[0] * hsb[2];
+                s += hsb[1] * hsb[2];
+                b += hsb[2];
+                total += hsb[2];
             }
         }
-
-        long avgR = Math.round(r / total);
-        long avgG = Math.round(g / total);
-        long avgB = Math.round(b / total);
-
-        return new Color((int) avgR, (int) avgG, (int) avgB);
+        h /= total;
+        s /= total;
+        b /= total;
+        return new Color(Color.HSBtoRGB(h, s, b));
     }
 }

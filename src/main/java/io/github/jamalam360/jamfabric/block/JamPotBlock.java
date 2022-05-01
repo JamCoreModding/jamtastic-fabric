@@ -26,7 +26,7 @@ package io.github.jamalam360.jamfabric.block;
 
 import io.github.jamalam360.jamfabric.data.JamIngredient;
 import io.github.jamalam360.jamfabric.data.JamIngredientRegistry;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
