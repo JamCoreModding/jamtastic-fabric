@@ -58,7 +58,7 @@ dependencies {
     //modApi(libs.required.stack.aware)
 
     // JiJ:
-    //include(libs.required.aware)
+    //include(libs.required.stack.aware)
 
     // Optional:
     modApi(libs.optional.mod.menu)
