@@ -81,7 +81,7 @@ public class JamSpreadType extends SpreadType {
 
     @Override
     public ItemStack getResultItem() {
-        return new ItemStack(ItemRegistry.JAM_JAR);
+        return ItemRegistry.JAM_JAR.getDefaultStack();
     }
 
     @Override
