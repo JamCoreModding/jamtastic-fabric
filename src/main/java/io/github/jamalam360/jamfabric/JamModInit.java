@@ -24,14 +24,15 @@
 
 package io.github.jamalam360.jamfabric;
 
-//import io.github.astrarre.itemview.v0.fabric.ItemKey;
-// import io.github.foa.stackaware.v0.api.StackAware;
-
 import io.github.jamalam360.jamfabric.config.JamFabricConfig;
 import io.github.jamalam360.jamfabric.registry.*;
+import io.github.jamalam360.jamfabric.util.Utils;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,6 +40,11 @@ import org.apache.logging.log4j.Logger;
 public class JamModInit implements ModInitializer {
     public static final String MOD_ID = "jamfabric";
     private static final Logger LOGGER = LogManager.getLogger("Jamtastic/Initializer");
+
+    public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(
+            Utils.id("general_group"),
+            () -> new ItemStack(ItemRegistry.JAM_JAR)
+    );
 
     @Override
     public void onInitialize() {

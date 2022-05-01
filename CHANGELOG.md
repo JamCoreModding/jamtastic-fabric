@@ -6,7 +6,7 @@
 
 ### Features
 
-- No new features were added in this release.
+- Added Jamtastic items to their own custom item group.
 
 ### Closed Issues
 

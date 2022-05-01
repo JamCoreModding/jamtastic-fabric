@@ -24,6 +24,7 @@
 
 package io.github.jamalam360.jamfabric.registry;
 
+import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.block.JamPotBlock;
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
 import io.github.jamalam360.jamfabric.util.Utils;
@@ -41,13 +42,13 @@ import net.minecraft.util.registry.Registry;
  * @author Jamalam360
  */
 public class BlockRegistry {
-    public static final Block JAM = new Block(FabricBlockSettings.of(Material.AIR));
+    public static final Block JAM_RENDER = new Block(FabricBlockSettings.of(Material.AIR));
     public static final Block JAM_POT = new JamPotBlock();
     public static final BlockEntityType<JamPotBlockEntity> JAM_POT_ENTITY = FabricBlockEntityTypeBuilder.create(JamPotBlockEntity::new, JAM_POT).build();
 
     public static void init() {
-        registerBlock("jam_render", JAM, null);
-        registerBlock("jam_pot", JAM_POT, ItemGroup.FOOD);
+        registerBlock("jam_render", JAM_RENDER, null);
+        registerBlock("jam_pot", JAM_POT, JamModInit.ITEM_GROUP);
         registerBlockEntity("jam_pot", JAM_POT_ENTITY);
     }
 

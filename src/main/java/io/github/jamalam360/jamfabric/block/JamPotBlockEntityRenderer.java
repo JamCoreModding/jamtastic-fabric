@@ -42,7 +42,7 @@ import net.minecraft.client.util.math.MatrixStack;
  * @author Jamalam360
  */
 public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBlockEntity> {
-    public static final BlockState JAM = BlockRegistry.JAM.getDefaultState();
+    public static final BlockState JAM = BlockRegistry.JAM_RENDER.getDefaultState();
     private static final BakedModel JAM_BAKED_MODEL = MinecraftClient.getInstance().getBlockRenderManager().getModel(JAM);
     private static final int LERP = 1;
 

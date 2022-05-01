@@ -24,19 +24,19 @@
 
 package io.github.jamalam360.jamfabric.registry;
 
+import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.item.JamJarItem;
 import io.github.jamalam360.jamfabric.util.Utils;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.util.registry.Registry;
 
 /**
  * @author Jamalam360
  */
 public class ItemRegistry {
-    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(ItemGroup.FOOD).food(new FoodComponent.Builder().alwaysEdible().build()));
+    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(JamModInit.ITEM_GROUP).food(new FoodComponent.Builder().alwaysEdible().build()));
 
     public static void init() {
         registerItem("jam_jar", JAM_JAR);

@@ -47,43 +47,50 @@ public class NetworkingRegistry {
 
     public static void init(boolean isClient) {
         if (isClient) {
-            ClientPlayNetworking.registerGlobalReceiver(GET_TRANSLATION_KEYS_REQ, (client, handler, reqBuf, responseSender) -> {
-                PacketByteBuf resBuf = PacketByteBufs.create();
-                String baseKey = reqBuf.readString();
-                resBuf.writeString(baseKey);
-                resBuf.writeString(String.join(",", TranslationHelper.getTranslations(baseKey)));
-                responseSender.sendPacket(GET_TRANSLATION_KEYS_RES, resBuf);
-            });
+            registerClient();
         } else {
-            ServerPlayNetworking.registerGlobalReceiver(GET_TRANSLATION_KEYS_RES, (server, player, handler, reqBuf, responseSender) -> {
-                String baseKey = reqBuf.readString();
-                String translations = reqBuf.readString();
-                String[] translationsArray = translations.split(",");
-
-                switch (baseKey) {
-                    case JamNameGenerator.BENEFICIAL_EFFECT_ADJECTIVES_KEY -> JamNameGenerator.BENEFICIAL_EFFECT_ADJECTIVES = translationsArray;
-                    case JamNameGenerator.NON_BENEFICIAL_EFFECT_ADJECTIVES_KEY -> JamNameGenerator.NON_BENEFICIAL_EFFECT_ADJECTIVES = translationsArray;
-                    case JamNameGenerator.NOUNS_KEY -> JamNameGenerator.NOUNS = translationsArray;
-                    default -> {
-                        LOGGER.error("Unknown translation key: " + baseKey + ".");
-                        throw new IllegalArgumentException();
-                    }
-                }
-            });
-
-            ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-                PacketByteBuf reqBuf1 = PacketByteBufs.create();
-                reqBuf1.writeString(JamNameGenerator.BENEFICIAL_EFFECT_ADJECTIVES_KEY);
-                PacketByteBuf reqBuf2 = PacketByteBufs.create();
-                reqBuf2.writeString(JamNameGenerator.NON_BENEFICIAL_EFFECT_ADJECTIVES_KEY);
-                PacketByteBuf reqBuf3 = PacketByteBufs.create();
-                reqBuf3.writeString(JamNameGenerator.NOUNS_KEY);
-
-                sender.sendPacket(GET_TRANSLATION_KEYS_REQ, reqBuf1);
-                sender.sendPacket(GET_TRANSLATION_KEYS_REQ, reqBuf2);
-                sender.sendPacket(GET_TRANSLATION_KEYS_REQ, reqBuf3);
-            });
+            registerServer();
         }
+    }
 
+    private static void registerClient() {
+        ClientPlayNetworking.registerGlobalReceiver(GET_TRANSLATION_KEYS_REQ, (client, handler, reqBuf, responseSender) -> {
+            PacketByteBuf resBuf = PacketByteBufs.create();
+            String baseKey = reqBuf.readString();
+            resBuf.writeString(baseKey);
+            resBuf.writeString(String.join(",", TranslationHelper.getTranslations(baseKey)));
+            responseSender.sendPacket(GET_TRANSLATION_KEYS_RES, resBuf);
+        });
+    }
+
+    private static void registerServer() {
+        ServerPlayNetworking.registerGlobalReceiver(GET_TRANSLATION_KEYS_RES, (server, player, handler, reqBuf, responseSender) -> {
+            String baseKey = reqBuf.readString();
+            String translations = reqBuf.readString();
+            String[] translationsArray = translations.split(",");
+
+            switch (baseKey) {
+                case JamNameGenerator.BENEFICIAL_EFFECT_ADJECTIVES_KEY -> JamNameGenerator.BENEFICIAL_EFFECT_ADJECTIVES = translationsArray;
+                case JamNameGenerator.NON_BENEFICIAL_EFFECT_ADJECTIVES_KEY -> JamNameGenerator.NON_BENEFICIAL_EFFECT_ADJECTIVES = translationsArray;
+                case JamNameGenerator.NOUNS_KEY -> JamNameGenerator.NOUNS = translationsArray;
+                default -> {
+                    LOGGER.error("Unknown translation key: " + baseKey + ".");
+                    throw new IllegalArgumentException();
+                }
+            }
+        });
+
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            PacketByteBuf reqBuf1 = PacketByteBufs.create();
+            reqBuf1.writeString(JamNameGenerator.BENEFICIAL_EFFECT_ADJECTIVES_KEY);
+            PacketByteBuf reqBuf2 = PacketByteBufs.create();
+            reqBuf2.writeString(JamNameGenerator.NON_BENEFICIAL_EFFECT_ADJECTIVES_KEY);
+            PacketByteBuf reqBuf3 = PacketByteBufs.create();
+            reqBuf3.writeString(JamNameGenerator.NOUNS_KEY);
+
+            sender.sendPacket(GET_TRANSLATION_KEYS_REQ, reqBuf1);
+            sender.sendPacket(GET_TRANSLATION_KEYS_REQ, reqBuf2);
+            sender.sendPacket(GET_TRANSLATION_KEYS_REQ, reqBuf3);
+        });
     }
 }

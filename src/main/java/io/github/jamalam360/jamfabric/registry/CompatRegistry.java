@@ -53,11 +53,11 @@ public class CompatRegistry {
                     Object obj = clazz.getConstructor().newInstance();
 
                     if (obj instanceof CompatibilityPlugin pluginInstance) {
-
                         LOGGER.log(Level.INFO, "Initializing compatibility with " + plugin.getKey() + ".");
                         JamMixinPlugin.ACTIVE_COMPATIBILITY_MIXIN_PACKAGES.add(plugin.getKey());
                         pluginInstance.init();
                     } else {
+                        LOGGER.log(Level.ERROR, "Failed to initialize compatibility with " + plugin.getKey() + " as it's specified plugin is not an instance of CompatibilityPlugin.");
                         throw new IllegalArgumentException();
                     }
                 } catch (Exception e) {
