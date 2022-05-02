@@ -2,6 +2,7 @@ plugins {
     id("fabric-loom") version "0.11-SNAPSHOT"
     id("io.github.juuxel.loom-quiltflower") version "1.6.0"
     id("org.quiltmc.quilt-mappings-on-loom") version "4.0.0"
+    id("io.github.p03w.machete") version "1.0.10"
     id("org.cadixdev.licenser") version "0.6.1"
 }
 
@@ -47,22 +48,33 @@ dependencies {
         addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:1.18.2+build.22:v2"))
     })
 
-    modImplementation(libs.loader)
+    // Fabric:
+    modImplementation(libs.fabric.loader)
     modImplementation(libs.fabric.api)
 
     // Required:
-    modApi(libs.cloth.config)
-    modApi(libs.meal.api)
-    //modApi(libs.stack.aware)
-
-    // Optional:
-    modApi(libs.mod.menu)
-    modApi(libs.patchouli)
-    modApi(libs.sandwichable)
+    modApi(libs.required.cloth.config)
+    modApi(libs.required.meal.api)
+    //modApi(libs.required.stack.aware)
 
     // JiJ:
-    //include(libs.stack.aware)
+    //include(libs.required.stack.aware)
+
+    // Optional:
+    modApi(libs.optional.mod.menu)
+    modApi(libs.optional.patchouli)
+    modApi(libs.optional.sandwichable)
 
     // Runtime:
-    modLocalRuntime(libs.spruce.ui) // Dependency of Sandwichable
+    modLocalRuntime(libs.runtime.spruce.ui) // Dependency of Sandwichable
+}
+
+tasks {
+    named("prepareRemapJar") {
+        dependsOn("optimizeOutputsOfJar")
+    }
+
+    named("remapJar") {
+        dependsOn("optimizeOutputsOfJar")
+    }
 }

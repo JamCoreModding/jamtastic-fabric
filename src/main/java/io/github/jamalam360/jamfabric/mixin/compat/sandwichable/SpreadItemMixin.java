@@ -27,7 +27,7 @@ package io.github.jamalam360.jamfabric.mixin.compat.sandwichable;
 import io.github.foundationgames.sandwichable.items.SpreadItem;
 import io.github.foundationgames.sandwichable.items.spread.SpreadType;
 import io.github.jamalam360.jamfabric.compat.sandwichable.JamSpreadType;
-import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.jam.Jam;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -64,7 +64,7 @@ public abstract class SpreadItemMixin {
     )
     public int jamfabric$getHungerRedirect(SpreadType instance) {
         if (instance instanceof JamSpreadType) {
-            return Jam.fromNbt(jamfabric$capturedStack.getSubNbt("Jam")).hunger();
+            return Jam.fromNbt(jamfabric$capturedStack.getSubNbt("Jam")).getHunger();
         } else {
             return instance.getHunger();
         }
@@ -80,7 +80,7 @@ public abstract class SpreadItemMixin {
     )
     public float jamfabric$getSaturationModifierRedirect(SpreadType instance) {
         if (instance instanceof JamSpreadType) {
-            return Jam.fromNbt(jamfabric$capturedStack.getSubNbt("Jam")).saturation();
+            return Jam.fromNbt(jamfabric$capturedStack.getSubNbt("Jam")).getSaturation();
         } else {
             return instance.getSaturationModifier();
         }

@@ -24,10 +24,11 @@
 
 package io.github.jamalam360.jamfabric.block;
 
-import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.jam.Jam;
+import io.github.jamalam360.jamfabric.jam.JamStateListener;
 import io.github.jamalam360.jamfabric.util.Utils;
-import io.github.jamalam360.jamfabric.util.color.Color;
-import io.github.jamalam360.jamfabric.util.registry.BlockRegistry;
+import io.github.jamalam360.jamfabric.color.Color;
+import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -41,41 +42,41 @@ import org.jetbrains.annotations.Nullable;
 /**
  * @author Jamalam360
  */
-public class JamPotBlockEntity extends BlockEntity {
-    public static final int CAPACITY = Utils.getConfig().jamOptions.maxJamIngredients;
-
-    public Jam jam = new Jam(this::update);
+public class JamPotBlockEntity extends BlockEntity implements JamStateListener {
+    public Jam jam = new Jam();
     public Color cachedColor = new Color(255, 255, 255);
     public Color lastColorBeforeChange = new Color(255, 255, 255);
+    public Color lerpingTo;
+    public Color lastLerpProgress;
     private boolean hasWater = false;
     private boolean hasSugar = false;
 
-    public Color lerpingTo;
-    public Color lastLerpProgress;
-    public boolean appliedClearListener = false;
-    public boolean justCleared = false;
-
     public JamPotBlockEntity(BlockPos pos, BlockState state) {
         super(BlockRegistry.JAM_POT_ENTITY, pos, state);
+        this.jam.addListener(this);
     }
 
     public boolean canInsertWater() {
-        return !hasWater;
+        return !this.hasWater;
     }
 
     public boolean canInsertSugar() {
-        return !hasSugar && hasWater;
+        return !this.hasSugar && this.hasWater;
     }
 
     public boolean canInsertIngredients() {
-        return hasSugar && hasWater && jam.ingredientsSize() < CAPACITY;
+        return this.hasSugar && this.hasWater && this.jam.getIngredients().size() < Utils.getConfig().jamOptions.maxJamIngredients;
+    }
+
+    public boolean hasWater() {
+        return this.hasWater;
     }
 
     public void setFilledWater(boolean filled) {
         this.hasWater = filled;
 
         if (filled) {
-            this.update();
+            this.onUpdated();
         }
 
         this.markDirty();
@@ -86,29 +87,26 @@ public class JamPotBlockEntity extends BlockEntity {
         this.markDirty();
     }
 
-    public boolean hasWater() {
-        return this.hasWater;
-    }
-
     public void empty() {
         this.jam.clear();
-        this.setFilledWater(false);
         this.setFilledSugar(false);
+        this.setFilledWater(false);
         this.markDirty();
     }
 
-    public void update() {
-        if (this.jam == null) return;
+    @Override
+    public void onUpdated() {
+        if (this.jam == null || this.world == null) return;
 
-        if (this.jam.ingredientsSize() > 0) {
+        if (this.jam.getIngredients().size() > 0) {
             if (this.world.isClient) {
                 if (this.cachedColor.equals(this.jam.getColor())) return;
                 this.lastColorBeforeChange = cachedColor;
                 this.cachedColor = this.jam.getColor();
             }
         } else {
-            this.lastColorBeforeChange = Utils.WATER_COLOR;
-            this.cachedColor = Utils.WATER_COLOR;
+            this.lastColorBeforeChange = Color.WATER;
+            this.cachedColor = Color.WATER;
         }
 
         if (!this.world.isClient) {
@@ -119,10 +117,19 @@ public class JamPotBlockEntity extends BlockEntity {
     }
 
     @Override
+    public void onCleared() {
+        this.lerpingTo = Color.WATER;
+        this.lastLerpProgress = Color.WATER;
+    }
+
+    @Override
     public void readNbt(NbtCompound nbt) {
         this.jam = Jam.fromNbt((NbtCompound) nbt.get("Jam"));
         this.hasWater = nbt.getBoolean("ContainsWater");
         this.hasSugar = nbt.getBoolean("ContainsSugar");
+
+        this.jam.addListener(this);
+
         super.readNbt(nbt);
     }
 

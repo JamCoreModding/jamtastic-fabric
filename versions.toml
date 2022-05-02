@@ -1,23 +1,27 @@
 [versions]
 minecraft = "1.18.2"
-loader = "0.13.3"
-fabric-api = "0.48.0+1.18.2"
-cloth-config = "6.2.51"
+fabric-loader = "0.14.4"
+fabric-api = "0.51.1+1.18.2"
+cloth-config = "6.2.57"
 meal-api = "0.3+1.18"
 stack-aware = "1.0.3"
-mod-menu = "3.1.0"
-patchouli = "1.18.2-66-FABRIC"
+mod-menu = "3.2.1"
+patchouli = "1.18.2-67-FABRIC"
 sandwichable = "1.2+1.18.2"
 spruce-ui = "3.3.3+1.18"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft"  }
-loader = { module = "net.fabricmc:fabric-loader", version.ref = "loader" }
+
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
 fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
-cloth-config = { module = "me.shedaniel.cloth:cloth-config-fabric", version.ref = "cloth-config" }
-meal-api = { module = "maven.modrinth:mealapi", version.ref = "meal-api" }
-stack-aware = { module = "io.github.foa:StackAware", version.ref="stack-aware"}
-mod-menu = { module = "com.terraformersmc:modmenu", version.ref = "mod-menu" }
-patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli" }
-sandwichable = { module = "maven.modrinth:5g7OOxWC", version.ref = "sandwichable" }
-spruce-ui = { module = "dev.lambdaurora:spruceui", version.ref = "spruce-ui" }
+
+required-cloth-config = { module = "me.shedaniel.cloth:cloth-config-fabric", version.ref = "cloth-config" }
+required-meal-api = { module = "maven.modrinth:mealapi", version.ref = "meal-api" }
+required-stack-aware = { module = "io.github.foa:StackAware", version.ref="stack-aware"}
+
+optional-mod-menu = { module = "com.terraformersmc:modmenu", version.ref = "mod-menu" }
+optional-patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli" }
+optional-sandwichable = { module = "maven.modrinth:5g7OOxWC", version.ref = "sandwichable" }
+
+runtime-spruce-ui = { module = "dev.lambdaurora:spruceui", version.ref = "spruce-ui" }

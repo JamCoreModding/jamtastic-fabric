@@ -25,8 +25,8 @@
 package io.github.jamalam360.jamfabric.mixin.entity;
 
 import com.mojang.datafixers.util.Pair;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
-import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.jam.Jam;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.FoodComponent;
@@ -53,7 +53,7 @@ public abstract class LivingEntityMixin {
     )
     public List<Pair<StatusEffectInstance, Float>> jamfabric$applyFoodEffects(FoodComponent instance, ItemStack stack, World world, LivingEntity targetEntity) {
         if (stack.isOf(ItemRegistry.JAM_JAR)) {
-            return Jam.fromNbt(stack.getSubNbt("Jam")).effectsRaw();
+            return Jam.fromNbt(stack.getSubNbt("Jam")).getRawEffects();
         } else {
             return instance.getStatusEffects();
         }

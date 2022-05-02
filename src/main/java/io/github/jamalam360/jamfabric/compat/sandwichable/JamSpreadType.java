@@ -25,8 +25,8 @@
 package io.github.jamalam360.jamfabric.compat.sandwichable;
 
 import io.github.foundationgames.sandwichable.items.spread.SpreadType;
-import io.github.jamalam360.jamfabric.util.Jam;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.jam.Jam;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
@@ -48,7 +48,7 @@ public class JamSpreadType extends SpreadType {
     @Override
     public int getColor(ItemStack stack) {
         Jam jam = Jam.fromNbt(stack.getSubNbt("Jam"));
-        if (jam.ingredientsSize() == 0) {
+        if (jam.getIngredients().size() == 0) {
             return 0;
         }
 
@@ -71,7 +71,7 @@ public class JamSpreadType extends SpreadType {
 
     @Override
     public List<StatusEffectInstance> getStatusEffects(ItemStack stack) {
-        return Jam.fromNbt(stack.getSubNbt("Jam")).effects();
+        return Jam.fromNbt(stack.getSubNbt("Jam")).getEffects();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class JamSpreadType extends SpreadType {
 
     @Override
     public ItemStack getResultItem() {
-        return new ItemStack(ItemRegistry.JAM_JAR);
+        return ItemRegistry.JAM_JAR.getDefaultStack();
     }
 
     @Override

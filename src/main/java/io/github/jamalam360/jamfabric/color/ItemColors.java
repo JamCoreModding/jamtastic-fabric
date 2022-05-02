@@ -22,23 +22,40 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util.registry;
+package io.github.jamalam360.jamfabric.color;
 
-import io.github.jamalam360.jamfabric.block.JamPotBlock;
-import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
-import io.github.jamalam360.jamfabric.data.JamIngredient;
-import io.github.jamalam360.jamfabric.data.JamIngredientRegistry;
-import io.github.jamalam360.jamfabric.data.JamIngredientsResourceReloadListener;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.minecraft.resource.ResourceType;
-import net.minecraft.util.ActionResult;
+import io.github.jamalam360.jamfabric.util.Utils;
+import io.github.jamalam360.jamfabric.util.helper.NativeImageHelper;
+import net.minecraft.item.Item;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jamalam360
  */
-public class DataRegistry {
-    public static void init() {
-        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new JamIngredientsResourceReloadListener());
+public class ItemColors {
+    private static final Map<Item, Color> CACHE = new HashMap<>();
+
+    public static Color getAverageItemColor(List<Item> items) {
+        Color[] colors = new Color[items.size()];
+
+        for (int i = 0; i < items.size(); i++) {
+            colors[i] = getAverageItemColor(items.get(i));
+        }
+
+        return Utils.getConfig().jamOptions.colorProviderType.getProvider().getAverageColor(colors);
+    }
+
+    public static Color getAverageItemColor(Item item) {
+        if (CACHE.containsKey(item)) {
+            return CACHE.get(item);
+        } else {
+            AverageColorProvider provider = Utils.getConfig().jamOptions.colorProviderType.getProvider();
+            Color color = provider.getAverageColor(NativeImageHelper.getColors(NativeImageHelper.getNativeImage(item)));
+            CACHE.put(item, color);
+            return color;
+        }
     }
 }

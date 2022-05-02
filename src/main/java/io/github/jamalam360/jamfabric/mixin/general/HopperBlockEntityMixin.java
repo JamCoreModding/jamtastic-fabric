@@ -28,7 +28,7 @@ import io.github.jamalam360.jamfabric.block.JamPotBlock;
 import io.github.jamalam360.jamfabric.block.JamPotBlockEntity;
 import io.github.jamalam360.jamfabric.data.JamIngredient;
 import io.github.jamalam360.jamfabric.data.JamIngredientRegistry;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HopperBlock;
 import net.minecraft.block.entity.HopperBlockEntity;
@@ -55,7 +55,7 @@ public class HopperBlockEntityMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void jamfabric$insertIntoJamJar(World world, BlockPos pos, BlockState state, Inventory inventory, CallbackInfoReturnable<Boolean> cir) {
+    private static void jamfabric$tryInsertIntoJamJar(World world, BlockPos pos, BlockState state, Inventory inventory, CallbackInfoReturnable<Boolean> cir) {
         BlockPos jamPos = pos.offset(state.get(HopperBlock.FACING));
 
         if (world.getBlockEntity(jamPos) instanceof JamPotBlockEntity jamPotBlockEntity) {

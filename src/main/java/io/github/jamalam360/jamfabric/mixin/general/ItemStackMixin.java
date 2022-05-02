@@ -68,7 +68,7 @@ public abstract class ItemStackMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void jamfabric$translateName(CallbackInfoReturnable<Text> cir) {
+    public void jamfabric$translateJamName(CallbackInfoReturnable<Text> cir) {
         // If on dedicated server, do nothing
 
         // This isn't very efficient, cry about it lmao

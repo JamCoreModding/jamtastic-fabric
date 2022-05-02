@@ -25,9 +25,9 @@
 package io.github.jamalam360.jamfabric.mixin.general;
 
 import io.github.foundationgames.mealapi.api.v0.PlayerFullnessUtil;
-import io.github.jamalam360.jamfabric.util.registry.ItemRegistry;
-import io.github.jamalam360.jamfabric.util.duck.HungerManagerDuck;
-import io.github.jamalam360.jamfabric.util.Jam;
+import io.github.jamalam360.jamfabric.jam.Jam;
+import io.github.jamalam360.jamfabric.registry.ItemRegistry;
+import io.github.jamalam360.jamfabric.util.Ducks;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -43,7 +43,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(HungerManager.class)
-public abstract class HungerManagerMixin implements HungerManagerDuck {
+public abstract class HungerManagerMixin implements Ducks.HungerManager {
     private PlayerEntity jamfabric$parent;
 
     @Inject(
@@ -51,9 +51,9 @@ public abstract class HungerManagerMixin implements HungerManagerDuck {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void jamfabric$eatMixin(Item item, ItemStack stack, CallbackInfo ci) {
+    public void jamfabric$tryAddFullness(Item item, ItemStack stack, CallbackInfo ci) {
         if (stack.isOf(ItemRegistry.JAM_JAR)) {
-            int hunger = Jam.fromNbt(stack.getSubNbt("Jam")).hunger();
+            int hunger = Jam.fromNbt(stack.getSubNbt("Jam")).getHunger();
 
             if (!this.jamfabric$parent.world.isClient && hunger > 0) {
                 PlayerFullnessUtil.instance().addFullness((ServerPlayerEntity) this.jamfabric$parent, hunger);

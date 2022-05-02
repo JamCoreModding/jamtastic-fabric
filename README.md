@@ -4,7 +4,7 @@ A mod that adds jam. Jam that you can add many, many things to. Beef, slime, and
 
 ![Demo GIF](demo.gif)
 
-Jamtastic can be downloaded from [Curseforge](https://www.curseforge.com/minecraft/mc-mods/jam-fabric).
+**Jamtastic can be downloaded from [Curseforge](https://www.curseforge.com/minecraft/mc-mods/jamtastic).**
 
 ## Mod Authors
 

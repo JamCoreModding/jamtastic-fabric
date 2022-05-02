@@ -24,10 +24,10 @@
 
 package io.github.jamalam360.jamfabric.config;
 
-import io.github.jamalam360.jamfabric.util.color.AverageColorProvider;
-import io.github.jamalam360.jamfabric.util.color.algorithm.HsbAverageColorProvider;
-import io.github.jamalam360.jamfabric.util.color.algorithm.SimpleAverageColorProvider;
-import io.github.jamalam360.jamfabric.util.color.algorithm.SimpleSquaredAverageColorProvider;
+import io.github.jamalam360.jamfabric.color.AverageColorProvider;
+import io.github.jamalam360.jamfabric.color.algorithm.HsbAverageColorProvider;
+import io.github.jamalam360.jamfabric.color.algorithm.SimpleAverageColorProvider;
+import io.github.jamalam360.jamfabric.color.algorithm.SimpleSquaredAverageColorProvider;
 
 /**
  * @author Jamalam360
@@ -37,11 +37,11 @@ public enum AverageColorProviderType {
     SIMPLE_SQUARED_AVERAGE(new SimpleSquaredAverageColorProvider()),
     HSB_AVERAGE(new HsbAverageColorProvider());
 
+    private final AverageColorProvider provider;
+
     AverageColorProviderType(AverageColorProvider provider) {
         this.provider = provider;
     }
-
-    private final AverageColorProvider provider;
 
     public AverageColorProvider getProvider() {
         return provider;

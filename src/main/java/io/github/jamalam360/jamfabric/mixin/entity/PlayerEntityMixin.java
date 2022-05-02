@@ -25,7 +25,7 @@
 package io.github.jamalam360.jamfabric.mixin.entity;
 
 import com.mojang.authlib.GameProfile;
-import io.github.jamalam360.jamfabric.util.duck.HungerManagerDuck;
+import io.github.jamalam360.jamfabric.util.Ducks;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -42,13 +42,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
-    @Shadow protected HungerManager hungerManager;
+    @Shadow
+    protected HungerManager hungerManager;
 
     @Inject(
             at = @At("TAIL"),
             method = "<init>"
     )
     public void jamFabric$initMixin(World world, BlockPos pos, float yaw, GameProfile profile, CallbackInfo ci) {
-        ((HungerManagerDuck) this.hungerManager).jamfabric$setPlayer((PlayerEntity) (Object) this);
+        ((Ducks.HungerManager) this.hungerManager).jamfabric$setPlayer((PlayerEntity) (Object) this);
     }
 }

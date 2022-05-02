@@ -22,36 +22,27 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.mixin.render;
+package io.github.jamalam360.jamfabric.registry;
 
-import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import io.github.jamalam360.jamfabric.JamModInit;
+import io.github.jamalam360.jamfabric.item.JamJarItem;
+import io.github.jamalam360.jamfabric.util.Utils;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.item.FoodComponent;
+import net.minecraft.item.Item;
+import net.minecraft.util.registry.Registry;
 
 /**
  * @author Jamalam360
  */
+public class ItemRegistry {
+    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(JamModInit.ITEM_GROUP).food(new FoodComponent.Builder().alwaysEdible().build()));
 
-@Mixin(BakedQuad.class)
-public class BakedQuadMixin {
-    @Shadow
-    @Final
-    protected Sprite sprite;
+    public static void init() {
+        registerItem("jam_jar", JAM_JAR);
+    }
 
-    @Inject(
-            method = "hasColor",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    public void jamfabric$forceColor(CallbackInfoReturnable<Boolean> cir) {
-        if (sprite.getId().equals(new Identifier("jamfabric:block/jam_block"))) {
-            cir.setReturnValue(true);
-        }
+    private static void registerItem(String id, Item item) {
+        Registry.register(Registry.ITEM, Utils.id(id), item);
     }
 }

@@ -24,25 +24,31 @@
 
 package io.github.jamalam360.jamfabric;
 
-//import io.github.astrarre.itemview.v0.fabric.ItemKey;
-// import io.github.foa.stackaware.v0.api.StackAware;
-
 import io.github.jamalam360.jamfabric.config.JamFabricConfig;
-import io.github.jamalam360.jamfabric.util.registry.*;
+import io.github.jamalam360.jamfabric.registry.*;
+import io.github.jamalam360.jamfabric.util.Utils;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class JamModInit implements ModInitializer {
     public static final String MOD_ID = "jamfabric";
-    public static Logger LOGGER = LogManager.getLogger("Jamtastic");
+    private static final Logger LOGGER = LogManager.getLogger("Jamtastic/Initializer");
+
+    public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(
+            Utils.id("general_group"),
+            () -> new ItemStack(ItemRegistry.JAM_JAR)
+    );
 
     @Override
     public void onInitialize() {
-        LOGGER.log(Level.INFO, "Initializing Jamtastic");
+        LOGGER.log(Level.INFO, "Initializing Jamtastic.");
 
         AutoConfig.register(JamFabricConfig.class, GsonConfigSerializer::new);
 
@@ -53,13 +59,13 @@ public class JamModInit implements ModInitializer {
         NetworkingRegistry.init(false);
 
         // StackAware.MAX_COUNT_REGISTRY.forExact(ItemKey.of(ItemRegistry.JAM_JAR), (itemKey, count) -> {
-        //     if (Jam.fromNbt(itemKey.getCompoundTag().getCompound("Jam")).ingredientsSize() > 0) {
+        //     if (Jam.fromNbt(itemKey.getCompoundTag().getCompound("Jam")).getIngredients().size() > 0) {
         //         return 1;
         //     } else {
         //         return 16;
         //     }
         // });
 
-        LOGGER.log(Level.INFO, "Jamtastic initialized");
+        LOGGER.log(Level.INFO, "Jamtastic initialized.");
     }
 }

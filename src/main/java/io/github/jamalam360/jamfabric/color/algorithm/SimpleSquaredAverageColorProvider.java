@@ -22,27 +22,35 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.util.registry;
+package io.github.jamalam360.jamfabric.color.algorithm;
 
-import io.github.jamalam360.jamfabric.item.JamJarItem;
-import io.github.jamalam360.jamfabric.util.Utils;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.util.registry.Registry;
+import io.github.jamalam360.jamfabric.color.AverageColorProvider;
+import io.github.jamalam360.jamfabric.color.Color;
 
 /**
  * @author Jamalam360
  */
-public class ItemRegistry {
-    public static final Item JAM_JAR = new JamJarItem(new FabricItemSettings().maxCount(1).group(ItemGroup.FOOD).food(new FoodComponent.Builder().alwaysEdible().build()));
+public class SimpleSquaredAverageColorProvider implements AverageColorProvider {
+    @Override
+    public Color getAverageColor(Color[] colors) {
+        float r = 0;
+        float g = 0;
+        float b = 0;
+        int total = 0;
 
-    public static void init() {
-        registerItem("jam_jar", JAM_JAR);
-    }
+        for (Color color : colors) {
+            if (color != null) {
+                r += color.getRed() * color.getRed();
+                g += color.getGreen() * color.getGreen();
+                b += color.getBlue() * color.getBlue();
+                total++;
+            }
+        }
 
-    private static void registerItem(String id, Item item) {
-        Registry.register(Registry.ITEM, Utils.id(id), item);
+        long avgR = Math.round(Math.sqrt(r / total));
+        long avgG = Math.round(Math.sqrt(g / total));
+        long avgB = Math.round(Math.sqrt(b / total));
+
+        return new Color((int) avgR, (int) avgG, (int) avgB);
     }
 }

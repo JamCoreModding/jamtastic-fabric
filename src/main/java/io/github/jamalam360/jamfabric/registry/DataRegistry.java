@@ -22,36 +22,17 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.jamfabric.mixin.render;
+package io.github.jamalam360.jamfabric.registry;
 
-import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import io.github.jamalam360.jamfabric.data.JamIngredientsResourceReloadListener;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.resource.ResourceType;
 
 /**
  * @author Jamalam360
  */
-
-@Mixin(BakedQuad.class)
-public class BakedQuadMixin {
-    @Shadow
-    @Final
-    protected Sprite sprite;
-
-    @Inject(
-            method = "hasColor",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    public void jamfabric$forceColor(CallbackInfoReturnable<Boolean> cir) {
-        if (sprite.getId().equals(new Identifier("jamfabric:block/jam_block"))) {
-            cir.setReturnValue(true);
-        }
+public class DataRegistry {
+    public static void init() {
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new JamIngredientsResourceReloadListener());
     }
 }
