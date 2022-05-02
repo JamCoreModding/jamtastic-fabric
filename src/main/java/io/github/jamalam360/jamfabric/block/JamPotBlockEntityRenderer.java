@@ -25,6 +25,7 @@
 package io.github.jamalam360.jamfabric.block;
 
 import io.github.jamalam360.jamfabric.color.Color;
+import io.github.jamalam360.jamfabric.jam.JamStateListener;
 import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -40,7 +41,7 @@ import net.minecraft.client.util.math.MatrixStack;
 /**
  * @author Jamalam360
  */
-public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBlockEntity> {
+public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBlockEntity>, JamStateListener {
     public static final BlockState JAM = BlockRegistry.JAM_RENDER.getDefaultState();
     private static final BakedModel JAM_BAKED_MODEL = MinecraftClient.getInstance().getBlockRenderManager().getModel(JAM);
     private static final int LERP = 1;
@@ -51,24 +52,13 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
 
     @Override
     public void render(JamPotBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if (!entity.appliedClearListener) {
-            entity.jam.setClearListener(() -> entity.justCleared = true);
-            entity.appliedClearListener = true;
-        }
-
-        if (entity.justCleared) {
-            entity.lerpingTo = Color.WATER;
-            entity.lastLerpProgress = Color.WATER;
-            entity.justCleared = false;
-        }
-
-        if (entity.jam.ingredientsSize() > 0 && entity.jam.getColor().getBlue() == 255 && entity.jam.getColor().getGreen() == 255 && entity.jam.getColor().getRed() == 255) {
+        if (entity.jam.getIngredients().size() > 0 && entity.jam.getColor().getBlue() == 255 && entity.jam.getColor().getGreen() == 255 && entity.jam.getColor().getRed() == 255) {
             entity.jam.recalculate();
         }
 
-        if (entity.jam.ingredientsSize() == 0 && !entity.hasWater()) return; //No Items, no water, no render!
+        if (entity.jam.getIngredients().size() == 0 && !entity.hasWater()) return; //No Items, no water, no render!
 
-        entity.update();
+        entity.onUpdated();
 
         assert entity.getWorld() != null;
         assert GameRenderer.getRenderTypeEntityCutoutShader() != null;
@@ -90,8 +80,8 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
 
         int updatedLight = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
 
-        if (entity.hasWater() && entity.jam.ingredientsSize() == 0) {
-            color = Color.WATER;;
+        if (entity.hasWater() && entity.jam.getIngredients().size() == 0) {
+            color = Color.WATER;
         }
 
         matrices.push();

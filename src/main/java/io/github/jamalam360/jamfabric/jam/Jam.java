@@ -52,34 +52,28 @@ public class Jam {
 
     private final List<JamIngredient> ingredients = new ArrayList<>();
     private final List<Pair<StatusEffectInstance, Float>> effects = new ArrayList<>();
-    private final JamUpdateFunction func;
-    private JamUpdateFunction clearListener = null;
+    private final List<JamStateListener> listeners = new ArrayList<>();
 
     private int hunger;
     private float saturation;
 
     public Jam(JamIngredient... ingredients) {
         this.ingredients.addAll(Arrays.asList(ingredients));
-        this.func = () -> {
-        };
         this.recalculate();
     }
-
-    public Jam(JamUpdateFunction func, JamIngredient... ingredients) {
-        this.ingredients.addAll(Arrays.asList(ingredients));
-        this.func = func;
-        this.recalculate();
+    
+    public void addListener(JamStateListener listener) {
+        listeners.add(listener);
     }
-
-    public void setClearListener(JamUpdateFunction clearListener) {
-        this.clearListener = clearListener;
-    }
-
-    @SuppressWarnings("ConstantConditions")
+    
     public void add(Item item) {
         if (item.isFood()) {
+            assert item.getFoodComponent() != null;
+            
             ingredients.add(new JamIngredient(item, item.getFoodComponent().getHunger(), item.getFoodComponent().getSaturationModifier()));
             this.recalculate();
+        } else {
+            LOGGER.warn("Item {} is not a food item. This is a bug, and should be reported.", item.getName());
         }
     }
 
@@ -89,7 +83,7 @@ public class Jam {
     }
 
     public Item removeLast() {
-        JamIngredient ingredient = ingredients.remove(ingredients.size() - 1);
+        JamIngredient ingredient = ingredients.remove(this.getIngredients().size() - 1);
         this.recalculate();
         return ingredient.item();
     }
@@ -98,16 +92,16 @@ public class Jam {
         ingredients.clear();
         this.recalculate();
 
-        if (clearListener != null) {
-            clearListener.update();
+        for (JamStateListener listener : listeners) {
+            listener.onCleared();
         }
     }
 
-    public int ingredientsSize() {
-        return ingredients.size();
+    public List<JamIngredient> getIngredients() {
+        return ingredients;
     }
 
-    public List<Item> ingredients() {
+    public List<Item> getItemIngredients() {
         return ingredients.stream().map(JamIngredient::item).collect(Collectors.toList());
     }
 
@@ -138,26 +132,25 @@ public class Jam {
         return finalTooltip;
     }
 
-    public int hunger() {
+    public float getSaturation() {
+        return saturation;
+    }
+
+    public int getHunger() {
         return hunger;
     }
 
-    public List<Pair<StatusEffectInstance, Float>> effectsRaw() {
+    public List<Pair<StatusEffectInstance, Float>> getRawEffects() {
         return effects;
     }
 
-    public List<StatusEffectInstance> effects() {
+    public List<StatusEffectInstance> getEffects() {
         List<StatusEffectInstance> finalEffects = new ArrayList<>();
         this.effects.forEach((pair) -> finalEffects.add(pair.getFirst()));
 
         return finalEffects;
     }
 
-    public float saturation() {
-        return saturation;
-    }
-
-    @SuppressWarnings("ConstantConditions")
     public void recalculate() {
         this.hunger = 0;
         this.saturation = 0;
@@ -167,11 +160,14 @@ public class Jam {
             this.hunger += ingredient.hunger();
             this.saturation += ingredient.saturation();
             if (ingredient.item().isFood()) {
+                assert ingredient.item().getFoodComponent() != null;
                 this.effects.addAll(ingredient.item().getFoodComponent().getStatusEffects());
             }
         }
 
-        this.func.update();
+        for (JamStateListener listener : listeners) {
+            listener.onUpdated();
+        }
     }
 
     public NbtCompound toNbt() {
@@ -189,6 +185,11 @@ public class Jam {
             }
         } catch (Exception e) {
             LOGGER.warn("Failed to load jam from NBT, this is likely due to an update in the NBT format, and can be ignored.");
+
+            if (compound == null) {
+                LOGGER.warn("Failed to recover from NBT error: NBT compound was null.");
+                return new Jam();
+            }
 
             // This parses the _old_ NBT format - don't touch!
 
@@ -209,10 +210,5 @@ public class Jam {
 
             return jam;
         }
-    }
-
-    @FunctionalInterface
-    public interface JamUpdateFunction {
-        void update();
     }
 }

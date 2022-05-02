@@ -57,17 +57,17 @@ public class JamNameGenerator {
         StringBuilder sb = new StringBuilder();
         Jam jam = Jam.fromNbt(nbt);
 
-        if (jam.ingredientsSize() == 0) {
+        if (jam.getIngredients().size() == 0) {
             return new String[0];
         }
 
-        boolean hasEffects = jam.effectsRaw().size() > 0;
+        boolean hasEffects = jam.getRawEffects().size() > 0;
 
         if (hasEffects) {
             int badCount = 0;
             int goodCount = 0;
 
-            for (StatusEffectInstance instance : jam.effects()) {
+            for (StatusEffectInstance instance : jam.getEffects()) {
                 if (instance.getEffectType().isBeneficial()) {
                     goodCount++;
                 } else {
@@ -85,7 +85,7 @@ public class JamNameGenerator {
 
             sb.append(" ");
         } else {
-            for (Item item : jam.ingredients()) {
+            for (Item item : jam.getItemIngredients()) {
                 if (item.getTranslationKey().contains("raw")) {
                     if (RANDOM.nextBoolean()) {
                         sb.append(random(NON_BENEFICIAL_EFFECT_ADJECTIVES));
@@ -97,7 +97,7 @@ public class JamNameGenerator {
         }
 
         String[] template;
-        List<Item> uniqueItems = jam.ingredients().stream().distinct().collect(Collectors.toList());
+        List<Item> uniqueItems = jam.getItemIngredients().stream().distinct().collect(Collectors.toList());
 
         if (uniqueItems.size() == 1) {
             template = TEMPLATES[0];

@@ -48,7 +48,7 @@ public class JamSpreadType extends SpreadType {
     @Override
     public int getColor(ItemStack stack) {
         Jam jam = Jam.fromNbt(stack.getSubNbt("Jam"));
-        if (jam.ingredientsSize() == 0) {
+        if (jam.getIngredients().size() == 0) {
             return 0;
         }
 
@@ -71,7 +71,7 @@ public class JamSpreadType extends SpreadType {
 
     @Override
     public List<StatusEffectInstance> getStatusEffects(ItemStack stack) {
-        return Jam.fromNbt(stack.getSubNbt("Jam")).effects();
+        return Jam.fromNbt(stack.getSubNbt("Jam")).getEffects();
     }
 
     @Override

@@ -58,9 +58,9 @@ public class JamJarItem extends Item {
             if (
                     blockEntity == null ||
                             context.getPlayer() == null ||
-                            blockEntity.jam.ingredientsSize() == 0
+                            blockEntity.jam.getIngredients().size() == 0
                             || (context.getStack().getSubNbt("Jam") != null
-                            && Jam.fromNbt(context.getStack().getSubNbt("Jam")).ingredientsSize() > 0)
+                            && Jam.fromNbt(context.getStack().getSubNbt("Jam")).getIngredients().size() > 0)
             ) {
                 return super.useOnBlock(context);
             }
@@ -86,7 +86,7 @@ public class JamJarItem extends Item {
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
-        if (Jam.fromNbt(stack.getSubNbt("Jam")).ingredientsSize() == 0) {
+        if (Jam.fromNbt(stack.getSubNbt("Jam")).getIngredients().size() == 0) {
             return 0;
         } else {
             return super.getMaxUseTime(stack);

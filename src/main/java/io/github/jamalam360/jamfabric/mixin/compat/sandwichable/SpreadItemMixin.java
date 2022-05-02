@@ -64,7 +64,7 @@ public abstract class SpreadItemMixin {
     )
     public int jamfabric$getHungerRedirect(SpreadType instance) {
         if (instance instanceof JamSpreadType) {
-            return Jam.fromNbt(jamfabric$capturedStack.getSubNbt("Jam")).hunger();
+            return Jam.fromNbt(jamfabric$capturedStack.getSubNbt("Jam")).getHunger();
         } else {
             return instance.getHunger();
         }
@@ -80,7 +80,7 @@ public abstract class SpreadItemMixin {
     )
     public float jamfabric$getSaturationModifierRedirect(SpreadType instance) {
         if (instance instanceof JamSpreadType) {
-            return Jam.fromNbt(jamfabric$capturedStack.getSubNbt("Jam")).saturation();
+            return Jam.fromNbt(jamfabric$capturedStack.getSubNbt("Jam")).getSaturation();
         } else {
             return instance.getSaturationModifier();
         }

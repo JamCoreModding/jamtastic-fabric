@@ -28,12 +28,14 @@ import io.github.jamalam360.jamfabric.data.JamIngredient;
 import io.github.jamalam360.jamfabric.data.JamIngredientRegistry;
 import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -44,6 +46,8 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 /**
  * @author Jamalam360
@@ -58,12 +62,21 @@ public class JamPotBlock extends BlockWithEntity {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack stack = player.getStackInHand(hand);
         JamPotBlockEntity blockEntity = (JamPotBlockEntity) world.getBlockEntity(pos);
-        assert blockEntity != null;
 
-        if (stack.isOf(Items.WATER_BUCKET) && blockEntity.canInsertWater()) {
+        if (blockEntity == null) return super.onUse(state, world, pos, player, hand, hit);
+
+        if (stack.isIn(ConventionalItemTags.WATER_BUCKETS) && blockEntity.canInsertWater()) {
             blockEntity.setFilledWater(true);
-            stack.decrement(1);
-            player.giveItemStack(new ItemStack(Items.BUCKET));
+
+            if (!player.isCreative()) {
+                stack.decrement(1);
+
+                if (stack.getItem().getRecipeRemainder() != null) {
+                    player.giveItemStack(stack.getItem().getRecipeRemainder().getDefaultStack());
+                } else {
+                    player.giveItemStack(Items.BUCKET.getDefaultStack());
+                }
+            }
 
             if (world.isClient) {
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
@@ -72,25 +85,37 @@ public class JamPotBlock extends BlockWithEntity {
             return ActionResult.SUCCESS;
         } else if (stack.isOf(Items.SUGAR) && blockEntity.canInsertSugar()) {
             blockEntity.setFilledSugar(true);
-            stack.decrement(1);
+
+            if (!player.isCreative()) {
+                stack.decrement(1);
+            }
+
             playRandomBrewingSound(world, pos);
 
             return ActionResult.SUCCESS;
         } else if (stack.isFood() && blockEntity.canInsertIngredients() && !stack.isOf(ItemRegistry.JAM_JAR)) {
             blockEntity.jam.add(stack.getItem());
-            stack.decrement(1);
+
+            if (!player.isCreative()) {
+                stack.decrement(1);
+            }
+
             playRandomBrewingSound(world, pos);
 
             return ActionResult.SUCCESS;
-        } else if (JamIngredientRegistry.has(player.getStackInHand(hand).getItem()) && blockEntity.canInsertIngredients()) {
-            JamIngredient ingredient = JamIngredientRegistry.get(player.getStackInHand(hand).getItem());
+        } else if (JamIngredientRegistry.has(stack.getItem()) && blockEntity.canInsertIngredients()) {
+            JamIngredient ingredient = JamIngredientRegistry.get(stack.getItem());
             blockEntity.jam.addRaw(ingredient);
-            player.getStackInHand(hand).decrement(1);
-            JamPotBlock.playRandomBrewingSound(world, pos);
+
+            if (!player.isCreative()) {
+                stack.decrement(1);
+            }
+
+            playRandomBrewingSound(world, pos);
 
             return ActionResult.SUCCESS;
         } else if (stack.isEmpty() && player.isSneaking() && !world.isClient) {
-            if (blockEntity.jam.ingredientsSize() > 0) {
+            if (blockEntity.jam.getIngredients().size() > 0) {
                 player.giveItemStack(new ItemStack(blockEntity.jam.removeLast()));
                 playRandomBrewingSound(world, pos);
 
@@ -99,6 +124,25 @@ public class JamPotBlock extends BlockWithEntity {
         }
 
         return super.onUse(state, world, pos, player, hand, hit);
+    }
+
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (world.isClient) {
+            if (random.nextDouble() < 0.035) {
+                playRandomBrewingSound(world, pos);
+            }
+
+            double d = (double) pos.getX() + 0.4 + (double) random.nextFloat() * 0.2;
+            double e = (double) pos.getY() + 0.7 + (double) random.nextFloat() * 0.3;
+            double f = (double) pos.getZ() + 0.4 + (double) random.nextFloat() * 0.2;
+            world.addParticle(ParticleTypes.SMOKE, d, e, f, 0.0, 0.0, 0.0);
+        }
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Override
@@ -117,14 +161,18 @@ public class JamPotBlock extends BlockWithEntity {
         return new JamPotBlockEntity(pos, state);
     }
 
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
-    }
-
     public static void playRandomBrewingSound(World world, BlockPos pos) {
         if (world.isClient) {
-            world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_BREWING_STAND_BREW, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() + 1F, false);
+            world.playSound(
+                    pos.getX(),
+                    pos.getY(),
+                    pos.getZ(),
+                    SoundEvents.BLOCK_BREWING_STAND_BREW,
+                    SoundCategory.BLOCKS,
+                    world.random.nextFloat(0.5f, 1f),
+                    world.random.nextFloat(0.6f, 1.3f),
+                    false
+            );
         }
     }
 }

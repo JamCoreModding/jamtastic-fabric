@@ -53,7 +53,7 @@ public abstract class HungerManagerMixin implements Ducks.HungerManager {
     )
     public void jamfabric$tryAddFullness(Item item, ItemStack stack, CallbackInfo ci) {
         if (stack.isOf(ItemRegistry.JAM_JAR)) {
-            int hunger = Jam.fromNbt(stack.getSubNbt("Jam")).hunger();
+            int hunger = Jam.fromNbt(stack.getSubNbt("Jam")).getHunger();
 
             if (!this.jamfabric$parent.world.isClient && hunger > 0) {
                 PlayerFullnessUtil.instance().addFullness((ServerPlayerEntity) this.jamfabric$parent, hunger);

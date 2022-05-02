@@ -53,7 +53,7 @@ public abstract class LivingEntityMixin {
     )
     public List<Pair<StatusEffectInstance, Float>> jamfabric$applyFoodEffects(FoodComponent instance, ItemStack stack, World world, LivingEntity targetEntity) {
         if (stack.isOf(ItemRegistry.JAM_JAR)) {
-            return Jam.fromNbt(stack.getSubNbt("Jam")).effectsRaw();
+            return Jam.fromNbt(stack.getSubNbt("Jam")).getRawEffects();
         } else {
             return instance.getStatusEffects();
         }

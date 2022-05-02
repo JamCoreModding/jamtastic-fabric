@@ -59,7 +59,7 @@ public class JamModInit implements ModInitializer {
         NetworkingRegistry.init(false);
 
         // StackAware.MAX_COUNT_REGISTRY.forExact(ItemKey.of(ItemRegistry.JAM_JAR), (itemKey, count) -> {
-        //     if (Jam.fromNbt(itemKey.getCompoundTag().getCompound("Jam")).ingredientsSize() > 0) {
+        //     if (Jam.fromNbt(itemKey.getCompoundTag().getCompound("Jam")).getIngredients().size() > 0) {
         //         return 1;
         //     } else {
         //         return 16;
