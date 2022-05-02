@@ -190,6 +190,8 @@ public class Jam {
         } catch (Exception e) {
             LOGGER.warn("Failed to load jam from NBT, this is likely due to an update in the NBT format, and can be ignored.");
 
+            // This parses the _old_ NBT format - don't touch!
+
             Item[] ingredients = NbtHelper.readItems(compound, INGREDIENTS_BASE_KEY);
 
             for (int i = 0; i < compound.getInt(INGREDIENTS_BASE_KEY + "Length"); i++) {
