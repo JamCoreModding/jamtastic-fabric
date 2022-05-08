@@ -3,6 +3,7 @@
 ### Fixes
 
 - Fixed an issue where the fallback NBT serialisation could fail if the NBT data was very, very invalid.
+- Moved `BakedQuadMixin` to client mixins to prevent warnings in console on dedicated server.
 
 ### Features
 

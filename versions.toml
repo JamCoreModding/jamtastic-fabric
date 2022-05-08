@@ -1,6 +1,6 @@
 [versions]
 minecraft = "1.18.2"
-fabric-loader = "0.14.4"
+fabric-loader = "0.13.3"
 fabric-api = "0.51.1+1.18.2"
 cloth-config = "6.2.57"
 meal-api = "0.3+1.18"
@@ -9,6 +9,7 @@ mod-menu = "3.2.1"
 patchouli = "1.18.2-67-FABRIC"
 sandwichable = "1.2+1.18.2"
 spruce-ui = "3.3.3+1.18"
+lazy-duf = "0.1.2"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft"  }
@@ -25,3 +26,4 @@ optional-patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "pat
 optional-sandwichable = { module = "maven.modrinth:5g7OOxWC", version.ref = "sandwichable" }
 
 runtime-spruce-ui = { module = "dev.lambdaurora:spruceui", version.ref = "spruce-ui" }
+runtime-lazy-dfu = { module = "maven.modrinth:lazydfu", version.ref = "lazy-dfu" }
