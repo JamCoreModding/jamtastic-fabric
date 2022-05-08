@@ -8,11 +8,11 @@
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",
     "general.HopperBlockEntityMixin",
-    "general.HungerManagerMixin",
-    "render.BakedQuadMixin"
+    "general.HungerManagerMixin"
   ],
   "client": [
-    "general.ItemStackMixin"
+    "general.ItemStackMixin",
+    "render.BakedQuadMixin"
   ],
   "server": [],
   "injectors": {
