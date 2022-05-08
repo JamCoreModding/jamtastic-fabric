@@ -11,7 +11,6 @@
   "environment": "*",
   "entrypoints": {
     "fabric-gametest": [
-      "io.github.jamalam360.jamfabric.config.ModMenuIntegration"
     ]
   }
 }
