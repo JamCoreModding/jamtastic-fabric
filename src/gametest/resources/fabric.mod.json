@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "jamfabric-gametest",
+  "version": "${version}",
+  "name": "Jamtastic Gametest",
+  "description": "Test all the jam your heart desires...",
+  "authors": [
+    "Jamalam"
+  ],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": [
+      "io.github.jamalam360.jamfabric.config.ModMenuIntegration"
+    ]
+  }
+}

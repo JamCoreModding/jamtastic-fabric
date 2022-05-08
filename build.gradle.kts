@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 plugins {
     id("fabric-loom") version "0.11-SNAPSHOT"
     id("io.github.juuxel.loom-quiltflower") version "1.6.0"
@@ -14,9 +16,27 @@ val mod_version: String by project
 group = "io.github.jamalam360"
 version = mod_version
 
+sourceSets {
+    create("gametest") {
+        compileClasspath += sourceSets.getByName("main").compileClasspath
+        runtimeClasspath += sourceSets.getByName("main").runtimeClasspath
+    }
+}
+
 loom {
     mixin {
         defaultRefmapName.set("jamfabric-refmap.json")
+    }
+
+    runs {
+        this.create("gametest") {
+            server()
+            name("Game Test")
+            source(sourceSets.getByName("gametest"))
+            vmArg("-Dfabric-api.gametest")
+            vmArg("-Dfabric-api.gametest.report-file=${project.buildDir}/junit.xml")
+            runDir("build/gametest")
+        }
     }
 }
 
@@ -70,11 +90,7 @@ dependencies {
 }
 
 tasks {
-    named("prepareRemapJar") {
-        dependsOn("optimizeOutputsOfJar")
-    }
-
-    named("remapJar") {
-        dependsOn("optimizeOutputsOfJar")
+    named("test") {
+        dependsOn("runGametest")
     }
 }
