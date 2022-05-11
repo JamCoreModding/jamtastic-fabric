@@ -2,6 +2,8 @@
   "tooltip.jamfabric.hunger_tooltip": "Hunger: %d",
   "tooltip.jamfabric.empty_tooltip": "Empty",
 
+  "itemGroup.jamfabric.general_group": "Jamtastic",
+
   "item.jamfabric.jam_jar": "Jam Jar",
 
   "block.jamfabric.jam_pot": "Jam Pot",

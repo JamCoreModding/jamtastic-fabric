@@ -17,9 +17,13 @@ group = "io.github.jamalam360"
 version = mod_version
 
 sourceSets {
+    val main = this.getByName("main")
+
     create("gametest") {
-        compileClasspath += sourceSets.getByName("main").compileClasspath
-        runtimeClasspath += sourceSets.getByName("main").runtimeClasspath
+        this.compileClasspath += main.compileClasspath
+        this.compileClasspath += main.output
+        this.runtimeClasspath += main.runtimeClasspath
+        this.runtimeClasspath += main.output
     }
 }
 
@@ -75,10 +79,10 @@ dependencies {
     // Required:
     modApi(libs.required.cloth.config)
     modApi(libs.required.meal.api)
-    //modApi(libs.required.stack.aware)
+    modApi(libs.required.stack.aware)
 
     // JiJ:
-    //include(libs.required.stack.aware)
+    include(libs.required.stack.aware)
 
     // Optional:
     modApi(libs.optional.mod.menu)

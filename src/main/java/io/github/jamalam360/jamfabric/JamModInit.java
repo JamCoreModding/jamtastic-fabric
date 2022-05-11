@@ -24,7 +24,10 @@
 
 package io.github.jamalam360.jamfabric;
 
+import io.github.astrarre.itemview.v0.fabric.ItemKey;
+import io.github.foa.stackaware.v0.api.StackAware;
 import io.github.jamalam360.jamfabric.config.JamFabricConfig;
+import io.github.jamalam360.jamfabric.jam.Jam;
 import io.github.jamalam360.jamfabric.registry.*;
 import io.github.jamalam360.jamfabric.util.Utils;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -39,12 +42,11 @@ import org.apache.logging.log4j.Logger;
 
 public class JamModInit implements ModInitializer {
     public static final String MOD_ID = "jamfabric";
-    private static final Logger LOGGER = LogManager.getLogger("Jamtastic/Initializer");
-
     public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(
             Utils.id("general_group"),
             () -> new ItemStack(ItemRegistry.JAM_JAR)
     );
+    private static final Logger LOGGER = LogManager.getLogger("Jamtastic/Initializer");
 
     @Override
     public void onInitialize() {
@@ -58,13 +60,13 @@ public class JamModInit implements ModInitializer {
         DataRegistry.init();
         NetworkingRegistry.init(false);
 
-        // StackAware.MAX_COUNT_REGISTRY.forExact(ItemKey.of(ItemRegistry.JAM_JAR), (itemKey, count) -> {
-        //     if (Jam.fromNbt(itemKey.getCompoundTag().getCompound("Jam")).getIngredients().size() > 0) {
-        //         return 1;
-        //     } else {
-        //         return 16;
-        //     }
-        // });
+        StackAware.MAX_COUNT_REGISTRY.forExact(ItemKey.of(ItemRegistry.JAM_JAR), (itemKey, count) -> {
+            if (Jam.fromNbt(itemKey.getCompoundTag().getCompound("Jam")).getIngredients().size() > 0) {
+                return 1;
+            } else {
+                return 16;
+            }
+        });
 
         LOGGER.log(Level.INFO, "Jamtastic initialized.");
     }
