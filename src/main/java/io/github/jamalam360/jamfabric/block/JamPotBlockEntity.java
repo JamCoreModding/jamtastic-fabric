@@ -37,6 +37,7 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ServerWorld;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -74,24 +75,18 @@ public class JamPotBlockEntity extends BlockEntity implements JamStateListener {
 
     public void setFilledWater(boolean filled) {
         this.hasWater = filled;
-
-        if (filled) {
-            this.onUpdated();
-        }
-
-        this.markDirty();
+        this.onUpdated();
     }
 
     public void setFilledSugar(boolean filled) {
         this.hasSugar = filled;
-        this.markDirty();
+        this.onUpdated();
     }
 
     public void empty() {
         this.jam.clear();
         this.setFilledSugar(false);
         this.setFilledWater(false);
-        this.markDirty();
     }
 
     @Override
@@ -114,6 +109,10 @@ public class JamPotBlockEntity extends BlockEntity implements JamStateListener {
         }
 
         this.markDirty();
+
+        if (this.world instance of ServerWorld serverWorld) {
+            serverWorld.getChunkManager().markForUpdate(this.pos);
+        }
     }
 
     @Override
