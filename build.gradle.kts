@@ -79,10 +79,15 @@ dependencies {
     // Required:
     modApi(libs.required.cloth.config)
     modApi(libs.required.meal.api)
-    modApi(libs.required.stack.aware)
+    //modApi(libs.required.stack.aware)
 
     // JiJ:
-    include(libs.required.stack.aware)
+    //include(libs.required.stack.aware)
+
+    // Dependencies of stack aware to JiJ:
+    //include(libs.required.astrarre.access)
+    //include(libs.required.astrarre.util)
+    //include(libs.required.astrarre.itemview)
 
     // Optional:
     modApi(libs.optional.mod.menu)

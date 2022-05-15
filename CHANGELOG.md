@@ -2,7 +2,6 @@
 
 ### Fixes
 
-- Re-add StackAware.
 - Add a lang entry for the item group.
 - Fix synchronisation between S -> C when emptying jam pot.
 
