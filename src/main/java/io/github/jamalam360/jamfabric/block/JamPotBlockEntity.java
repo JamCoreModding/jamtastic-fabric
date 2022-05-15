@@ -110,7 +110,7 @@ public class JamPotBlockEntity extends BlockEntity implements JamStateListener {
 
         this.markDirty();
 
-        if (this.world instance of ServerWorld serverWorld) {
+        if (this.world instanceof ServerWorld serverWorld) {
             serverWorld.getChunkManager().markForUpdate(this.pos);
         }
     }
