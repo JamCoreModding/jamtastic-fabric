@@ -37,14 +37,15 @@
     "fabricloader": ">=0.11.3",
     "fabric": "*",
     "cloth-config2": "*",
-    "mealapi": ">=0.3"
+    "mealapi": ">=0.3",
+    "patchouli": "*"
   },
   "suggests": {
-    "patchouli": "*",
-    "sandwichable": "*"
+    "sandwichable": "*",
+    "modmenu": "*"
   },
   "custom": {
-    "notify_gradle_properties_url": "https://raw.githubusercontent.com/JamCoreModding/JamFabric/main/gradle.properties",
+    "notify_gradle_properties_url": "https://raw.githubusercontent.com/JamCoreModding/Jamtastic/main/gradle.properties",
     "notify_gradle_properties_key": "mod_version"
   }
 }
