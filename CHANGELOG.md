@@ -2,15 +2,12 @@
 
 ### Fixes
 
-- Add a lang entry for the item group.
-- Fix synchronisation between S -> C when emptying jam pot.
+- The jam pot will now only spawn smoke particles and make brewing noises when filled with water and sugar.
 
 ### Features
 
-- Add a test GitHub workflow.
+- No new features were added in this release.
 
-### Closed Issues
+Closed Issues: None.
 
-No issues were closed in this release.
-
-[Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/1.4.0...1.4.1)
+[Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/1.4.1...1.4.2)

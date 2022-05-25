@@ -73,6 +73,10 @@ public class JamPotBlockEntity extends BlockEntity implements JamStateListener {
         return this.hasWater;
     }
 
+    public boolean hasSugar() {
+        return this.hasSugar;
+    }
+
     public void setFilledWater(boolean filled) {
         this.hasWater = filled;
         this.onUpdated();

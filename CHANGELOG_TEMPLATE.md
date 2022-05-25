@@ -8,8 +8,6 @@
 
 - No new features were added in this release.
 
-### Closed Issues
-
-No issues were closed in this release.
+Closed Issues: None.
 
 [Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/...)

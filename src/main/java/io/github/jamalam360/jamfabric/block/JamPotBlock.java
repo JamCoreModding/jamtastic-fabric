@@ -129,14 +129,18 @@ public class JamPotBlock extends BlockWithEntity {
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (world.isClient) {
-            if (random.nextDouble() < 0.035) {
-                playRandomBrewingSound(world, pos);
-            }
+            BlockEntity entity = world.getBlockEntity(pos);
 
-            double d = (double) pos.getX() + 0.4 + (double) random.nextFloat() * 0.2;
-            double e = (double) pos.getY() + 0.7 + (double) random.nextFloat() * 0.3;
-            double f = (double) pos.getZ() + 0.4 + (double) random.nextFloat() * 0.2;
-            world.addParticle(ParticleTypes.SMOKE, d, e, f, 0.0, 0.0, 0.0);
+            if (entity instanceof JamPotBlockEntity jamPotBlockEntity && jamPotBlockEntity.hasWater() && jamPotBlockEntity.hasSugar()) {
+                if (random.nextDouble() < 0.035) {
+                    playRandomBrewingSound(world, pos);
+                }
+
+                double d = (double) pos.getX() + 0.4 + (double) random.nextFloat() * 0.2;
+                double e = (double) pos.getY() + 0.7 + (double) random.nextFloat() * 0.3;
+                double f = (double) pos.getZ() + 0.4 + (double) random.nextFloat() * 0.2;
+                world.addParticle(ParticleTypes.SMOKE, d, e, f, 0.0, 0.0, 0.0);
+            }
         }
     }
 
