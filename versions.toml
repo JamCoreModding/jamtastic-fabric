@@ -4,6 +4,7 @@ fabric-loader = "0.13.3"
 fabric-api = "0.51.1+1.18.2"
 cloth-config = "6.2.57"
 meal-api = "0.3+1.18"
+jam-lib = "0.0.5"
 stack-aware = "1.0.4"
 astrarre-access = "1.6.4"
 astrarre-util = "1.2.6"
@@ -22,6 +23,7 @@ fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fab
 
 required-cloth-config = { module = "me.shedaniel.cloth:cloth-config-fabric", version.ref = "cloth-config" }
 required-meal-api = { module = "maven.modrinth:mealapi", version.ref = "meal-api" }
+required-jam-lib = { module = "io.github.jamalam360:jam-lib", version.ref = "jam-lib" }
 required-stack-aware = { module = "io.github.foa:StackAware", version.ref="stack-aware"}
 required-astrarre-access = { module = "io.github.astrarre:astrarre-access-v0-fabric", version.ref = "astrarre-access" }
 required-astrarre-util = { module = "io.github.astrarre:astrarre-util-v0-fabric", version.ref = "astrarre-util" }

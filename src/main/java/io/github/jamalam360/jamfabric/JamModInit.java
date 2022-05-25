@@ -25,7 +25,6 @@
 package io.github.jamalam360.jamfabric;
 
 import io.github.jamalam360.jamfabric.config.JamFabricConfig;
-import io.github.jamalam360.jamfabric.jam.Jam;
 import io.github.jamalam360.jamfabric.registry.*;
 import io.github.jamalam360.jamfabric.util.Utils;
 import me.shedaniel.autoconfig.AutoConfig;
