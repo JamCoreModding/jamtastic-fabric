@@ -1,5 +1,7 @@
 ## Changelog
 
+Only a little bug fix this time.
+
 ### Fixes
 
 - The jam pot will now only spawn smoke particles and make brewing noises when filled with water and sugar.
