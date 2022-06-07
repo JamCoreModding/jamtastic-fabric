@@ -112,7 +112,6 @@ public abstract class ItemStackMixin {
                         }
 
                         this.setCustomName(new LiteralText(String.join(" ", translatedText)));
-                        System.out.println(Arrays.toString(translatedText));
                         cir.setReturnValue(this.getName());
                     }
                 }
