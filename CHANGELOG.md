@@ -1,5 +1,7 @@
 ## Changelog
 
+This is the final release version for 1.18.2.
+
 ### Fixes
 
 - Removed a console log left over from debugging.
