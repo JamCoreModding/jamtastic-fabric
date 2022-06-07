@@ -31,6 +31,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -72,6 +73,23 @@ public abstract class LivingEntityMixin {
             stack.removeCustomName();
         } else {
             stack.decrement(amount);
+        }
+    }
+
+    @Redirect(
+            method = "spawnConsumptionEffects",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"
+            )
+    )
+    public void jamfabric$cancelDrinkSoundIfEmpty(LivingEntity instance, SoundEvent soundEvent, float volume, float pitch, ItemStack stack) {
+        if (stack.isOf(ItemRegistry.JAM_JAR)) {
+            if (Jam.fromNbt(stack.getSubNbt("Jam")).getIngredients().size() != 0) {
+                instance.playSound(soundEvent, volume, pitch);
+            }
+        } else {
+            instance.playSound(soundEvent, volume, pitch);
         }
     }
 }

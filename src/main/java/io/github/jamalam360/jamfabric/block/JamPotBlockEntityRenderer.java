@@ -78,8 +78,6 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
         color = lerpBetween(LERP, entity.lastLerpProgress, entity.lerpingTo);
         entity.lastLerpProgress = color; // Set the last progress to the calculated color for next tick
 
-        int updatedLight = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
-
         if (entity.hasWater() && entity.jam.getIngredients().size() == 0) {
             color = Color.WATER;
         }
@@ -96,7 +94,7 @@ public class JamPotBlockEntityRenderer implements BlockEntityRenderer<JamPotBloc
                 color.getRed() / 255f,
                 color.getGreen() / 255f,
                 color.getBlue() / 255f,
-                updatedLight,
+                light,
                 overlay
         );
 
