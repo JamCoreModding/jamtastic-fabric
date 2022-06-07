@@ -1,15 +1,12 @@
 ## Changelog
 
-This is the final release version for 1.18.2.
-
 ### Fixes
 
-- Removed a console log left over from debugging.
-- Cleanup in preparation for 1.19 release.
+- No bugs were fixed in this release.
 
 ### Features
 
-- No new features were added in this release.
+- Port to 1.19.
 
 Closed Issues: None.
 

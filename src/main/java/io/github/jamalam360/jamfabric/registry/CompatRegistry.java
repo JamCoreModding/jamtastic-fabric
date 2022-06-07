@@ -42,7 +42,7 @@ public class CompatRegistry {
     private static final Logger LOGGER = LogManager.getLogger("Jamtastic/Compatibility");
 
     static {
-        COMPATIBILITY_PLUGINS.put("sandwichable", "sandwichable.SandwichablePlugin");
+//        COMPATIBILITY_PLUGINS.put("sandwichable", "sandwichable.SandwichablePlugin");
     }
 
     public static void init() {

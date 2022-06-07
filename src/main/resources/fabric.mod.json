@@ -37,8 +37,7 @@
     "fabricloader": ">=0.11.3",
     "fabric": "*",
     "cloth-config2": "*",
-    "mealapi": ">=0.3",
-    "patchouli": "*"
+    "mealapi": ">=0.3"
   },
   "suggests": {
     "sandwichable": "*",

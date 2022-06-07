@@ -24,9 +24,9 @@
 
 package io.github.jamalam360.jamfabric.util.helper;
 
+import com.mojang.blaze3d.texture.NativeImage;
 import io.github.jamalam360.jamfabric.color.Color;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.texture.NativeImage;
 import net.minecraft.item.Item;
 import net.minecraft.resource.Resource;
 import net.minecraft.util.Identifier;
@@ -49,7 +49,7 @@ public class NativeImageHelper {
                 throw new NullPointerException("Unexpected null texture");
             }
 
-            return NativeImage.read(texture.getInputStream());
+            return NativeImage.read(texture.open());
         } catch (Exception e) {
             LOGGER.log(Level.ERROR, "Failed to retrieve NativeImage texture of item " + item.getName().getString() + ". This a bug, and should be reported.");
             e.printStackTrace();

@@ -31,7 +31,6 @@ import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -96,7 +95,7 @@ public abstract class ItemStackMixin {
                 NbtCompound nbtCompound = this.getSubNbt("display");
 
                 if (nbtCompound != null && nbtCompound.contains("Name", 8)) {
-                    String[] text = Text.Serializer.fromJson(nbtCompound.getString("Name")).asString().split(" ");
+                    String[] text = Text.Serializer.fromJson(nbtCompound.getString("Name")).getString().split(" ");
 
                     if (Arrays.stream(text).anyMatch(s -> s.contains("."))) {
                         String[] translatedText = new String[text.length];
@@ -111,7 +110,7 @@ public abstract class ItemStackMixin {
                             }
                         }
 
-                        this.setCustomName(new LiteralText(String.join(" ", translatedText)));
+                        this.setCustomName(Text.literal(String.join(" ", translatedText)));
                         cir.setReturnValue(this.getName());
                     }
                 }

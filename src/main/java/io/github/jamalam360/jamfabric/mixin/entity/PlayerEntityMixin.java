@@ -28,6 +28,7 @@ import com.mojang.authlib.GameProfile;
 import io.github.jamalam360.jamfabric.util.Ducks;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.encryption.PlayerPublicKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -49,7 +50,7 @@ public abstract class PlayerEntityMixin {
             at = @At("TAIL"),
             method = "<init>"
     )
-    public void jamFabric$initMixin(World world, BlockPos pos, float yaw, GameProfile profile, CallbackInfo ci) {
+    public void jamFabric$initMixin(World world, BlockPos blockPos, float f, GameProfile gameProfile, PlayerPublicKey playerPublicKey, CallbackInfo ci) {
         ((Ducks.HungerManager) this.hungerManager).jamfabric$setPlayer((PlayerEntity) (Object) this);
     }
 }

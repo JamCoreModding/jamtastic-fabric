@@ -33,7 +33,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.UseAction;
@@ -73,7 +72,7 @@ public class JamJarItem extends Item {
                 }
 
                 if (!context.getWorld().isClient) {
-                    context.getStack().setCustomName(new LiteralText(String.join(" ", JamNameGenerator.create(context.getStack().getSubNbt("Jam"), context.getPlayer()))));
+                    context.getStack().setCustomName(Text.literal(String.join(" ", JamNameGenerator.create(context.getStack().getSubNbt("Jam"), context.getPlayer()))));
                 }
 
                 blockEntity.empty();

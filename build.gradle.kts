@@ -91,11 +91,14 @@ dependencies {
 
     // Optional:
     modApi(libs.optional.mod.menu)
-    modApi(libs.optional.patchouli)
-    modApi(libs.optional.sandwichable)
+
+    // Patchouli, sandiwchable, and spruce UI are waiting on 1.19 updates.
+
+//    modApi(libs.optional.patchouli)
+//    modApi(libs.optional.sandwichable)
 
     // Runtime:
-    modLocalRuntime(libs.runtime.spruce.ui) // Dependency of Sandwichable
+//    modLocalRuntime(libs.runtime.spruce.ui) // Dependency of Sandwichable
     modLocalRuntime(libs.runtime.lazy.dfu) // For _speed_
 }
 

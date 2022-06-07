@@ -44,6 +44,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,6 +54,8 @@ import java.util.Random;
  * @author Jamalam360
  */
 public class JamPotBlock extends BlockWithEntity {
+    private static final Random RANDOM = new Random();
+
     public JamPotBlock() {
         super(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque());
     }
@@ -127,7 +130,7 @@ public class JamPotBlock extends BlockWithEntity {
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, RandomGenerator random) {
         if (world.isClient) {
             BlockEntity entity = world.getBlockEntity(pos);
 
@@ -136,9 +139,9 @@ public class JamPotBlock extends BlockWithEntity {
                     playRandomBrewingSound(world, pos);
                 }
 
-                double d = (double) pos.getX() + 0.4 + (double) random.nextFloat() * 0.2;
-                double e = (double) pos.getY() + 0.7 + (double) random.nextFloat() * 0.3;
-                double f = (double) pos.getZ() + 0.4 + (double) random.nextFloat() * 0.2;
+                double d = (double) pos.getX() + 0.4 + (double) RANDOM.nextFloat() * 0.2;
+                double e = (double) pos.getY() + 0.7 + (double) RANDOM.nextFloat() * 0.3;
+                double f = (double) pos.getZ() + 0.4 + (double) RANDOM.nextFloat() * 0.2;
                 world.addParticle(ParticleTypes.SMOKE, d, e, f, 0.0, 0.0, 0.0);
             }
         }
@@ -173,8 +176,8 @@ public class JamPotBlock extends BlockWithEntity {
                     pos.getZ(),
                     SoundEvents.BLOCK_BREWING_STAND_BREW,
                     SoundCategory.BLOCKS,
-                    world.random.nextFloat(0.5f, 1f),
-                    world.random.nextFloat(0.6f, 1.3f),
+                    RANDOM.nextFloat(0.5f, 1f),
+                    RANDOM.nextFloat(0.6f, 1.3f),
                     false
             );
         }

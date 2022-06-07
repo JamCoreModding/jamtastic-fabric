@@ -1,19 +1,19 @@
 [versions]
-minecraft = "1.18.2"
-mappings-build = "23"
+minecraft = "1.19"
+mappings-build = "1"
 fabric-loader = "0.14.6"
-fabric-api = "0.55.1+1.18.2"
-cloth-config = "6.2.57"
+fabric-api = "0.55.1+1.19"
+cloth-config = "7.0.65"
 meal-api = "0.3+1.18"
-jam-lib = "0.0.5"
+jam-lib = "0.0.6"
 stack-aware = "1.0.4"
 astrarre-access = "1.6.4"
 astrarre-util = "1.2.6"
 astrarre-itemview = "1.0.7"
-mod-menu = "3.2.1"
-patchouli = "1.18.2-69-FABRIC"
-sandwichable = "1.2+1.18.2"
-spruce-ui = "3.3.3+1.18"
+mod-menu = "4.0.0-beta.4"
+#patchouli = "1.18.2-69-FABRIC"
+#sandwichable = "1.2+1.18.2"
+#spruce-ui = "3.3.3+1.18"
 lazy-dfu = "0.1.2"
 
 [libraries]
@@ -31,8 +31,8 @@ required-astrarre-util = { module = "io.github.astrarre:astrarre-util-v0-fabric"
 required-astrarre-itemview = { module = "io.github.astrarre:astrarre-itemview-v0-fabric", version.ref = "astrarre-itemview" }
 
 optional-mod-menu = { module = "com.terraformersmc:modmenu", version.ref = "mod-menu" }
-optional-patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli" }
-optional-sandwichable = { module = "maven.modrinth:5g7OOxWC", version.ref = "sandwichable" }
+#optional-patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli" }
+#optional-sandwichable = { module = "maven.modrinth:5g7OOxWC", version.ref = "sandwichable" }
 
-runtime-spruce-ui = { module = "dev.lambdaurora:spruceui", version.ref = "spruce-ui" }
+#runtime-spruce-ui = { module = "dev.lambdaurora:spruceui", version.ref = "spruce-ui" }
 runtime-lazy-dfu = { module = "maven.modrinth:lazydfu", version.ref = "lazy-dfu" }

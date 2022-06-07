@@ -32,9 +32,7 @@ import io.github.jamalam360.jamfabric.util.helper.NbtHelper;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -122,11 +120,11 @@ public class Jam {
         }
 
         if (tooltipMap.isEmpty()) {
-            finalTooltip.add(new TranslatableText("tooltip.jamfabric.empty_tooltip").styled(s -> s.withColor(Formatting.AQUA)));
+            finalTooltip.add(Text.translatable("tooltip.jamfabric.empty_tooltip").styled(s -> s.withColor(Formatting.AQUA)));
         } else {
-            finalTooltip.add(new TranslatableText("tooltip.jamfabric.hunger_tooltip", this.hunger).styled(s -> s.withColor(Formatting.AQUA)));
-            finalTooltip.add(new LiteralText(""));
-            tooltipMap.forEach((key, value) -> finalTooltip.add(new TranslatableText(key.getTranslationKey()).append(" x" + value).styled((style -> style.withColor(Formatting.GOLD)))));
+            finalTooltip.add(Text.translatable("tooltip.jamfabric.hunger_tooltip", this.hunger).styled(s -> s.withColor(Formatting.AQUA)));
+            finalTooltip.add(Text.literal(""));
+            tooltipMap.forEach((key, value) -> finalTooltip.add(Text.translatable(key.getTranslationKey()).append(" x" + value).styled((style -> style.withColor(Formatting.GOLD)))));
         }
 
         return finalTooltip;
