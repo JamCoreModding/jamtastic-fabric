@@ -1,10 +1,8 @@
 ## Changelog
 
-Only a little bug fix this time.
-
 ### Fixes
 
-- The jam pot will now only spawn smoke particles and make brewing noises when filled with water and sugar.
+- No bugs were fixed in this release.
 
 ### Features
 
@@ -12,4 +10,4 @@ Only a little bug fix this time.
 
 Closed Issues: None.
 
-[Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/1.4.1...1.4.2)
+[Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/1.4.2...1.4.3)
