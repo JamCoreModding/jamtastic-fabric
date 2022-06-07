@@ -3,6 +3,7 @@
 ### Fixes
 
 - Removed a console log left over from debugging.
+- Cleanup in preparation for 1.19 release.
 
 ### Features
 
