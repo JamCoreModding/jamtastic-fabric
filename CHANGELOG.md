@@ -1,11 +1,8 @@
 ## Changelog
 
-This is the final release version for 1.18.2.
-
 ### Fixes
 
-- Removed a console log left over from debugging.
-- Cleanup in preparation for 1.19 release.
+- Fixed an issue where a `BakedQuad`s `Sprite` could be null, causing errors.
 
 ### Features
 
@@ -13,4 +10,4 @@ This is the final release version for 1.18.2.
 
 Closed Issues: None.
 
-[Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/1.4.3...1.4.4)
+[Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/1.4.4...1.4.5)

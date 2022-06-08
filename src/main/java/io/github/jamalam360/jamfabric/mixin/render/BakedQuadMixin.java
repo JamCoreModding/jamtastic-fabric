@@ -50,8 +50,10 @@ public class BakedQuadMixin {
             cancellable = true
     )
     public void jamfabric$forceColor(CallbackInfoReturnable<Boolean> cir) {
-        if (sprite.getId().equals(new Identifier("jamfabric:block/jam_block"))) {
-            cir.setReturnValue(true);
-        }
+	if (sprite.getId() != null) {
+            if (sprite.getId().equals(new Identifier("jamfabric:block/jam_block"))) {
+                cir.setReturnValue(true);
+            }
+	}
     }
 }
