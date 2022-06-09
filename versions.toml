@@ -23,6 +23,7 @@ quilted-fabric-api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-a
 
 required-meal-api = { module = "maven.modrinth:mealapi", version.ref = "meal-api" }
 required-jam-lib = { module = "io.github.jamalam360:jam-lib", version.ref = "jam-lib" }
+required-spruce-ui = { module = "dev.lambdaurora:spruceui", version.ref = "spruce-ui" }
 required-stack-aware = { module = "io.github.foa:StackAware", version.ref="stack-aware"}
 required-astrarre-access = { module = "io.github.astrarre:astrarre-access-v0-fabric", version.ref = "astrarre-access" }
 required-astrarre-util = { module = "io.github.astrarre:astrarre-util-v0-fabric", version.ref = "astrarre-util" }
@@ -32,5 +33,4 @@ optional-mod-menu = { module = "com.terraformersmc:modmenu", version.ref = "mod-
 optional-patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli" }
 optional-sandwichable = { module = "maven.modrinth:5g7OOxWC", version.ref = "sandwichable" }
 
-runtime-spruce-ui = { module = "dev.lambdaurora:spruceui", version.ref = "spruce-ui" }
 runtime-lazy-dfu = { module = "maven.modrinth:lazydfu", version.ref = "lazy-dfu" }

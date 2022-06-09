@@ -76,9 +76,11 @@ dependencies {
     // Required:
     modApi(libs.required.meal.api)
     //modApi(libs.required.stack.aware)
+    modApi(libs.required.spruce.ui)
 
     // JiJ:
     //include(libs.required.stack.aware)
+    include(libs.required.spruce.ui)
 
     // Dependencies of stack aware to JiJ:
     //include(libs.required.astrarre.access)
@@ -91,7 +93,6 @@ dependencies {
     modApi(libs.optional.sandwichable)
 
     // Runtime:
-    modLocalRuntime(libs.runtime.spruce.ui) // Dependency of Sandwichable
     modLocalRuntime(libs.runtime.lazy.dfu) // For _speed_
 }
 

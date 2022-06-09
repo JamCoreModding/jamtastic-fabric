@@ -33,7 +33,6 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 public class ModMenuIntegration implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-//        return parent -> AutoConfig.getConfigScreen(JamFabricConfig.class, parent).get();
-        return null;
+        return ConfigScreen::new;
     }
 }
