@@ -54,7 +54,7 @@ import java.util.Random;
  */
 public class JamPotBlock extends BlockWithEntity {
     public JamPotBlock() {
-        super(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque());
+        super(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque().requiresTool());
     }
 
     @SuppressWarnings("deprecation")

@@ -10,7 +10,7 @@
           "functions": [
             {
               "function": "set_nbt",
-              "tag": "{Jam: {Ingredients2: \"minecraft:melon_slice\", Ingredients3: \"minecraft:enchanted_golden_apple\", Ingredients0: \"minecraft:melon_slice\", IngredientsLength: 4, Ingredients1: \"minecraft:melon_slice\"}, display:{Name: '{\"text\":\"Mega Jam\"}'}}"
+              "tag": "{Jam: {Ingredients2: \"minecraft:melon_slice;2;1.2\", Ingredients3: \"minecraft:enchanted_golden_apple;4;9.6\", Ingredients0: \"minecraft:melon_slice;2;1.2\", IngredientsLength: 4, Ingredients1: \"minecraft:melon_slice;2;1.2\"}, display:{Name: '{\"text\":\"Mega Jam\"}'}}"
             }
           ]
         }
