@@ -24,6 +24,7 @@
 
 package io.github.jamalam360.jamfabric.color;
 
+import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.util.Utils;
 import io.github.jamalam360.jamfabric.util.helper.NativeImageHelper;
 import net.minecraft.item.Item;
@@ -45,14 +46,14 @@ public class ItemColors {
             colors[i] = getAverageItemColor(items.get(i));
         }
 
-        return Utils.getConfig().jamOptions.colorProviderType.getProvider().getAverageColor(colors);
+        return JamModInit.CONFIG.jamOptions.colorProviderType.getProvider().getAverageColor(colors);
     }
 
     public static Color getAverageItemColor(Item item) {
         if (CACHE.containsKey(item)) {
             return CACHE.get(item);
         } else {
-            AverageColorProvider provider = Utils.getConfig().jamOptions.colorProviderType.getProvider();
+            AverageColorProvider provider = JamModInit.CONFIG.jamOptions.colorProviderType.getProvider();
             Color color = provider.getAverageColor(NativeImageHelper.getColors(NativeImageHelper.getNativeImage(item)));
             CACHE.put(item, color);
             return color;

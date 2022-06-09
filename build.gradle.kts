@@ -1,15 +1,12 @@
 @file:Suppress("SpellCheckingInspection")
 
 plugins {
-    id("fabric-loom") version "0.11-SNAPSHOT"
-    id("io.github.juuxel.loom-quiltflower") version "1.7.2"
-    id("org.quiltmc.quilt-mappings-on-loom") version "4.2.0"
+    id("org.quiltmc.loom") version "0.12.+"
     id("io.github.p03w.machete") version "1.0.11"
     id("org.cadixdev.licenser") version "0.6.1"
 }
 
 apply(from = "https://raw.githubusercontent.com/JamCoreModding/Gronk/main/publishing.gradle.kts")
-apply(from = "https://raw.githubusercontent.com/JamCoreModding/Gronk/main/misc.gradle.kts")
 
 val mod_version: String by project
 
@@ -72,12 +69,11 @@ dependencies {
         addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:${libs.versions.minecraft.get()}+build.${libs.versions.mappings.build.get()}:v2"))
     })
 
-    // Fabric:
-    modImplementation(libs.fabric.loader)
-    modImplementation(libs.fabric.api)
+    // Quilt:
+    modImplementation(libs.quilt.loader)
+    modImplementation(libs.quilted.fabric.api)
 
     // Required:
-    modApi(libs.required.cloth.config)
     modApi(libs.required.meal.api)
     //modApi(libs.required.stack.aware)
 
@@ -102,5 +98,36 @@ dependencies {
 tasks {
     named("test") {
         dependsOn("runGametest")
+    }
+
+    named<ProcessResources>("processResources") {
+        inputs.property("version", project.version)
+        filesMatching("quilt.mod.json") {
+            expand(
+                mutableMapOf(
+                    "version" to project.version
+                )
+            )
+        }
+    }
+
+    named<org.gradle.jvm.tasks.Jar>("jar") {
+        archiveBaseName.set(project.property("archive_base_name") as String)
+    }
+
+    named<org.gradle.jvm.tasks.Jar>("remapJar") {
+        archiveBaseName.set(project.property("archive_base_name") as String)
+    }
+
+    withType<JavaCompile> {
+        options.release.set(17)
+    }
+
+    named("prepareRemapJar") {
+        dependsOn("optimizeOutputsOfJar")
+    }
+
+    named("remapJar") {
+        dependsOn("optimizeOutputsOfJar")
     }
 }

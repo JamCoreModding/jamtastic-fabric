@@ -24,34 +24,22 @@
 
 package io.github.jamalam360.jamfabric.config;
 
-import io.github.jamalam360.jamfabric.JamModInit;
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import org.quiltmc.config.api.WrappedConfig;
 
 /**
  * @author Jamalam360
  */
 
-@Config(name = JamModInit.MOD_ID)
-public class JamFabricConfig implements ConfigData {
-    @ConfigEntry.Gui.CollapsibleObject
-    @ConfigEntry.Gui.Tooltip
+public class JamFabricConfig extends WrappedConfig {
     public JamOptions jamOptions = new JamOptions();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    @ConfigEntry.Gui.Tooltip
     public CompatOptions compatOptions = new CompatOptions();
 
     public static class JamOptions {
-        @ConfigEntry.Gui.Tooltip
         public int maxJamIngredients = 4;
-        @ConfigEntry.Gui.Tooltip
         public AverageColorProviderType colorProviderType = AverageColorProviderType.HSB_AVERAGE;
     }
 
     public static class CompatOptions {
-        @ConfigEntry.Gui.Tooltip
         public boolean enableSandwichableCompat = true;
     }
 }

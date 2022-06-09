@@ -1,9 +1,8 @@
 [versions]
 minecraft = "1.18.2"
-mappings-build = "23"
-fabric-loader = "0.14.6"
-fabric-api = "0.55.1+1.18.2"
-cloth-config = "6.2.57"
+mappings-build = "24"
+quilt-loader = "0.17.0-beta.4"
+quilted-fabric-api = "1.0.0-beta.19+0.55.1-1.18.2"
 meal-api = "0.3+1.18"
 jam-lib = "0.0.5"
 stack-aware = "1.0.4"
@@ -19,10 +18,9 @@ lazy-dfu = "0.1.2"
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft"  }
 
-fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
-fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+quilt-loader = { module = "org.quiltmc:quilt-loader", version.ref = "quilt-loader" }
+quilted-fabric-api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api", version.ref = "quilted-fabric-api" }
 
-required-cloth-config = { module = "me.shedaniel.cloth:cloth-config-fabric", version.ref = "cloth-config" }
 required-meal-api = { module = "maven.modrinth:mealapi", version.ref = "meal-api" }
 required-jam-lib = { module = "io.github.jamalam360:jam-lib", version.ref = "jam-lib" }
 required-stack-aware = { module = "io.github.foa:StackAware", version.ref="stack-aware"}

@@ -25,18 +25,12 @@
 package io.github.jamalam360.jamfabric.util;
 
 import io.github.jamalam360.jamfabric.JamModInit;
-import io.github.jamalam360.jamfabric.config.JamFabricConfig;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.util.Identifier;
 
 /**
  * @author Jamalam360
  */
 public class Utils {
-    public static JamFabricConfig getConfig() {
-        return AutoConfig.getConfigHolder(JamFabricConfig.class).getConfig();
-    }
-
     public static Identifier id(String path) {
         return new Identifier(JamModInit.MOD_ID, path);
     }

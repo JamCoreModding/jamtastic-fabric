@@ -29,20 +29,21 @@ import io.github.jamalam360.jamfabric.jam.Jam;
 import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import io.github.jamalam360.jamfabric.registry.ItemRegistry;
 import io.github.jamalam360.jamfabric.registry.NetworkingRegistry;
-import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 
 /**
  * @author Jamalam360
  */
 public class JamModClientInit implements ClientModInitializer {
     @Override
-    public void onInitializeClient() {
+    public void onInitializeClient(ModContainer container) {
         BlockEntityRendererRegistry.register(BlockRegistry.JAM_POT_ENTITY, JamPotBlockEntityRenderer::new);
 
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.JAM_POT, RenderLayer.getTranslucent());

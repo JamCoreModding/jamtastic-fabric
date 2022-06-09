@@ -27,15 +27,17 @@ package io.github.jamalam360.jamfabric;
 import io.github.jamalam360.jamfabric.config.JamFabricConfig;
 import io.github.jamalam360.jamfabric.registry.*;
 import io.github.jamalam360.jamfabric.util.Utils;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.config.QuiltConfig;
+import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+
+import java.nio.file.Path;
 
 public class JamModInit implements ModInitializer {
     public static final String MOD_ID = "jamfabric";
@@ -43,19 +45,21 @@ public class JamModInit implements ModInitializer {
             Utils.id("general_group"),
             () -> new ItemStack(ItemRegistry.JAM_JAR)
     );
+    public static JamFabricConfig CONFIG;
     private static final Logger LOGGER = LogManager.getLogger("Jamtastic/Initializer");
 
     @Override
-    public void onInitialize() {
+    public void onInitialize(ModContainer mod) {
         LOGGER.log(Level.INFO, "Initializing Jamtastic.");
-
-        AutoConfig.register(JamFabricConfig.class, GsonConfigSerializer::new);
 
         ItemRegistry.init();
         BlockRegistry.init();
         CompatRegistry.init();
         DataRegistry.init();
         NetworkingRegistry.init(false);
+
+        CONFIG = QuiltConfig.create(MOD_ID, "config", Path.of(""), JamFabricConfig.class, builder -> builder.format("json5"));
+        CONFIG.save();
 
         LOGGER.log(Level.INFO, "Jamtastic initialized.");
     }

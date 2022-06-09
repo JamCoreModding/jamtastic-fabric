@@ -24,10 +24,10 @@
 
 package io.github.jamalam360.jamfabric.block;
 
+import io.github.jamalam360.jamfabric.JamModInit;
+import io.github.jamalam360.jamfabric.color.Color;
 import io.github.jamalam360.jamfabric.jam.Jam;
 import io.github.jamalam360.jamfabric.jam.JamStateListener;
-import io.github.jamalam360.jamfabric.util.Utils;
-import io.github.jamalam360.jamfabric.color.Color;
 import io.github.jamalam360.jamfabric.registry.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -36,8 +36,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -66,7 +66,7 @@ public class JamPotBlockEntity extends BlockEntity implements JamStateListener {
     }
 
     public boolean canInsertIngredients() {
-        return this.hasSugar && this.hasWater && this.jam.getIngredients().size() < Utils.getConfig().jamOptions.maxJamIngredients;
+        return this.hasSugar && this.hasWater && this.jam.getIngredients().size() < JamModInit.CONFIG.jamOptions.maxJamIngredients;
     }
 
     public boolean hasWater() {
