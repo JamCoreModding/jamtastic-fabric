@@ -24,6 +24,8 @@
 
 package io.github.jamalam360.jamfabric.mixin.general;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import io.github.jamalam360.jamfabric.item.JamJarItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -40,6 +42,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.Arrays;
 
 /**
@@ -48,6 +52,11 @@ import java.util.Arrays;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
+    private final boolean jamfabric$staLoaded = FabricLoader.getInstance().isModLoaded("server_translations");
+    private final Gson jamfabric$gson = new Gson();
+    private String jamfabric$cachedJson = "";
+    private String jamfabric$cachedName = "";
+
     @Shadow
     public abstract Item getItem();
 
@@ -69,34 +78,35 @@ public abstract class ItemStackMixin {
             cancellable = true
     )
     public void jamfabric$translateJamName(CallbackInfoReturnable<Text> cir) {
-        // If on dedicated server, do nothing
-
-        // This isn't very efficient, cry about it lmao
-
-        /*
-        * ———————————No ~~bitches~~ efficiency?———————————
-                ⠀⣞⢽⢪⢣⢣⢣⢫⡺⡵⣝⡮⣗⢷⢽⢽⢽⣮⡷⡽⣜⣜⢮⢺⣜⢷⢽⢝⡽⣝
-                ⠸⡸⠜⠕⠕⠁⢁⢇⢏⢽⢺⣪⡳⡝⣎⣏⢯⢞⡿⣟⣷⣳⢯⡷⣽⢽⢯⣳⣫⠇
-                ⠀⠀⢀⢀⢄⢬⢪⡪⡎⣆⡈⠚⠜⠕⠇⠗⠝⢕⢯⢫⣞⣯⣿⣻⡽⣏⢗⣗⠏⠀
-                ⠀⠪⡪⡪⣪⢪⢺⢸⢢⢓⢆⢤⢀⠀⠀⠀⠀⠈⢊⢞⡾⣿⡯⣏⢮⠷⠁⠀⠀
-                ⠀⠀⠀⠈⠊⠆⡃⠕⢕⢇⢇⢇⢇⢇⢏⢎⢎⢆⢄⠀⢑⣽⣿⢝⠲⠉⠀⠀⠀⠀
-                ⠀⠀⠀⠀⠀⡿⠂⠠⠀⡇⢇⠕⢈⣀⠀⠁⠡⠣⡣⡫⣂⣿⠯⢪⠰⠂⠀⠀⠀⠀
-                ⠀⠀⠀⠀⡦⡙⡂⢀⢤⢣⠣⡈⣾⡃⠠⠄⠀⡄⢱⣌⣶⢏⢊⠂⠀⠀⠀⠀⠀⠀
-                ⠀⠀⠀⠀⢝⡲⣜⡮⡏⢎⢌⢂⠙⠢⠐⢀⢘⢵⣽⣿⡿⠁⠁⠀⠀⠀⠀⠀⠀⠀
-                ⠀⠀⠀⠀⠨⣺⡺⡕⡕⡱⡑⡆⡕⡅⡕⡜⡼⢽⡻⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                ⠀⠀⠀⠀⣼⣳⣫⣾⣵⣗⡵⡱⡡⢣⢑⢕⢜⢕⡝⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                ⠀⠀⠀⣴⣿⣾⣿⣿⣿⡿⡽⡑⢌⠪⡢⡣⣣⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                ⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                ⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                —————————————————————————————
-        * */
-
         if (FabricLoader.getInstance().getEnvironmentType() != EnvType.SERVER && this.getItem() instanceof JamJarItem) {
             if (this.hasCustomName()) {
                 NbtCompound nbtCompound = this.getSubNbt("display");
 
                 if (nbtCompound != null && nbtCompound.contains("Name", 8)) {
-                    String[] text = Text.Serializer.fromJson(nbtCompound.getString("Name")).asString().split(" ");
+                    String[] text = new String[0];
+
+                    if (this.jamfabric$staLoaded) {
+                        String json = nbtCompound.getString("Name");
+
+                        if (json.equals(this.jamfabric$cachedJson)) {
+                            text = this.jamfabric$cachedName.split(" ");
+                        } else {
+                            JsonReader reader = this.jamfabric$gson.newJsonReader(new StringReader(json));
+
+                            try {
+                                while (!reader.nextName().equals("text")) {
+                                }
+
+                                String name = reader.nextString();
+                                this.jamfabric$cachedJson = json;
+                                this.jamfabric$cachedName = name;
+                                text = name.split(" ");
+                            } catch (IOException ignored) {
+                            }
+                        }
+                    } else {
+                       text = Text.Serializer.fromJson(nbtCompound.getString("Name")).asString().split(" ");
+                    }
 
                     if (Arrays.stream(text).anyMatch(s -> s.contains("."))) {
                         String[] translatedText = new String[text.length];

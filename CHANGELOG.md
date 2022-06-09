@@ -2,7 +2,7 @@
 
 ### Fixes
 
-- Fixed an issue where a `BakedQuad`s `Sprite` could be null, causing errors.
+- Fix an incompatibility with Server Translations API.
 
 ### Features
 
@@ -10,4 +10,4 @@
 
 Closed Issues: None.
 
-[Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/1.4.4...1.4.5)
+[Full Changelog](https://github.com/JamCoreModding/Jamtastic/compare/...)
