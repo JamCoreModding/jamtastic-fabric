@@ -63,7 +63,7 @@ public class JamPotBlock extends BlockWithEntity {
         ItemStack stack = player.getStackInHand(hand);
         JamPotBlockEntity blockEntity = (JamPotBlockEntity) world.getBlockEntity(pos);
 
-        if (blockEntity == null) return super.onUse(state, world, pos, player, hand, hit);
+        if (blockEntity == null || !player.canModifyBlocks()) return super.onUse(state, world, pos, player, hand, hit);
 
         if (stack.isIn(ConventionalItemTags.WATER_BUCKETS) && blockEntity.canInsertWater()) {
             blockEntity.setFilledWater(true);
