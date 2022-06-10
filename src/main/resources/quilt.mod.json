@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "io.github.jamalam360",
+    "id": "jamfabric",
+    "version": "${version}",
+    "metadata": {
+      "name": "Jamtastic",
+      "description": "Make all the jam your heart desires...",
+      "contributors": {
+        "Jamalam": "Owner",
+        "Jomlom/Jonty": "Artist"
+      },
+      "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/jamtastic",
+        "sources": "https://github.com/JamCoreModding/Jamtastic",
+        "issues": "https://github.com/JamCoreModding/Jamtastic/issues",
+        "discord": "https://discord.jamalam.tech"
+      },
+      "icon": "assets/jamfabric/icon.png",
+      "license": "MIT"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": "io.github.jamalam360.jamfabric.JamModInit",
+      "client_init": "io.github.jamalam360.jamfabric.JamModClientInit",
+      "modmenu": "io.github.jamalam360.jamfabric.config.ModMenuIntegration"
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.17.0-beta.4"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=1.0.0-"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.18.2"
+      }
+    ]
+  },
+  "mixin": "jamfabric.mixins.json"
+}

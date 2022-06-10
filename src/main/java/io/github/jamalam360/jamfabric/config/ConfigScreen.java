@@ -26,7 +26,10 @@ package io.github.jamalam360.jamfabric.config;
 
 import dev.lambdaurora.spruceui.Position;
 import dev.lambdaurora.spruceui.background.DirtTexturedBackground;
-import dev.lambdaurora.spruceui.option.*;
+import dev.lambdaurora.spruceui.option.SpruceCyclingOption;
+import dev.lambdaurora.spruceui.option.SpruceIntegerInputOption;
+import dev.lambdaurora.spruceui.option.SpruceOption;
+import dev.lambdaurora.spruceui.option.SpruceToggleBooleanOption;
 import dev.lambdaurora.spruceui.screen.SpruceScreen;
 import dev.lambdaurora.spruceui.util.RenderUtil;
 import dev.lambdaurora.spruceui.widget.SpruceButtonWidget;
@@ -39,12 +42,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
-import org.jetbrains.annotations.Nullable;
 import org.quiltmc.config.api.values.TrackedValue;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Jamalam
@@ -62,25 +62,21 @@ public class ConfigScreen extends SpruceScreen {
         this.parent = parent;
     }
 
-    private void addFields(@Nullable List<String> parents) {
+    private void addFields() {
         String pKey = "cfgbarrel.jamfabric.option";
-
-        if (parents != null) {
-            pKey += "." + parents.stream().reduce((a, b) -> a + "." + b).orElse("error");
-        }
 
         for (TrackedValue<?> value : JamModInit.CONFIG.values()) {
             Class<?> clazz = value.getRealValue().getClass();
             String key = pKey + "." + value.key().getLastComponent();
 
-            if (clazz.equals(int.class)) {
+            if (clazz.equals(int.class) || clazz.equals(Integer.class)) {
                 this.optionsWidget.addSingleOptionEntry(new SpruceIntegerInputOption(key,
                         () -> (Integer) value.value(),
-                        (i) -> ((TrackedValue<Integer>) value).setValue(i, true), null));
-            } else if (clazz.equals(boolean.class)) {
+                        (i) -> ((TrackedValue<Integer>) value).setValue(i, true), new TranslatableText("cfgbarrel.jamfabric.option.enableSandwichableCompat.tooltip")));
+            } else if (clazz.equals(boolean.class) || clazz.equals(Boolean.class)) {
                 this.optionsWidget.addSingleOptionEntry(new SpruceToggleBooleanOption(key,
                         () -> (Boolean) value.value(),
-                        (b) -> ((TrackedValue<Boolean>) value).setValue(b, true), null));
+                        (b) -> ((TrackedValue<Boolean>) value).setValue(b, true), new TranslatableText("cfgbarrel.jamfabric.option.maxJamIngredients.tooltip")));
             } else if (clazz.isEnum()) {
                 this.optionsWidget.addOptionEntry(new LabelOption(key), new SpruceCyclingOption(key,
                         (i) -> {
@@ -89,16 +85,7 @@ public class ConfigScreen extends SpruceScreen {
                                     (AverageColorProviderType) clazz.getEnumConstants()[Math.floorMod(((Enum<?>) value.value()).ordinal() + 1, s)], true
                             );
                         },
-                        opt -> new TranslatableText("cfgbarrel.jamfabric.enum." + ((Enum<?>) value.value()).name()), null));
-            } else {
-                this.optionsWidget.addSingleOptionEntry(new SpruceSeparatorOption(key, true, null));
-                List<String> nParents = new ArrayList<>();
-                if (parents != null) {
-                    nParents.addAll(parents);
-                }
-                nParents.add(value.key().getLastComponent());
-                this.addFields(nParents);
-                this.optionsWidget.addSingleOptionEntry(new SpruceSeparatorOption("cfgbarrel.empty", false, null));
+                        opt -> new LiteralText(((Enum<?>) value.value()).name()), new TranslatableText("cfgbarrel.jamfabric.option.colorProviderType.tooltip")));
             }
         }
     }
@@ -120,7 +107,7 @@ public class ConfigScreen extends SpruceScreen {
         super.init();
         this.optionsWidget = new SpruceOptionListWidget(Position.of(0, 22), this.width, this.height - (35 + 22));
         this.optionsWidget.setBackground(DirtTexturedBackground.DARKENED);
-        this.addFields(null);
+        this.addFields();
         this.addDrawableChild(optionsWidget);
         int bottomCenter = this.width / 2 - 65;
         this.addDrawableChild(new SpruceButtonWidget(Position.of(bottomCenter - 69, this.height - 27), 130, 20, ScreenTexts.CANCEL, button -> this.onClose()));

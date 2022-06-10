@@ -75,17 +75,10 @@ dependencies {
 
     // Required:
     modApi(libs.required.meal.api)
-    //modApi(libs.required.stack.aware)
     modApi(libs.required.spruce.ui)
 
     // JiJ:
-    //include(libs.required.stack.aware)
     include(libs.required.spruce.ui)
-
-    // Dependencies of stack aware to JiJ:
-    //include(libs.required.astrarre.access)
-    //include(libs.required.astrarre.util)
-    //include(libs.required.astrarre.itemview)
 
     // Optional:
     modApi(libs.optional.mod.menu)

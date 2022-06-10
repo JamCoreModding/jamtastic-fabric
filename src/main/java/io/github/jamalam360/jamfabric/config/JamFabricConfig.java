@@ -31,15 +31,7 @@ import org.quiltmc.config.api.WrappedConfig;
  */
 
 public class JamFabricConfig extends WrappedConfig {
-    public JamOptions jamOptions = new JamOptions();
-    public CompatOptions compatOptions = new CompatOptions();
-
-    public static class JamOptions {
-        public int maxJamIngredients = 4;
-        public AverageColorProviderType colorProviderType = AverageColorProviderType.HSB_AVERAGE;
-    }
-
-    public static class CompatOptions {
-        public boolean enableSandwichableCompat = true;
-    }
+    public final int maxJamIngredients = 4;
+    public final AverageColorProviderType colorProviderType = AverageColorProviderType.HSB_AVERAGE;
+    public final boolean enableSandwichableCompat = true;
 }

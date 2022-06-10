@@ -52,14 +52,15 @@ public class JamModInit implements ModInitializer {
     public void onInitialize(ModContainer mod) {
         LOGGER.log(Level.INFO, "Initializing Jamtastic.");
 
+        CONFIG = QuiltConfig.create(MOD_ID, "config", Path.of(""), JamFabricConfig.class, builder -> builder.format("json5"));
+        CONFIG.save();
+
         ItemRegistry.init();
         BlockRegistry.init();
         CompatRegistry.init();
         DataRegistry.init();
         NetworkingRegistry.init(false);
 
-        CONFIG = QuiltConfig.create(MOD_ID, "config", Path.of(""), JamFabricConfig.class, builder -> builder.format("json5"));
-        CONFIG.save();
 
         LOGGER.log(Level.INFO, "Jamtastic initialized.");
     }

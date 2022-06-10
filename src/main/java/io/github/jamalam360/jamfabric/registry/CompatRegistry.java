@@ -27,10 +27,10 @@ package io.github.jamalam360.jamfabric.registry;
 import com.google.common.collect.Maps;
 import io.github.jamalam360.jamfabric.compat.CompatibilityPlugin;
 import io.github.jamalam360.jamfabric.mixin.JamMixinPlugin;
-import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.Map;
 
@@ -47,7 +47,7 @@ public class CompatRegistry {
 
     public static void init() {
         for (Map.Entry<String, String> plugin : COMPATIBILITY_PLUGINS.entrySet()) {
-            if (FabricLoader.getInstance().isModLoaded(plugin.getKey())) {
+            if (QuiltLoader.isModLoaded(plugin.getKey())) {
                 try {
                     Class<?> clazz = Class.forName("io.github.jamalam360.jamfabric.compat." + plugin.getValue());
                     Object obj = clazz.getConstructor().newInstance();
@@ -62,7 +62,7 @@ public class CompatRegistry {
                     }
                 } catch (Exception e) {
                     LOGGER.log(Level.ERROR, "Failed to load compatibility plugin: " + plugin.getKey() + ".");
-                    throw new IllegalArgumentException();
+                    e.printStackTrace();
                 }
             }
         }

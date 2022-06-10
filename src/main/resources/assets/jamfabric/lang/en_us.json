@@ -10,19 +10,13 @@
 
   "text.jamfabric.jam_spread": "Jam",
 
-  "text.autoconfig.jamfabric.title": "Jam Config (May Require Restart)",
-
-  "text.autoconfig.jamfabric.option.jamOptions": "Jam Options",
-  "text.autoconfig.jamfabric.option.jamOptions.@Tooltip": "Configure jam behaviour",
-  "text.autoconfig.jamfabric.option.jamOptions.maxJamIngredients": "Max Ingredients",
-  "text.autoconfig.jamfabric.option.jamOptions.maxJamIngredients.@Tooltip": "The maximum number of ingredients allowed in jam",
-  "text.autoconfig.jamfabric.option.jamOptions.colorProviderType": "Jam Color Algorithm",
-  "text.autoconfig.jamfabric.option.jamOptions.colorProviderType.@Tooltip": "The algorithm to use to get the average color for the jam",
-
-  "text.autoconfig.jamfabric.option.compatOptions": "Compatibility Options",
-  "text.autoconfig.jamfabric.option.compatOptions.@Tooltip": "Configure compatibility with other mods",
-  "text.autoconfig.jamfabric.option.compatOptions.enableSandwichableCompat": "Enabled Sandwichable Compatibility",
-  "text.autoconfig.jamfabric.option.compatOptions.enableSandwichableCompat.@Tooltip": "Enabled compatibility features with Sandwichable",
+  "cfgbarrel.jamfabric.screen": "Jam Config (May Require Restart)",
+  "cfgbarrel.jamfabric.option.maxJamIngredients": "Max Ingredients",
+  "cfgbarrel.jamfabric.option.maxJamIngredients.tooltip": "The maximum number of ingredients allowed in jam",
+  "cfgbarrel.jamfabric.option.colorProviderType": "Jam Color Algorithm",
+  "cfgbarrel.jamfabric.option.colorProviderType.tooltip": "The algorithm to use to get the average color for the jam",
+  "cfgbarrel.jamfabric.option.enableSandwichableCompat": "Enable Sandwichable Compatibility",
+  "cfgbarrel.jamfabric.option.enableSandwichableCompat.tooltip": "Enable compatibility features with Sandwichable",
 
   "jam_names.jamfabric.beneficial_effect_adjectives.0": "Premium",
   "jam_names.jamfabric.beneficial_effect_adjectives.1": "Luxury",

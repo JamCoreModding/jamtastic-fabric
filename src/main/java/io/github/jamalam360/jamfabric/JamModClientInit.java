@@ -43,7 +43,7 @@ import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
  */
 public class JamModClientInit implements ClientModInitializer {
     @Override
-    public void onInitializeClient(ModContainer container) {
+    public void onInitializeClient(ModContainer mod) {
         BlockEntityRendererRegistry.register(BlockRegistry.JAM_POT_ENTITY, JamPotBlockEntityRenderer::new);
 
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.JAM_POT, RenderLayer.getTranslucent());

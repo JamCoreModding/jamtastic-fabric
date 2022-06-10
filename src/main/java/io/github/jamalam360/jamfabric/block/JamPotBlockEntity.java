@@ -40,6 +40,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 /**
  * @author Jamalam360
  */
@@ -66,7 +68,7 @@ public class JamPotBlockEntity extends BlockEntity implements JamStateListener {
     }
 
     public boolean canInsertIngredients() {
-        return this.hasSugar && this.hasWater && this.jam.getIngredients().size() < JamModInit.CONFIG.jamOptions.maxJamIngredients;
+        return this.hasSugar && this.hasWater && this.jam.getIngredients().size() < (int) JamModInit.CONFIG.getValue(List.of("maxJamIngredients")).getRealValue();
     }
 
     public boolean hasWater() {

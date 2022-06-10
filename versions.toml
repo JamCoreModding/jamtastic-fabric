@@ -5,10 +5,6 @@ quilt-loader = "0.17.0-beta.4"
 quilted-fabric-api = "1.0.0-beta.19+0.55.1-1.18.2"
 meal-api = "0.3+1.18"
 jam-lib = "0.0.5"
-stack-aware = "1.0.4"
-astrarre-access = "1.6.4"
-astrarre-util = "1.2.6"
-astrarre-itemview = "1.0.7"
 mod-menu = "3.2.1"
 patchouli = "1.18.2-69-FABRIC"
 sandwichable = "1.2+1.18.2"
@@ -24,10 +20,6 @@ quilted-fabric-api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-a
 required-meal-api = { module = "maven.modrinth:mealapi", version.ref = "meal-api" }
 required-jam-lib = { module = "io.github.jamalam360:jam-lib", version.ref = "jam-lib" }
 required-spruce-ui = { module = "dev.lambdaurora:spruceui", version.ref = "spruce-ui" }
-required-stack-aware = { module = "io.github.foa:StackAware", version.ref="stack-aware"}
-required-astrarre-access = { module = "io.github.astrarre:astrarre-access-v0-fabric", version.ref = "astrarre-access" }
-required-astrarre-util = { module = "io.github.astrarre:astrarre-util-v0-fabric", version.ref = "astrarre-util" }
-required-astrarre-itemview = { module = "io.github.astrarre:astrarre-itemview-v0-fabric", version.ref = "astrarre-itemview" }
 
 optional-mod-menu = { module = "com.terraformersmc:modmenu", version.ref = "mod-menu" }
 optional-patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli" }

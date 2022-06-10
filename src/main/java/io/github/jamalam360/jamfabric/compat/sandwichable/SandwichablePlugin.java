@@ -27,7 +27,8 @@ package io.github.jamalam360.jamfabric.compat.sandwichable;
 import io.github.foundationgames.sandwichable.util.SpreadRegistry;
 import io.github.jamalam360.jamfabric.JamModInit;
 import io.github.jamalam360.jamfabric.compat.CompatibilityPlugin;
-import io.github.jamalam360.jamfabric.util.Utils;
+
+import java.util.List;
 
 /**
  * @author Jamalam360
@@ -35,7 +36,7 @@ import io.github.jamalam360.jamfabric.util.Utils;
 public class SandwichablePlugin implements CompatibilityPlugin {
     @Override
     public void init() {
-        if (JamModInit.CONFIG.compatOptions.enableSandwichableCompat) {
+        if ((boolean) JamModInit.CONFIG.getValue(List.of("enableSandwichableCompat")).getRealValue()) {
             SpreadRegistry.INSTANCE.register("jamtastic:jam", new JamSpreadType());
         }
     }
