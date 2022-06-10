@@ -52,7 +52,7 @@ public class JamJarItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        if (context.getWorld().getBlockState(context.getBlockPos()).isOf(BlockRegistry.JAM_POT)) {
+        if (context.getWorld().getBlockState(context.getBlockPos()).isOf(BlockRegistry.JAM_POT) && context.getPlayer().canModifyBlocks()) {
             JamPotBlockEntity blockEntity = (JamPotBlockEntity) context.getWorld().getBlockEntity(context.getBlockPos());
 
             if (
