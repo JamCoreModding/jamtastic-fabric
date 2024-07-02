@@ -19,7 +19,7 @@ jobs:
 
       - name: Get Branch Name
         id: branch-name
-        uses: tj-actions/branch-names@v5
+        uses: tj-actions/branch-names@v8
 
       - name: Check For --no-actions Flag
         if: ${{ contains(github.event.commits[0].message, '--no-actions') }}
@@ -74,7 +74,7 @@ jobs:
 
       - name: Get Branch Name
         id: branch-name
-        uses: tj-actions/branch-names@v5
+        uses: tj-actions/branch-names@v8
 
       - name: Check For --no-actions Flag
         if: ${{ contains(github.event.commits[0].message, '--no-actions') }}
